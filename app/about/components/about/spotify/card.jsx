@@ -59,17 +59,18 @@ const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
     }, [isActive, startTime, duration, audioRef]);
 
     return (
-        <div className="py-6 w-full flex flex-col items-start justify-center opacity-100 transition-opacity duration-700 will-change-transform transform-gpu">
+        // REVERT: py-3 agar jarak antar titik dan lirik lebih natural/dekat
+        <div className="py-3 w-full flex flex-col items-start justify-center opacity-100 transition-opacity duration-700 will-change-transform transform-gpu">
             <div className="relative inline-block w-fit">
                 {/* Layer 1: Background */}
-                <div className="text-[28px] tracking-[4px] text-white/20 leading-relaxed select-none font-bold mix-blend-screen pl-1">
+                <div className="text-[28px] tracking-[4px] text-white/20 leading-tight select-none font-bold mix-blend-screen pl-1">
                     ● ● ●
                 </div>
 
                 {/* Layer 2: Filling */}
                 <div 
                     ref={fillRef} 
-                    className="absolute top-0 left-0 h-full overflow-hidden whitespace-nowrap text-[28px] tracking-[4px] text-white leading-relaxed select-none font-bold will-change-[width] pl-1"
+                    className="absolute top-0 left-0 h-full overflow-hidden whitespace-nowrap text-[28px] tracking-[4px] text-white leading-tight select-none font-bold will-change-[width] pl-1"
                     style={{ width: '0%' }}
                 >
                     <span className={isActive ? "active-lyric-glow-text" : ""}>
@@ -404,7 +405,7 @@ const Card = () => {
         }
     };
 
-    // --- AUTO SCROLL LOGIC (UPDATED POSITION) ---
+    // --- AUTO SCROLL LOGIC ---
     useEffect(() => {
         if (showLyrics && scrollRef.current && !showPlaylist && activeIdx !== -1) {
             const activeEl = scrollRef.current.children[activeIdx];
@@ -414,12 +415,8 @@ const Card = () => {
                 const elTop = activeEl.offsetTop;
                 const elH = activeEl.clientHeight;
                 
-                // TARGET SCROLL BARU:
-                // Menempatkan lirik aktif di 22% dari atas container (High-Position / Top-Biased)
-                // Ini memberikan ruang "baca" yang luas di bawah lirik aktif.
+                // ADJUSTMENT: 22% Top Bias
                 let targetScroll = elTop - (containerH * 0.22); 
-
-                // Jika lirik sangat panjang (lebih dari 40% layar), dorong lebih ke atas (15%)
                 if (elH > containerH * 0.4) {
                     targetScroll = elTop - (containerH * 0.15);
                 }
@@ -553,8 +550,8 @@ const Card = () => {
                             </div>
                         )}
 
-                        {/* Lyrics Area */}
-                        <div ref={scrollRef} className="w-full h-full overflow-y-auto no-scrollbar pt-20 pb-32 px-8 mask-scroller-y">
+                        {/* Lyrics Area (REVERT SPACING: py-3 & leading-tight, px-4) */}
+                        <div ref={scrollRef} className="w-full h-full overflow-y-auto no-scrollbar pt-20 pb-32 px-4 mask-scroller-y">
                             {processedLyrics.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center h-full text-white/30 gap-2">
                                     <FontAwesomeIcon icon={faMusic} className="text-2xl" />
@@ -580,13 +577,15 @@ const Card = () => {
                                         <div 
                                             key={i} 
                                             onClick={() => handleSeekEnd(line.time)} 
-                                            className={`cursor-pointer py-4 text-left transition-all duration-700 ease-out origin-left will-change-transform transform-gpu ${
+                                            // REVERTED: py-3 (rapat vertikal)
+                                            className={`cursor-pointer py-3 text-left transition-all duration-700 ease-out origin-left will-change-transform transform-gpu ${
                                                 isActive 
                                                 ? "opacity-100 scale-100 active-lyric-glow blur-0" 
                                                 : "opacity-40 scale-[0.98] blur-[1.5px] hover:opacity-60 hover:blur-[0.5px]" 
                                             }`}
                                         >
-                                            <p className={`font-bold text-[28px] leading-relaxed text-white tracking-tight ${isActive ? "active-lyric-glow-text" : ""}`}>{line.text}</p>
+                                            {/* REVERTED: leading-tight (rapat baris) */}
+                                            <p className={`font-bold text-[28px] leading-tight text-white tracking-tight ${isActive ? "active-lyric-glow-text" : ""}`}>{line.text}</p>
                                         </div>
                                     );
                                 })
