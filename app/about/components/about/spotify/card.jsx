@@ -544,7 +544,7 @@ const Card = () => {
                             )}
                         </div>
 
-                        {/* Bottom  hojojo Actions */}
+                        {/* Bottom Actions */}
                         <div className="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end z-40">
                              <button onClick={(e) => { e.stopPropagation(); setShowPlaylist(!showPlaylist); }} className={`w-9 h-9 rounded-full flex items-center justify-center bg-black/20 backdrop-blur-md border border-white/10 transition-all active:scale-90 ${showPlaylist ? "bg-white text-black" : "text-white hover:bg-white/10"}`}><FontAwesomeIcon icon={showPlaylist ? faTimes : faBars} className="text-xs" /></button>
                              {result.karaokeUrl && !showPlaylist && (
@@ -609,7 +609,7 @@ const Card = () => {
                 }
                 
                 .animate-spin-slow { animation: spin-slow 90s linear infinite; }
-                .animate-spin-reverse-slower { animation: spin-reverse-slower 90s linear infinite; }
+                .animate-spin-reverse-slower { animation: spin-reverse-slower 75s linear infinite; }
                 .animate-pulse-spin { animation: pulse-spin 60s ease-in-out infinite; }
                 
                 .contain-strict { contain: strict; }
