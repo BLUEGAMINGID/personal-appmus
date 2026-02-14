@@ -28,7 +28,7 @@ const useMediaQuery = (query) => {
     return matches;
 };
 
-// --- MEMOIZED SUB-COMPONENTS ---
+// --- MEMOIZED SUB-COMPONENTS (PERFORMANCE CORE) ---
 
 const LiveInterlude = React.memo(({ isActive, audioRef, startTime, duration }) => {
     const fillRef = useRef(null);
@@ -41,6 +41,7 @@ const LiveInterlude = React.memo(({ isActive, audioRef, startTime, duration }) =
             let progress = (currentTime - startTime) / duration;
             progress = Math.max(0, Math.min(1, progress));
             fillRef.current.style.width = `${progress * 100}%`;
+            
             if (isActive) rafId = requestAnimationFrame(update);
         };
 
@@ -169,19 +170,11 @@ const LyricLine = React.memo(({ line, isActive, onClick, audioRef }) => {
 }, (prev, next) => prev.isActive === next.isActive && prev.line === next.line);
 LyricLine.displayName = "LyricLine";
 
-// --- MEMOIZED BACKGROUND (3 LAYERS - GPU CACHED) ---
+// --- MEMOIZED BACKGROUND (KEEP 3 LAYERS BUT OPTIMIZED) ---
 const AliveBackground = React.memo(({ cover }) => (
     <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#101010] contain-strict">
         {cover && (
             <>
-                {/* PERFORMANCE TRICK: 
-                   Kita menggunakan 'inset-[-50%]' agar gambar lebih besar dari container.
-                   Browser akan me-raster gambar blur ini SEKALI SAJA sebagai texture besar.
-                   Animasi selanjutnya hanya memutar texture tersebut (transform rotate).
-                   Ini JAUH lebih ringan daripada meng-animasikan property filter: blur().
-                */}
-                
-                {/* Layer 1: Deep Base (Rotasi Lambat) */}
                 <div 
                     className="absolute inset-[-50%] bg-cover bg-center animate-spin-slow will-change-transform transform-gpu" 
                     style={{ 
@@ -192,7 +185,6 @@ const AliveBackground = React.memo(({ cover }) => (
                     }} 
                 />
                 
-                {/* Layer 2: Color Pop (Rotasi Balik) */}
                 <div 
                     className="absolute inset-[-50%] bg-cover bg-center animate-spin-reverse-slower will-change-transform transform-gpu" 
                     style={{ 
@@ -204,7 +196,6 @@ const AliveBackground = React.memo(({ cover }) => (
                     }} 
                 />
 
-                {/* Layer 3: Texture/Breathing (Rotasi + Scale Pulse) */}
                 <div 
                     className="absolute inset-[-50%] bg-cover bg-center animate-pulse-spin will-change-transform transform-gpu" 
                     style={{ 
@@ -432,10 +423,10 @@ const Card = () => {
     const handlePrev = () => setCurrentIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
     const selectSong = (idx) => { if (idx === currentIndex) { setShowPlaylist(false); return; } setCurrentIndex(idx); setShowPlaylist(false); };
 
-    // Layout: Consistent Height (Closed: 260px, Open: varies)
+    // LAYOUT RESPONSIVE LOGIC
     const getCardHeight = () => {
         if (showLyrics || showPlaylist) return isDesktop ? 680 : 580; 
-        return 260; 
+        return isDesktop ? 260 : 160; // Mobile: 160px (Compact), Desktop: 260px (Normal)
     };
 
     return (
@@ -445,7 +436,7 @@ const Card = () => {
 
             <div className="relative w-full rounded-[40px] overflow-hidden shadow-2xl bg-[#0a0a0a] transition-all duration-500 cubic-bezier(0.32, 0.72, 0, 1)" style={{ height: getCardHeight() }}>
                 
-                {/* 3-LAYER ALIVE BACKGROUND (GPU CACHED) */}
+                {/* 3 LAYERS BACKGROUND */}
                 <AliveBackground cover={result.cover} />
 
                 <div className="relative z-10 w-full h-full p-6 flex flex-col border border-white/5">
@@ -487,7 +478,7 @@ const Card = () => {
                             </div>
                         )}
 
-                        {/* Lyrics Area (GPU OPTIMIZED) */}
+                        {/* Lyrics Area */}
                         <div ref={scrollRef} className="w-full h-full overflow-y-auto no-scrollbar pt-20 pb-32 px-4 mask-scroller-y">
                             {processedLyrics.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center h-full text-white/30 gap-2"><FontAwesomeIcon icon={faMusic} className="text-2xl" /><p className="text-sm">No Lyrics</p></div>
@@ -555,18 +546,9 @@ const Card = () => {
                     );
                 }
                 
-                /* 5-LAYER ULTRA SOFT GLOW (WITH GPU HACK) */
+                /* 1-LAYER SMOOTH GLOW (ALL DEVICES) */
                 .active-lyric-glow-text { 
-                    /* Note: Properti ini berat jika dianimasikan secara transisi CSS standard.
-                       Tapi karena kita menggunakan isolasi komponen React.memo(), 
-                       browser hanya perlu menggambar ini sekali saat state berubah.
-                    */
-                    text-shadow: 
-                        0 0 5px rgba(255,255,255,0.30),   
-                        0 0 10px rgba(255,255,255,0.25),  
-                        0 0 20px rgba(255,255,255,0.15),
-                        0 0 40px rgba(255,255,255,0.08),
-                        0 0 80px rgba(255,255,255,0.05);
+                    text-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
                 }
 
                 @keyframes spin-slow { from { transform: rotate(0deg) scale(1.5); } to { transform: rotate(360deg) scale(1.5); } }
@@ -581,10 +563,7 @@ const Card = () => {
                 .animate-spin-reverse-slower { animation: spin-reverse-slower 120s linear infinite; }
                 .animate-pulse-spin { animation: pulse-spin 60s ease-in-out infinite; }
                 
-                /* Strict Containment untuk Background agar tidak repaint container utama */
-                .contain-strict {
-                    contain: strict;
-                }
+                .contain-strict { contain: strict; }
             `}</style>
         </div>
     );
