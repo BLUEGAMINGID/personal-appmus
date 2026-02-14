@@ -224,7 +224,7 @@ const Card = () => {
     
     const [currentIndex, setCurrentIndex] = useState(0); 
     const [isMounted, setIsMounted] = useState(false);
-    const [result, setResult] = useState({ lyrics: [], title: "Loading...", artist: "Music", cover: null, audioUrl: "", karaokeUrl: null });
+    const [result, setResult] = useState({ lyrics: [], title: "Loading...", artist: "Music", cover: null, tinyCover: null, audioUrl: "", karaokeUrl: null });
     const [isPaused, setIsPaused] = useState(true);
     const [duration, setDuration] = useState(0);
     const [showLyrics, setShowLyrics] = useState(false);
@@ -364,7 +364,7 @@ const Card = () => {
         }
 
         if (processedLyrics.length > 0) {
-            const lyricAnimationDelay = -0.7;
+            const lyricAnimationDelay = -0.6;
             const adjustedTime = mainTime - lyricAnimationDelay;
             let idx = -1;
             
@@ -426,7 +426,7 @@ const Card = () => {
     const handlePrev = () => setCurrentIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
     const selectSong = (idx) => { if (idx === currentIndex) { setShowPlaylist(false); return; } setCurrentIndex(idx); setShowPlaylist(false); };
 
-    // Layout: 190px Mobile (Compact), 260px Desktop (Normal) iya hhh
+    // Layout: 160px Mobile (Compact), 260px Desktop (Normal)
     const getCardHeight = () => {
         if (showLyrics || showPlaylist) return isDesktop ? 680 : 580; 
         return isDesktop ? 260 : 190; 
@@ -439,13 +439,14 @@ const Card = () => {
 
             <div className="relative w-full rounded-[40px] overflow-hidden shadow-2xl bg-[#0a0a0a] transition-all duration-500 cubic-bezier(0.32, 0.72, 0, 1)" style={{ height: getCardHeight() }}>
                 
-                {/* 3-LAYER ALIVE BACKGROUND (OPTIMIZED) */}
-                <AliveBackground cover={result.cover} />
+                {/* 3-LAYER ALIVE BACKGROUND (Use TinyCover if available) */}
+                <AliveBackground cover={result.tinyCover || result.cover} />
 
                 <div className="relative z-10 w-full h-full p-6 flex flex-col border border-white/5">
                     {/* Header */}
                     <div className="flex items-center space-x-5 shrink-0 mb-4 relative z-50">
                         <div className="w-14 h-14 rounded-lg overflow-hidden shadow-lg relative shrink-0 border border-white/10 bg-white/5">
+                            {/* Main Cover must be HD */}
                             {result.cover ? <img src={result.cover} alt="Cover" className="w-full h-full object-cover" loading="eager" decoding="async" /> : <div className="w-full h-full flex items-center justify-center"><FontAwesomeIcon icon={faApple} className="text-white/30 text-xl" /></div>}
                         </div>
                         <div className="min-w-0 flex flex-col justify-center flex-1">
@@ -549,7 +550,7 @@ const Card = () => {
                     );
                 }
                 
-                /* OPTIMIZED MOBILE GLOW (crisp & fast) */
+                /* 1-LAYER SMOOTH GLOW (ALL DEVICES) - MOBILE OPTIMIZED STYLE */
                 .active-lyric-glow-text { 
                     text-shadow: 0 0 5px rgba(255,255,255,0.4), 0 0 15px rgba(255,255,255,0.1);
                 }

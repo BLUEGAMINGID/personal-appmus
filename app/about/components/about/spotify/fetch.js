@@ -1,9 +1,7 @@
 // components/about/components/about/spotify/fetch.js
 
-// --- CONFIG ---
-const LYRIC_OFFSET = 0; // KEMBALIKAN KE 0 AGAR AUDIO TIDAK RUSAK
+const LYRIC_OFFSET = 0; 
 
-// Helper: Fetch dengan Timeout
 const fetchWithTimeout = async (resource, options = {}) => {
     const { timeout = 4000 } = options;
     const controller = new AbortController();
@@ -18,7 +16,6 @@ const fetchWithTimeout = async (resource, options = {}) => {
     }
 };
 
-// Parser Waktu TTML
 const parseTTMLTime = (timeStr) => {
     if (!timeStr) return 0;
     const parts = timeStr.split(':');
@@ -33,7 +30,6 @@ const parseTTMLTime = (timeStr) => {
     return seconds;
 };
 
-// Parser XML TTML
 const parseTTML = (xmlString) => {
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(xmlString, "text/xml");
@@ -58,17 +54,16 @@ const parseTTML = (xmlString) => {
     return lyrics;
 };
 
-// --- FUNGSI MEMBERSIHKAN JUDUL ---
 const cleanTitle = (rawTitle) => {
     return rawTitle.replace(/^(\d+[-.]\d+|\d+)\s+/, "").trim();
 };
 
-// --- FUNGSI UTAMA ---
 export default async function getLocalMetadata(item) {
     const { original, karaoke, ttml } = item;
     
+    // Cek cache
     if (typeof window !== "undefined") {
-        const cached = localStorage.getItem(`hybrid_meta_v3_${original}`);
+        const cached = localStorage.getItem(`hybrid_meta_v4_${original}`); // Naikkan versi cache ke v4
         if (cached) return JSON.parse(cached);
     }
 
@@ -77,6 +72,7 @@ export default async function getLocalMetadata(item) {
         let finalArtist = item.artist;
         let finalAlbum = item.album;
         let coverUrl = null;
+        let tinyCoverUrl = null; // Variable baru untuk 300x300
 
         try {
             const query = `${finalArtist} ${finalTitle}`;
@@ -89,11 +85,16 @@ export default async function getLocalMetadata(item) {
                     finalTitle = track.trackName;
                     finalArtist = track.artistName;
                     finalAlbum = track.collectionName;
+                    
+                    // 1. Cover HD untuk Tampilan Utama (600x600)
                     coverUrl = track.artworkUrl100.replace("100x100", "600x600");
+                    
+                    // 2. Cover Lite untuk Background (300x300) - Jauh lebih enteng!
+                    tinyCoverUrl = track.artworkUrl100.replace("100x100", "300x300");
                 }
             }
         } catch (e) { 
-            console.warn("iTunes fetch failed, using local fallback");
+            console.warn("iTunes fetch failed");
         }
 
         let lyrics = [];
@@ -112,19 +113,28 @@ export default async function getLocalMetadata(item) {
             artist: finalArtist,
             album: finalAlbum, 
             cover: coverUrl,
+            tinyCover: tinyCoverUrl || coverUrl, // Fallback ke HD jika gagal
             lyrics: lyrics,
             audioUrl: original,
             karaokeUrl: karaoke
         };
 
         if (typeof window !== "undefined") {
-            try { localStorage.setItem(`hybrid_meta_v3_${original}`, JSON.stringify(finalData)); } catch(e) {}
+            try { localStorage.setItem(`hybrid_meta_v4_${original}`, JSON.stringify(finalData)); } catch(e) {}
         }
         
         return finalData;
 
     } catch (e) {
-        return { title: cleanTitle(item.title), artist: item.artist, lyrics: [], cover: null, audioUrl: original, karaokeUrl: karaoke };
+        return { 
+            title: cleanTitle(item.title), 
+            artist: item.artist, 
+            lyrics: [], 
+            cover: null, 
+            tinyCover: null,
+            audioUrl: original, 
+            karaokeUrl: karaoke 
+        };
     }
 }
 
