@@ -360,15 +360,19 @@ const Card = () => {
     }, [vocalMix, result.karaokeUrl]);
 
     const handleTimeUpdate = () => {
-        if (!audioRef.current) return;
-        const mainTime = audioRef.current.currentTime;
+    if (!audioRef.current || !instruRef.current) return;
+    const mainTime = audioRef.current.currentTime;
 
-        if (instruRef.current && result.karaokeUrl && !instruRef.current.paused && !audioRef.current.paused) {
-            const diff = Math.abs(instruRef.current.currentTime - mainTime);
-            if (diff > 0.15) {
-                instruRef.current.currentTime = mainTime;
-            }
+    // SYNC AUDIO: Hanya jalankan jika ada lagu karaoke
+    if (result.karaokeUrl && !instruRef.current.paused && !audioRef.current.paused) {
+        const diff = Math.abs(instruRef.current.currentTime - mainTime);
+        
+        // Gunakan threshold yang lebih longgar (misal 0.3 detik)
+        // agar vokal tidak sering "melompat" yang bikin suara aneh
+        if (diff > 0.3) {
+            instruRef.current.currentTime = mainTime;
         }
+    }
 
         if (processedLyrics.length > 0) {
             let idx = -1;
@@ -465,7 +469,7 @@ const Card = () => {
                 className="relative w-full rounded-[40px] overflow-hidden shadow-2xl bg-[#0a0a0a] transition-all duration-500 cubic-bezier(0.32, 0.72, 0, 1)" 
                 style={{ height: getCardHeight() }}
             >
-                {/* --- ALIVE BAOUND (3 LAYERS - DESYNCHRONIZED) --- */}
+                {/* --- ALIVE BACKGROUND (3 LAYERS - DESYNCHRONIZED) --- */}
                 <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#0a0a0a]">
                      {result.cover && (
                         <>

@@ -1,7 +1,7 @@
 // components/about/components/about/spotify/fetch.js
 
 // --- CONFIG ---
-const LYRIC_OFFSET = -0.5; // Delay lirik (negatif = lebih cepat)
+const LYRIC_OFFSET = 0; // Delay lirik (negatif = lebih cepat)
 
 // Helper: Fetch dengan Timeout
 const fetchWithTimeout = async (resource, options = {}) => {
