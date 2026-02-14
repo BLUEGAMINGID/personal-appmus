@@ -28,7 +28,7 @@ const useMediaQuery = (query) => {
     return matches;
 };
 
-// --- MEMOIZED SUB-COMPONENTS (PERFORMANCE CORE) ---
+// --- MEMOIZED SUB-COMPONENTS ---
 
 const LiveInterlude = React.memo(({ isActive, audioRef, startTime, duration }) => {
     const fillRef = useRef(null);
@@ -170,12 +170,11 @@ const LyricLine = React.memo(({ line, isActive, onClick, audioRef }) => {
 }, (prev, next) => prev.isActive === next.isActive && prev.line === next.line);
 LyricLine.displayName = "LyricLine";
 
-// --- MEMOIZED BACKGROUND (3 LAYERS - DESKTOP & MOBILE) ---
+// --- MEMOIZED BACKGROUND (3 LAYERS - 600x600 for Smooth Blur) ---
 const AliveBackground = React.memo(({ cover }) => (
     <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#101010] contain-strict">
         {cover && (
             <>
-                {/* Layer 1: Base */}
                 <div 
                     className="absolute inset-[-50%] bg-cover bg-center animate-spin-slow will-change-transform transform-gpu" 
                     style={{ 
@@ -186,7 +185,6 @@ const AliveBackground = React.memo(({ cover }) => (
                     }} 
                 />
                 
-                {/* Layer 2: Color Pop */}
                 <div 
                     className="absolute inset-[-50%] bg-cover bg-center animate-spin-reverse-slower will-change-transform transform-gpu" 
                     style={{ 
@@ -198,7 +196,6 @@ const AliveBackground = React.memo(({ cover }) => (
                     }} 
                 />
 
-                {/* Layer 3: Texture/Breathing */}
                 <div 
                     className="absolute inset-[-50%] bg-cover bg-center animate-pulse-spin will-change-transform transform-gpu" 
                     style={{ 
@@ -224,7 +221,10 @@ const Card = () => {
     
     const [currentIndex, setCurrentIndex] = useState(0); 
     const [isMounted, setIsMounted] = useState(false);
-    const [result, setResult] = useState({ lyrics: [], title: "Loading...", artist: "Music", cover: null, tinyCover: null, audioUrl: "", karaokeUrl: null });
+    
+    // Result State includes bgCover (600x600) and cover (300x300)
+    const [result, setResult] = useState({ lyrics: [], title: "Loading...", artist: "Music", cover: null, bgCover: null, audioUrl: "", karaokeUrl: null });
+    
     const [isPaused, setIsPaused] = useState(true);
     const [duration, setDuration] = useState(0);
     const [showLyrics, setShowLyrics] = useState(false);
@@ -364,7 +364,7 @@ const Card = () => {
         }
 
         if (processedLyrics.length > 0) {
-            const lyricAnimationDelay = -0.6;
+            const lyricAnimationDelay = 0.5;
             const adjustedTime = mainTime - lyricAnimationDelay;
             let idx = -1;
             
@@ -426,10 +426,10 @@ const Card = () => {
     const handlePrev = () => setCurrentIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
     const selectSong = (idx) => { if (idx === currentIndex) { setShowPlaylist(false); return; } setCurrentIndex(idx); setShowPlaylist(false); };
 
-    // Layout: 160px Mobile (Compact), 260px Desktop (Normal)
+    // Layout: 160px Mobile (Compact), 260px Desktop
     const getCardHeight = () => {
         if (showLyrics || showPlaylist) return isDesktop ? 680 : 580; 
-        return isDesktop ? 260 : 190; 
+        return isDesktop ? 260 : 160; 
     };
 
     return (
@@ -439,14 +439,13 @@ const Card = () => {
 
             <div className="relative w-full rounded-[40px] overflow-hidden shadow-2xl bg-[#0a0a0a] transition-all duration-500 cubic-bezier(0.32, 0.72, 0, 1)" style={{ height: getCardHeight() }}>
                 
-                {/* 3-LAYER ALIVE BACKGROUND (Use TinyCover if available) */}
-                <AliveBackground cover={result.tinyCover || result.cover} />
+                {/* 3-LAYER BACKGROUND (USES 600x600 for Smooth Blur) */}
+                <AliveBackground cover={result.bgCover || result.cover} />
 
                 <div className="relative z-10 w-full h-full p-6 flex flex-col border border-white/5">
-                    {/* Header */}
+                    {/* Header (USES 300x300 for Sharpness & Speed) */}
                     <div className="flex items-center space-x-5 shrink-0 mb-4 relative z-50">
                         <div className="w-14 h-14 rounded-lg overflow-hidden shadow-lg relative shrink-0 border border-white/10 bg-white/5">
-                            {/* Main Cover must be HD */}
                             {result.cover ? <img src={result.cover} alt="Cover" className="w-full h-full object-cover" loading="eager" decoding="async" /> : <div className="w-full h-full flex items-center justify-center"><FontAwesomeIcon icon={faApple} className="text-white/30 text-xl" /></div>}
                         </div>
                         <div className="min-w-0 flex flex-col justify-center flex-1">
@@ -550,9 +549,14 @@ const Card = () => {
                     );
                 }
                 
-                /* 1-LAYER SMOOTH GLOW (ALL DEVICES) - MOBILE OPTIMIZED STYLE */
+                /* 5-LAYER ULTRA SOFT GLOW (WITH GPU HACK) */
                 .active-lyric-glow-text { 
-                    text-shadow: 0 0 5px rgba(255,255,255,0.4), 0 0 15px rgba(255,255,255,0.1);
+                    text-shadow: 
+                        0 0 5px rgba(255,255,255,0.30),   
+                        0 0 10px rgba(255,255,255,0.25),  
+                        0 0 20px rgba(255,255,255,0.15),
+                        0 0 40px rgba(255,255,255,0.08),
+                        0 0 80px rgba(255,255,255,0.05);
                 }
 
                 @keyframes spin-slow { from { transform: rotate(0deg) scale(1.5); } to { transform: rotate(360deg) scale(1.5); } }

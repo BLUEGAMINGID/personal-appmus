@@ -61,9 +61,9 @@ const cleanTitle = (rawTitle) => {
 export default async function getLocalMetadata(item) {
     const { original, karaoke, ttml } = item;
     
-    // Cek cache
+    // Gunakan key cache baru v5
     if (typeof window !== "undefined") {
-        const cached = localStorage.getItem(`hybrid_meta_v4_${original}`); // Naikkan versi cache ke v4
+        const cached = localStorage.getItem(`hybrid_meta_v5_${original}`);
         if (cached) return JSON.parse(cached);
     }
 
@@ -71,8 +71,10 @@ export default async function getLocalMetadata(item) {
         let finalTitle = cleanTitle(item.title);
         let finalArtist = item.artist;
         let finalAlbum = item.album;
-        let coverUrl = null;
-        let tinyCoverUrl = null; // Variable baru untuk 300x300
+        
+        // Default null
+        let mainCoverUrl = null; // Untuk Header (300x300)
+        let bgCoverUrl = null;   // Untuk Alive BG (600x600)
 
         try {
             const query = `${finalArtist} ${finalTitle}`;
@@ -86,11 +88,12 @@ export default async function getLocalMetadata(item) {
                     finalArtist = track.artistName;
                     finalAlbum = track.collectionName;
                     
-                    // 1. Cover HD untuk Tampilan Utama (600x600)
-                    coverUrl = track.artworkUrl100.replace("100x100", "600x600");
+                    // REQUEST USER:
+                    // Main Cover (Header) -> 300x300 (Enteng)
+                    mainCoverUrl = track.artworkUrl100.replace("100x100", "300x300");
                     
-                    // 2. Cover Lite untuk Background (300x300) - Jauh lebih enteng!
-                    tinyCoverUrl = track.artworkUrl100.replace("100x100", "300x300");
+                    // Background Cover -> 600x600 (Detail untuk Blur)
+                    bgCoverUrl = track.artworkUrl100.replace("100x100", "600x600");
                 }
             }
         } catch (e) { 
@@ -112,15 +115,15 @@ export default async function getLocalMetadata(item) {
             title: finalTitle,
             artist: finalArtist,
             album: finalAlbum, 
-            cover: coverUrl,
-            tinyCover: tinyCoverUrl || coverUrl, // Fallback ke HD jika gagal
+            cover: mainCoverUrl, // 300x300
+            bgCover: bgCoverUrl || mainCoverUrl, // 600x600 (fallback ke main jika gagal)
             lyrics: lyrics,
             audioUrl: original,
             karaokeUrl: karaoke
         };
 
         if (typeof window !== "undefined") {
-            try { localStorage.setItem(`hybrid_meta_v4_${original}`, JSON.stringify(finalData)); } catch(e) {}
+            try { localStorage.setItem(`hybrid_meta_v5_${original}`, JSON.stringify(finalData)); } catch(e) {}
         }
         
         return finalData;
@@ -131,7 +134,7 @@ export default async function getLocalMetadata(item) {
             artist: item.artist, 
             lyrics: [], 
             cover: null, 
-            tinyCover: null,
+            bgCover: null,
             audioUrl: original, 
             karaokeUrl: karaoke 
         };
