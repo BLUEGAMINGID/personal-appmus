@@ -426,10 +426,10 @@ const Card = () => {
     const handlePrev = () => setCurrentIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
     const selectSong = (idx) => { if (idx === currentIndex) { setShowPlaylist(false); return; } setCurrentIndex(idx); setShowPlaylist(false); };
 
-    // Layout: 160px Mobile (Compact), 260px Desktop (Normal)
+    // Layout: 190px Mobile (Compact), 260px Desktop (Normal) iya hhh
     const getCardHeight = () => {
         if (showLyrics || showPlaylist) return isDesktop ? 680 : 580; 
-        return isDesktop ? 260 : 160; 
+        return isDesktop ? 260 : 190; 
     };
 
     return (
