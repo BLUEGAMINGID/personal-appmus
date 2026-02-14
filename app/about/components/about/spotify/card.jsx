@@ -59,7 +59,6 @@ const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
     }, [isActive, startTime, duration, audioRef]);
 
     return (
-        // REVERT: py-3 agar jarak antar titik dan lirik lebih natural/dekat
         <div className="py-3 w-full flex flex-col items-start justify-center opacity-100 transition-opacity duration-700 will-change-transform transform-gpu">
             <div className="relative inline-block w-fit">
                 {/* Layer 1: Background */}
@@ -466,28 +465,35 @@ const Card = () => {
                 className="relative w-full rounded-[40px] overflow-hidden shadow-2xl bg-[#0a0a0a] transition-all duration-500 cubic-bezier(0.32, 0.72, 0, 1)" 
                 style={{ height: getCardHeight() }}
             >
-                {/* --- ALIVE BACKGROUND --- */}
+                {/* --- ALIVE BACKGROUND (ZOOM & BLUR TUNED) --- */}
                 <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#101010]">
                      {result.cover && (
                         <>
+                            {/* Layer 1: Ambient (Lower Zoom 140%, Lower Blur 40px) */}
+                            {/* Mengurangi zoom agar sisi gelap cover ikut terlihat */}
                             <div 
-                                className="absolute -top-[50%] -left-[50%] w-[200%] h-[200%] bg-cover bg-center animate-spin-slow will-change-transform transform-gpu" 
+                                className="absolute -top-[20%] -left-[20%] w-[140%] h-[140%] bg-cover bg-center animate-spin-slow will-change-transform transform-gpu" 
                                 style={{ 
                                     backgroundImage: `url(${result.cover})`,
-                                    filter: 'blur(80px) saturate(300%) contrast(120%) brightness(1.2)', 
-                                    opacity: 0.7
-                                }}
-                            ></div>
-                            <div 
-                                className="absolute -bottom-[50%] -right-[50%] w-[200%] h-[200%] bg-cover bg-center animate-spin-reverse will-change-transform transform-gpu" 
-                                style={{ 
-                                    backgroundImage: `url(${result.cover})`,
-                                    mixBlendMode: 'screen', 
-                                    filter: 'blur(60px) saturate(400%) contrast(150%) brightness(1.5)',
+                                    filter: 'blur(40px) saturate(300%) contrast(120%) brightness(1.1)', 
                                     opacity: 0.6
                                 }}
                             ></div>
-                            <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/90"></div>
+                            
+                            {/* Layer 2: Shape/Silhouette (Low Zoom 120%, Low Blur 25px) */}
+                            {/* Layer ini mempertahankan bentuk/siluet (seperti merah di tengah hitam) */}
+                            <div 
+                                className="absolute -bottom-[10%] -right-[10%] w-[120%] h-[120%] bg-cover bg-center animate-spin-reverse will-change-transform transform-gpu" 
+                                style={{ 
+                                    backgroundImage: `url(${result.cover})`,
+                                    mixBlendMode: 'screen', // Kunci agar warna pop di atas hitam
+                                    filter: 'blur(25px) saturate(400%) contrast(140%) brightness(1.3)',
+                                    opacity: 0.5
+                                }}
+                            ></div>
+                            
+                            {/* Overlay Gradient */}
+                            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/90"></div>
                         </>
                      )}
                      <div className="absolute inset-0 opacity-[0.07] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay"></div>
@@ -550,7 +556,9 @@ const Card = () => {
                             </div>
                         )}
 
-                        {/* Lyrics Area (REVERT SPACING: py-3 & leading-tight, px-4) */}
+                        {/* Lyrics Area (RAPAT & PX-4) */}
+                        {/* px-4: Margin kiri kanan standar (tidak terlalu tebal) */}
+                        {/* pt-20 pb-32: Tetap Full Height */}
                         <div ref={scrollRef} className="w-full h-full overflow-y-auto no-scrollbar pt-20 pb-32 px-4 mask-scroller-y">
                             {processedLyrics.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center h-full text-white/30 gap-2">
@@ -577,14 +585,14 @@ const Card = () => {
                                         <div 
                                             key={i} 
                                             onClick={() => handleSeekEnd(line.time)} 
-                                            // REVERTED: py-3 (rapat vertikal)
+                                            // REVERT: py-3 untuk density yang lebih rapat
                                             className={`cursor-pointer py-3 text-left transition-all duration-700 ease-out origin-left will-change-transform transform-gpu ${
                                                 isActive 
                                                 ? "opacity-100 scale-100 active-lyric-glow blur-0" 
                                                 : "opacity-40 scale-[0.98] blur-[1.5px] hover:opacity-60 hover:blur-[0.5px]" 
                                             }`}
                                         >
-                                            {/* REVERTED: leading-tight (rapat baris) */}
+                                            {/* REVERT: leading-tight (Rapat) */}
                                             <p className={`font-bold text-[28px] leading-tight text-white tracking-tight ${isActive ? "active-lyric-glow-text" : ""}`}>{line.text}</p>
                                         </div>
                                     );
@@ -639,7 +647,7 @@ const Card = () => {
                     text-shadow: 
                         0 0 5px rgba(255,255,255,0.30),   
                         0 0 10px rgba(255,255,255,0.25),  
-                        0 0 30px rgba(255,255,255,0.15);
+                        0 0 20px rgba(255,255,255,0.15); /* Reduced glow to prevent overlap in tight lines */
                 }
 
                 @keyframes spin-slow { from { transform: rotate(0deg) scale(1.5); } to { transform: rotate(360deg) scale(1.5); } }
