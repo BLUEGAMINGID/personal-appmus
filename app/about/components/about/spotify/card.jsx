@@ -11,7 +11,7 @@ import {
     faMicrophone, faMusic, faSpinner, faBars, faTimes
 } from "@fortawesome/free-solid-svg-icons";
 
-// --- KOMPONEN: DYNAMIC INTERLUDE DOTS (FIXED GLOW & REMOVED TEXT) ---
+// --- KOMPONEN: DYNAMIC INTERLUDE DOTS (Fixed Alignment & Smooth Glow) ---
 const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
     const fillRef = useRef(null);
 
@@ -46,23 +46,23 @@ const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
     }, [isActive, startTime, duration, audioRef]);
 
     return (
-        <div className="py-12 pl-2 w-full flex flex-col justify-center gap-2 opacity-100 transition-opacity duration-500">
-            {/* Teks "Music Break" DIHAPUS sesuai request */}
-            
-            <div className="relative inline-block w-fit mx-auto">
-                {/* Layer 1: Background (Redup) */}
-                <div className="text-[40px] tracking-[16px] text-white/20 leading-none select-none font-bold">
+        // ALIGNMENT FIX: 'items-start', 'text-left', padding disesuaikan dengan lirik
+        <div className="py-12 w-full flex flex-col items-start justify-center gap-2 opacity-100 transition-opacity duration-500 origin-left">
+            <div className="relative inline-block w-fit">
+                {/* Layer 1: Background (Redup & Smooth) */}
+                <div className="text-[40px] tracking-[12px] text-white/20 leading-none select-none font-bold mix-blend-screen">
                     ● ● ●
                 </div>
 
-                {/* Layer 2: Filling (Tanpa Shadow di sini agar tidak kotak) */}
+                {/* Layer 2: Filling (Tanpa Shadow Kotak) */}
+                {/* Kita gunakan mask text di sini untuk fill yang solid */}
                 <div 
                     ref={fillRef} 
-                    className="absolute top-0 left-0 h-full overflow-hidden whitespace-nowrap text-[40px] tracking-[16px] text-white leading-none select-none font-bold will-change-[width]"
+                    className="absolute top-0 left-0 h-full overflow-hidden whitespace-nowrap text-[40px] tracking-[12px] text-white leading-none select-none font-bold will-change-[width]"
                     style={{ width: '0%' }}
                 >
-                    {/* Shadow dipindah ke teks dalam agar tidak terpotong container */}
-                    <span className="drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]">
+                    {/* Shadow dipindah ke text-shadow langsung agar smooth */}
+                    <span className="interlude-glow">
                         ● ● ●
                     </span>
                 </div>
@@ -71,7 +71,7 @@ const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
     );
 };
 
-// --- KOMPONEN: APPLE VOCAL SLIDER ---
+// --- KOMPONEN: APPLE VOCAL SLIDER (Clean Glass, No Dark Glow) ---
 const AppleVocalSlider = ({ value, onChange, onClose }) => {
     const sliderRef = useRef(null);
     const [isDragging, setIsDragging] = useState(false);
@@ -109,9 +109,12 @@ const AppleVocalSlider = ({ value, onChange, onClose }) => {
                     ref={sliderRef}
                     className="relative w-[42px] h-[140px] rounded-[21px] overflow-hidden cursor-pointer touch-none select-none border border-white/20"
                     style={{
-                        background: "rgba(30, 30, 30, 0.6)", 
-                        backdropFilter: "blur(40px)",
-                        boxShadow: isDragging ? "0 15px 40px rgba(255,255,255,0.15)" : "0 8px 30px rgba(0,0,0,0.5)"
+                        background: "rgba(50, 50, 50, 0.4)", // Lebih terang dikit biar glassy
+                        backdropFilter: "blur(40px) saturate(180%)", // Saturate nambah efek glass
+                        // GLOW FIX: Hapus shadow hitam. Pakai shadow putih tipis untuk depth.
+                        boxShadow: isDragging 
+                            ? "0 0 20px rgba(255,255,255,0.2)" 
+                            : "0 4px 15px rgba(0,0,0,0.1)" 
                     }}
                     onPointerDown={handlePointerDown}
                     onPointerMove={handlePointerMove}
@@ -124,16 +127,21 @@ const AppleVocalSlider = ({ value, onChange, onClose }) => {
                         style={{ height: `${value * 100}%` }}
                         transition={{ duration: isDragging ? 0 : 0.3 }}
                     >
+                        {/* Glow dalam slider */}
                         <motion.div 
-                            animate={{ opacity: isDragging ? 1 : 0.5, scale: isDragging ? 1.5 : 1 }}
-                            className="absolute top-0 left-0 right-0 h-[30px] bg-white blur-[15px]"
+                            animate={{ opacity: isDragging ? 1 : 0.5 }}
+                            className="absolute top-0 left-0 right-0 h-[20px] bg-white blur-[10px]"
                         />
                     </motion.div>
+                    
+                    {/* Icon Microphone */}
                     <div className="absolute inset-0 flex flex-col justify-end items-center pb-5 pointer-events-none mix-blend-difference">
                         <FontAwesomeIcon icon={faMicrophone} className="text-white text-sm opacity-80" />
                     </div>
+                    
+                    {/* Reflection Gloss */}
                     <div className="absolute inset-0 rounded-[21px] pointer-events-none border border-white/10 shadow-[inset_0_0_15px_rgba(255,255,255,0.1)]">
-                        <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[70%] h-[2px] bg-white/30 rounded-full blur-[0.5px]" />
+                        <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[70%] h-[2px] bg-white/40 rounded-full blur-[0.5px]" />
                     </div>
                 </div>
             </motion.div>
@@ -141,7 +149,7 @@ const AppleVocalSlider = ({ value, onChange, onClose }) => {
     );
 };
 
-// --- KOMPONEN: TIME SLIDER ---
+// --- TIME SLIDER ---
 const AppleMusicTimeSlider = ({ audioRef, duration, isPaused, onSeekStart, onSeekEnd }) => {
     const progressRef = useRef(null);
     const timeRef = useRef(null);
@@ -428,7 +436,6 @@ const Card = () => {
                 <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#121212]">
                      {result.cover && (
                         <>
-                            {/* Layer 1: Base Slow Rotation */}
                             <div 
                                 className="absolute -top-[50%] -left-[50%] w-[200%] h-[200%] bg-cover bg-center animate-spin-slow will-change-transform" 
                                 style={{ 
@@ -436,8 +443,6 @@ const Card = () => {
                                     filter: 'blur(80px) saturate(180%) contrast(120%) brightness(0.8)',
                                 }}
                             ></div>
-                            
-                            {/* Layer 2: Counter Rotation & Offset (Membuat efek "Breathing" & Mesh) */}
                             <div 
                                 className="absolute -bottom-[50%] -right-[50%] w-[200%] h-[200%] bg-cover bg-center animate-spin-reverse will-change-transform mix-blend-hard-light" 
                                 style={{ 
@@ -446,12 +451,9 @@ const Card = () => {
                                     opacity: 0.6
                                 }}
                             ></div>
-                            
-                            {/* Dark Gradient Overlay untuk Readability */}
                             <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/80"></div>
                         </>
                      )}
-                     {/* Noise Dithering */}
                      <div className="absolute inset-0 opacity-[0.07] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay"></div>
                 </div>
 
@@ -512,7 +514,7 @@ const Card = () => {
                             </div>
                         )}
 
-                        {/* Lyrics Area */}
+                        {/* Lyrics Area (Updated Mask Gradient) */}
                         <div ref={scrollRef} className="w-full h-full overflow-y-auto no-scrollbar py-[180px] px-2 mask-scroller-y">
                             {processedLyrics.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center h-full text-white/30 gap-2">
@@ -539,6 +541,7 @@ const Card = () => {
                                         <div 
                                             key={i} 
                                             onClick={() => handleSeekEnd(line.time)} 
+                                            // Efek transisi diperhalus (500ms) dan glow diperbaiki
                                             className={`cursor-pointer py-3 text-left transition-all duration-500 ease-out origin-left ${
                                                 isActive 
                                                 ? "opacity-100 scale-100 active-lyric-glow blur-0" 
@@ -589,29 +592,26 @@ const Card = () => {
 
             <style jsx global>{`
                 .no-scrollbar::-webkit-scrollbar { display: none; }
+                /* GRADIENT MASK FIX: Lebih pudar di atas dan bawah */
                 .mask-scroller-y { 
-                    mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
-                    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+                    mask-image: linear-gradient(to bottom, transparent 2%, black 20%, black 80%, transparent 98%);
+                    -webkit-mask-image: linear-gradient(to bottom, transparent 2%, black 20%, black 80%, transparent 98%);
                 }
-                /* Smooth Soft Glow (3 Layer Shadow) */
-                .active-lyric-glow p { 
+                /* GLOW FIX: 3 Layer Soft Shadow */
+                .active-lyric-glow p, .interlude-glow { 
                     text-shadow: 
-                        0 0 10px rgba(255,255,255,0.4),
-                        0 0 20px rgba(255,255,255,0.2),
-                        0 0 30px rgba(255,255,255,0.1);
+                        0 0 10px rgba(255,255,255,0.6), /* Core Brightness */
+                        0 0 25px rgba(255,255,255,0.3), /* Soft Bloom */
+                        0 0 50px rgba(255,255,255,0.15); /* Wide Ambient */
                 }
                 @keyframes spin-slow { from { transform: rotate(0deg) scale(1.5); } to { transform: rotate(360deg) scale(1.5); } }
                 @keyframes spin-reverse { from { transform: rotate(360deg) scale(1.8) translate(10px, 10px); } to { transform: rotate(0deg) scale(1.8) translate(0px, 0px); } }
                 
                 .animate-spin-slow { animation: spin-slow 90s linear infinite; }
                 .animate-spin-reverse { animation: spin-reverse 120s linear infinite; }
-                
-                .animate-fade-in { animation: fadeIn 1s ease-out; }
-                @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
             `}</style>
         </div>
     );
 };
 
 export default Card;
-//hai
