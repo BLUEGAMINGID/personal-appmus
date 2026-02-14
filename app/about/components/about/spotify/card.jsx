@@ -397,6 +397,8 @@ const Card = () => {
                 const containerH = container.clientHeight;
                 const elTop = activeEl.offsetTop;
                 const elH = activeEl.clientHeight;
+                
+                // ADJUSTMENT: Scroll position lebih ke atas sedikit agar pas dengan layout baru
                 let targetScroll = elTop - (containerH * 0.35);
                 if (elH > containerH * 0.5) targetScroll = elTop - (containerH * 0.30);
                 container.scrollTo({ top: targetScroll, behavior: 'smooth' });
@@ -432,7 +434,8 @@ const Card = () => {
             <audio ref={audioRef} preload="auto" onTimeUpdate={handleTimeUpdate} onEnded={handleNext} className="hidden" />
             <audio ref={instruRef} preload="auto" className="hidden" />
 
-            <div className="relative w-full rounded-[40px] overflow-hidden shadow-2xl bg-[#0a0a0a]" style={{ height: showLyrics || showPlaylist ? 580 : 200, transition: 'height 0.5s cubic-bezier(0.32, 0.72, 0, 1)' }}>
+            {/* HEIGHT ADJUSTMENT: 200px -> 240px (Closed), 580px -> 640px (Open) */}
+            <div className="relative w-full rounded-[40px] overflow-hidden shadow-2xl bg-[#0a0a0a]" style={{ height: showLyrics || showPlaylist ? 640 : 240, transition: 'height 0.5s cubic-bezier(0.32, 0.72, 0, 1)' }}>
                 {/* --- ALIVE BACKGROUND --- */}
                 <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#121212]">
                      {result.cover && (
@@ -515,8 +518,9 @@ const Card = () => {
                             </div>
                         )}
 
-                        {/* Lyrics Area */}
-                        <div ref={scrollRef} className="w-full h-full overflow-y-auto no-scrollbar py-[180px] px-8 mask-scroller-y">
+                        {/* Lyrics Area (PADDING ADJUSTMENT & DEEP MASK) */}
+                        {/* pt-20 pb-32: Padding cukup besar di atas/bawah agar lirik bisa 'parkir' di balik fade */}
+                        <div ref={scrollRef} className="w-full h-full overflow-y-auto no-scrollbar pt-20 pb-32 px-8 mask-scroller-y">
                             {processedLyrics.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center h-full text-white/30 gap-2">
                                     <FontAwesomeIcon icon={faMusic} className="text-2xl" />
@@ -580,7 +584,7 @@ const Card = () => {
 
                     {/* Controls */}
                     <div className="mt-auto flex flex-col gap-3 shrink-0 z-20 pt-2">
-                        {/* FIX TYPO DISINI */}
+                        {/* FIX TYPO */}
                         <AppleMusicTimeSlider audioRef={audioRef} duration={duration} isPaused={isPaused} onSeekStart={() => {}} onSeekEnd={handleSeekEnd} />
                         <div className="flex justify-center items-center gap-6">
                             <button onClick={handlePrev} className="text-white/60 hover:text-white p-3 active:scale-90 transition-transform"><FontAwesomeIcon icon={faBackward} size="lg" /></button>
@@ -594,13 +598,12 @@ const Card = () => {
             <style jsx global>{`
                 .no-scrollbar::-webkit-scrollbar { display: none; }
                 
-                /* DEEP MASK FIX: Gradient lebih luas (transparent 5% - black 30%) */
+                /* PEPET MASK: Gradasi dimulai dari 5% sampai 95% agar mepet atas/bawah */
                 .mask-scroller-y { 
-                    mask-image: linear-gradient(to bottom, transparent 0%, transparent 5%, black 30%, black 70%, transparent 95%, transparent 100%);
-                    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, transparent 5%, black 30%, black 70%, transparent 95%, transparent 100%);
+                    mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
+                    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
                 }
                 
-                /* 5-LAYER ULTRA SOFT GLOW */
                 .active-lyric-glow-text { 
                     text-shadow: 
                         0 0 5px rgba(255,255,255,0.30),   
