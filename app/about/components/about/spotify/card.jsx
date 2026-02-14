@@ -600,4 +600,23 @@ const Card = () => {
                     text-shadow: 0 0 5px rgba(255,255,255,0.4), 0 0 15px rgba(255,255,255,0.1);
                 }
 
-                @keyframes spin-slow { from { transform: rotate(0deg) scale(1.5); } to { transform: rotate(360deg) scale(1.5); }
+                @keyframes spin-slow { from { transform: rotate(0deg) scale(1.5); } to { transform: rotate(360deg) scale(1.5); } }
+                @keyframes spin-reverse-slower { from { transform: rotate(360deg) scale(1.2); } to { transform: rotate(0deg) scale(1.2); } }
+                @keyframes pulse-spin { 
+                    0% { transform: rotate(0deg) scale(1.4); opacity: 0.3; } 
+                    50% { transform: rotate(180deg) scale(1.6); opacity: 0.5; }
+                    100% { transform: rotate(360deg) scale(1.4); opacity: 0.3; }
+                }
+                
+                .animate-spin-slow { animation: spin-slow 90s linear infinite; }
+                .animate-spin-reverse-slower { animation: spin-reverse-slower 120s linear infinite; }
+                .animate-pulse-spin { animation: pulse-spin 60s ease-in-out infinite; }
+                
+                .contain-strict { contain: strict; }
+                .will-change-height { will-change: height; }
+            `}</style>
+        </div>
+    );
+};
+
+export default Card;
