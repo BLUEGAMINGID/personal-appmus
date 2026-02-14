@@ -2,7 +2,6 @@
 
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-// HAPUS import Image from "next/image"; -> Kita pakai <img> biasa agar aman
 import getLocalMetadata, { getSimpleMetadata } from "./fetch";
 import { playlist } from "./list";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,7 +21,6 @@ const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
             if (!audioRef.current || !fillRef.current) return;
             
             const currentTime = audioRef.current.currentTime;
-            // Hitung progress
             let progress = (currentTime - startTime) / duration;
             progress = Math.max(0, Math.min(1, progress));
 
@@ -36,7 +34,6 @@ const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
         if (isActive) {
             rafId = requestAnimationFrame(update);
         } else {
-            // Cleanup state jika tidak aktif
             if (audioRef.current && fillRef.current) {
                 if (audioRef.current.currentTime > startTime + duration) {
                     fillRef.current.style.width = '100%';
@@ -61,12 +58,9 @@ const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
             )}
 
             <div className="relative inline-block w-fit">
-                {/* Layer 1: Background (Redup) */}
                 <div className="text-[30px] tracking-[12px] text-white/10 leading-none select-none font-bold">
                     ● ● ●
                 </div>
-
-                {/* Layer 2: Filling (Terang) */}
                 <div 
                     ref={fillRef} 
                     className="absolute top-0 left-0 h-full overflow-hidden whitespace-nowrap text-[30px] tracking-[12px] text-white leading-none select-none font-bold will-change-[width]"
@@ -222,6 +216,7 @@ const Card = () => {
     const audioRef = useRef(null);
     const instruRef = useRef(null);
     const scrollRef = useRef(null);
+    const playlistContainerRef = useRef(null); // Ref untuk auto scroll playlist
 
     const groupedPlaylist = useMemo(() => {
         const groups = [];
@@ -256,6 +251,7 @@ const Card = () => {
 
     useEffect(() => { setCurrentIndex(0); }, []);
 
+    // --- PLAYLIST DATA & AUTO SCROLL ---
     useEffect(() => {
         if (showPlaylist && playlistMeta.length === 0) {
             const fetchData = async () => {
@@ -269,7 +265,18 @@ const Card = () => {
             };
             fetchData();
         }
-    }, [showPlaylist, playlistMeta.length]);
+
+        // Logic Auto-Scroll Playlist
+        if (showPlaylist && playlistContainerRef.current) {
+            // Beri sedikit delay agar layout render sempurna
+            setTimeout(() => {
+                const activeEl = playlistContainerRef.current.querySelector('.active-playlist-song');
+                if (activeEl) {
+                    activeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 100);
+        }
+    }, [showPlaylist, playlistMeta.length, currentIndex]);
 
     useEffect(() => {
         setIsLoading(true);
@@ -333,12 +340,10 @@ const Card = () => {
         }
     }, [vocalMix, result.karaokeUrl]);
 
-    // --- FIX UTAMA: LOGIC UPDATE LIRIK ---
     const handleTimeUpdate = () => {
         if (!audioRef.current) return;
         const mainTime = audioRef.current.currentTime;
 
-        // Sync Instrumental (Tanpa Distorsi)
         if (instruRef.current && result.karaokeUrl && !instruRef.current.paused && !audioRef.current.paused) {
             const diff = Math.abs(instruRef.current.currentTime - mainTime);
             if (diff > 0.15) {
@@ -346,25 +351,19 @@ const Card = () => {
             }
         }
 
-        // Logic Lirik yang AMAN (Anti-Crash)
         if (processedLyrics.length > 0) {
             let idx = -1;
             
-            // 1. Cek index sekarang (Optimasi) - DENGAN GUARD CLAUSE
             if (activeIdx !== -1 && activeIdx < processedLyrics.length) {
                 const currentLine = processedLyrics[activeIdx];
                 const nextLine = processedLyrics[activeIdx + 1];
-                
-                // Jika masih di rentang waktu baris ini
                 if (currentLine && mainTime >= currentLine.time && (!nextLine || mainTime < nextLine.time)) {
                     idx = activeIdx;
                 }
             }
 
-            // 2. Jika tidak valid/tidak ketemu, cari dari awal atau index sebelumnya
             if (idx === -1) {
                 const startSearch = activeIdx > -1 ? activeIdx : 0;
-                // Cari ke depan
                 for (let i = startSearch; i < processedLyrics.length; i++) {
                     if (mainTime >= processedLyrics[i].time) {
                         if (i === processedLyrics.length - 1 || mainTime < processedLyrics[i + 1].time) {
@@ -373,8 +372,6 @@ const Card = () => {
                         }
                     }
                 }
-                
-                // Fallback: Jika seek ke belakang, cari dari 0
                 if (idx === -1) {
                     for (let i = 0; i < processedLyrics.length; i++) {
                         if (mainTime >= processedLyrics[i].time && (i === processedLyrics.length - 1 || mainTime < processedLyrics[i + 1].time)) {
@@ -384,7 +381,6 @@ const Card = () => {
                     }
                 }
             }
-
             if (idx !== -1 && idx !== activeIdx) setActiveIdx(idx);
         }
     };
@@ -392,23 +388,14 @@ const Card = () => {
     useEffect(() => {
         if (showLyrics && scrollRef.current && !showPlaylist && activeIdx !== -1) {
             const activeEl = scrollRef.current.children[activeIdx];
-            
             if (activeEl) {
                 const container = scrollRef.current;
                 const containerH = container.clientHeight;
                 const elTop = activeEl.offsetTop;
                 const elH = activeEl.clientHeight;
-
                 let targetScroll = elTop - (containerH * 0.35);
-
-                if (elH > containerH * 0.5) {
-                    targetScroll = elTop - (containerH * 0.30);
-                }
-
-                container.scrollTo({
-                    top: targetScroll,
-                    behavior: 'smooth'
-                });
+                if (elH > containerH * 0.5) targetScroll = elTop - (containerH * 0.30);
+                container.scrollTo({ top: targetScroll, behavior: 'smooth' });
             }
         }
     }, [activeIdx, showLyrics, showPlaylist]);
@@ -428,12 +415,8 @@ const Card = () => {
     };
 
     const handleSeekEnd = (newTime) => {
-        if (audioRef.current) { 
-            audioRef.current.currentTime = newTime; 
-        }
-        if (instruRef.current && result.karaokeUrl) {
-            instruRef.current.currentTime = newTime;
-        }
+        if (audioRef.current) { audioRef.current.currentTime = newTime; }
+        if (instruRef.current && result.karaokeUrl) { instruRef.current.currentTime = newTime; }
     };
 
     const handleNext = () => setCurrentIndex((prev) => (prev + 1) % playlist.length);
@@ -441,21 +424,31 @@ const Card = () => {
     const selectSong = (idx) => { if (idx === currentIndex) { setShowPlaylist(false); return; } setCurrentIndex(idx); setShowPlaylist(false); };
 
     return (
-        <div className="mt-6 w-full max-w-md mx-auto md:mx-0 font-jost select-none relative z-10">
+        // LAYOUT FIX: mx-auto untuk center desktop
+        <div className="mt-6 w-full max-w-md mx-auto font-jost select-none relative z-10">
             <audio ref={audioRef} preload="auto" onTimeUpdate={handleTimeUpdate} onEnded={handleNext} className="hidden" />
             <audio ref={instruRef} preload="auto" className="hidden" />
 
             <div className="relative w-full rounded-[40px] overflow-hidden shadow-2xl bg-[#0a0a0a]" style={{ height: showLyrics || showPlaylist ? 580 : 200, transition: 'height 0.5s cubic-bezier(0.32, 0.72, 0, 1)' }}>
-                {/* Background */}
+                {/* Background (Enhanced Quality) */}
                 <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#0a0a0a]">
                      {result.cover && (
                         <div className="absolute inset-0 w-full h-full animate-fade-in">
-                            <div className="absolute -top-[50%] -left-[50%] w-[200%] h-[200%] bg-cover bg-center opacity-40 blur-[80px] animate-slow-spin" style={{ backgroundImage: `url(${result.cover})` }}></div>
+                            {/* FIX GLOW: translate3d untuk Hardware Acceleration & blur lebih halus */}
+                            <div 
+                                className="absolute -top-[50%] -left-[50%] w-[200%] h-[200%] bg-cover bg-center opacity-40 blur-[90px] animate-slow-spin will-change-transform" 
+                                style={{ 
+                                    backgroundImage: `url(${result.cover})`,
+                                    transform: 'translate3d(0,0,0)' 
+                                }}
+                            ></div>
                             <div className="absolute inset-0 bg-black/30"></div>
-                            <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/80"></div>
+                            {/* Gradasi halus untuk anti-banding */}
+                            <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/90"></div>
                         </div>
                      )}
-                     <div className="absolute inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay"></div>
+                     {/* Noise Dithering lebih kuat untuk mencegah 6-bit look */}
+                     <div className="absolute inset-0 opacity-[0.05] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay"></div>
                 </div>
 
                 {/* Content */}
@@ -463,13 +456,8 @@ const Card = () => {
                     {/* Header */}
                     <div className="flex items-center space-x-5 shrink-0 mb-4 relative z-50">
                         <div className="w-14 h-14 rounded-lg overflow-hidden shadow-lg relative shrink-0 border border-white/10 bg-white/5">
-                            {/* FIX: KEMBALI KE IMG BIASA */}
                             {result.cover ? (
-                                <img 
-                                    src={result.cover} 
-                                    alt="Cover" 
-                                    className="w-full h-full object-cover" 
-                                />
+                                <img src={result.cover} alt="Cover" className="w-full h-full object-cover" />
                             ) : (
                                 <div className="w-full h-full flex items-center justify-center">
                                     <FontAwesomeIcon icon={faApple} className="text-white/30 text-xl" />
@@ -494,7 +482,7 @@ const Card = () => {
                                 <div className="p-4 border-b border-white/5 flex justify-between items-center bg-white/5">
                                     <span className="text-[11px] font-bold text-white/70 uppercase tracking-widest pl-1">Up Next</span>
                                 </div>
-                                <div className="flex-1 overflow-y-auto no-scrollbar p-3 space-y-4">
+                                <div ref={playlistContainerRef} className="flex-1 overflow-y-auto no-scrollbar p-3 space-y-4">
                                     {groupedPlaylist.map((group, gIdx) => (
                                         <div key={gIdx} className="mb-2">
                                             <div className="sticky top-0 bg-[#111] p-2 rounded-lg mb-2 z-10 border border-white/5">
@@ -502,7 +490,12 @@ const Card = () => {
                                             </div>
                                             <div className="space-y-1">
                                                 {group.tracks.map((track, i) => (
-                                                    <div key={track.idx} onClick={() => selectSong(track.idx)} className={`flex items-center p-2 rounded-xl gap-3 cursor-pointer ${currentIndex === track.idx ? "bg-white/10" : "hover:bg-white/5"}`}>
+                                                    <div 
+                                                        key={track.idx} 
+                                                        onClick={() => selectSong(track.idx)} 
+                                                        // CLASS 'active-playlist-song' untuk target auto-scroll
+                                                        className={`flex items-center p-2 rounded-xl gap-3 cursor-pointer ${currentIndex === track.idx ? "bg-white/10 active-playlist-song" : "hover:bg-white/5"}`}
+                                                    >
                                                         <div className="w-6 text-center shrink-0">
                                                             {currentIndex === track.idx ? <FontAwesomeIcon icon={faPlay} className="text-green-400 text-[10px]"/> : <span className="text-white/30 text-[12px] font-medium">{i + 1}</span>}
                                                         </div>
@@ -516,7 +509,7 @@ const Card = () => {
                             </div>
                         )}
 
-                        {/* Lyrics Area */}
+                        {/* Lyrics Area (FIX: Mask Image Proper) */}
                         <div ref={scrollRef} className="w-full h-full overflow-y-auto no-scrollbar py-[180px] px-2 mask-scroller-y">
                             {processedLyrics.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center h-full text-white/30 gap-2">
@@ -593,10 +586,14 @@ const Card = () => {
 
             <style jsx global>{`
                 .no-scrollbar::-webkit-scrollbar { display: none; }
-                .mask-scroller-y { mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%); }
-                .active-lyric-glow p { text-shadow: 0 0 12px rgba(255,255,255,0.4); }
+                /* Mask Image yang lebih smooth untuk atas dan bawah */
+                .mask-scroller-y { 
+                    mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+                    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+                }
+                .active-lyric-glow p { text-shadow: 0 0 15px rgba(255,255,255,0.6); }
                 @keyframes slow-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-                .animate-slow-spin { animation: slow-spin 60s linear infinite; }
+                .animate-slow-spin { animation: slow-spin 80s linear infinite; }
                 .animate-fade-in { animation: fadeIn 1s ease-out; }
                 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
             `}</style>
