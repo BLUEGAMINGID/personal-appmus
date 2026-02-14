@@ -198,13 +198,12 @@ const AppleMusicTimeSlider = ({ audioRef, duration, isPaused, onSeekStart, onSee
 
 // --- MAIN CARD ---
 const Card = () => {
-    // Logic Random Index (Hydration Safe)
+    // Logic Random Index
     const [currentIndex, setCurrentIndex] = useState(0); 
     const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
         setIsMounted(true);
-        // Putar lagu random saat load pertama
         const randomIdx = Math.floor(Math.random() * playlist.length);
         setCurrentIndex(randomIdx);
     }, []);
@@ -398,7 +397,7 @@ const Card = () => {
                 const elTop = activeEl.offsetTop;
                 const elH = activeEl.clientHeight;
                 
-                // ADJUSTMENT: Scroll position lebih ke atas sedikit agar pas dengan layout baru
+                // ADJUSTMENT: Scroll position disesuaikan agar mepet atas
                 let targetScroll = elTop - (containerH * 0.35);
                 if (elH > containerH * 0.5) targetScroll = elTop - (containerH * 0.30);
                 container.scrollTo({ top: targetScroll, behavior: 'smooth' });
@@ -436,26 +435,34 @@ const Card = () => {
 
             {/* HEIGHT ADJUSTMENT: 200px -> 240px (Closed), 580px -> 640px (Open) */}
             <div className="relative w-full rounded-[40px] overflow-hidden shadow-2xl bg-[#0a0a0a]" style={{ height: showLyrics || showPlaylist ? 640 : 240, transition: 'height 0.5s cubic-bezier(0.32, 0.72, 0, 1)' }}>
-                {/* --- ALIVE BACKGROUND --- */}
-                <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#121212]">
+                {/* --- ALIVE BACKGROUND (Enhanced for Dark Covers) --- */}
+                <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#101010]">
                      {result.cover && (
                         <>
+                            {/* Layer 1: Ambient Base (High Saturation) */}
                             <div 
                                 className="absolute -top-[50%] -left-[50%] w-[200%] h-[200%] bg-cover bg-center animate-spin-slow will-change-transform" 
                                 style={{ 
                                     backgroundImage: `url(${result.cover})`,
-                                    filter: 'blur(80px) saturate(180%) contrast(120%) brightness(0.8)',
+                                    filter: 'blur(80px) saturate(300%) contrast(120%) brightness(1.2)', 
+                                    opacity: 0.7
                                 }}
                             ></div>
+                            
+                            {/* Layer 2: The "Neon" Effect (Color Dodge untuk mengangkat warna dari hitam) */}
                             <div 
-                                className="absolute -bottom-[50%] -right-[50%] w-[200%] h-[200%] bg-cover bg-center animate-spin-reverse will-change-transform mix-blend-hard-light" 
+                                className="absolute -bottom-[50%] -right-[50%] w-[200%] h-[200%] bg-cover bg-center animate-spin-reverse will-change-transform" 
                                 style={{ 
                                     backgroundImage: `url(${result.cover})`,
-                                    filter: 'blur(90px) saturate(200%) contrast(110%) brightness(1.1)',
+                                    // Mix-blend-mode screen/color-dodge adalah kunci agar cover hitam tetap berwarna
+                                    mixBlendMode: 'screen', 
+                                    filter: 'blur(60px) saturate(400%) contrast(150%) brightness(1.5)',
                                     opacity: 0.6
                                 }}
                             ></div>
-                            <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/80"></div>
+                            
+                            {/* Dark Overlay untuk readability */}
+                            <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/90"></div>
                         </>
                      )}
                      <div className="absolute inset-0 opacity-[0.07] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay"></div>
@@ -518,8 +525,8 @@ const Card = () => {
                             </div>
                         )}
 
-                        {/* Lyrics Area (PADDING ADJUSTMENT & DEEP MASK) */}
-                        {/* pt-20 pb-32: Padding cukup besar di atas/bawah agar lirik bisa 'parkir' di balik fade */}
+                        {/* Lyrics Area (FULL HEIGHT PEPET) */}
+                        {/* pt-20 pb-32: Padding dikurangi dari pt-32 agar lirik bisa naik lebih tinggi */}
                         <div ref={scrollRef} className="w-full h-full overflow-y-auto no-scrollbar pt-20 pb-32 px-8 mask-scroller-y">
                             {processedLyrics.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center h-full text-white/30 gap-2">
@@ -584,7 +591,7 @@ const Card = () => {
 
                     {/* Controls */}
                     <div className="mt-auto flex flex-col gap-3 shrink-0 z-20 pt-2">
-                        {/* FIX TYPO */}
+                        {/* FIX TYPO: AppleMusicTimeTimeSlider -> AppleMusicTimeSlider */}
                         <AppleMusicTimeSlider audioRef={audioRef} duration={duration} isPaused={isPaused} onSeekStart={() => {}} onSeekEnd={handleSeekEnd} />
                         <div className="flex justify-center items-center gap-6">
                             <button onClick={handlePrev} className="text-white/60 hover:text-white p-3 active:scale-90 transition-transform"><FontAwesomeIcon icon={faBackward} size="lg" /></button>
@@ -598,7 +605,8 @@ const Card = () => {
             <style jsx global>{`
                 .no-scrollbar::-webkit-scrollbar { display: none; }
                 
-                /* PEPET MASK: Gradasi dimulai dari 5% sampai 95% agar mepet atas/bawah */
+                /* PEPET MASK: Gradasi dimulai dari 5% (atas) sampai 95% (bawah) */
+                /* Ini membuat lirik terlihat penuh dari ujung ke ujung sebelum menghilang */
                 .mask-scroller-y { 
                     mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
                     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
