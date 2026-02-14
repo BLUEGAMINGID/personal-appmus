@@ -361,7 +361,7 @@ const Card = () => {
         }
 
         if (processedLyrics.length > 0) {
-            const lyricAnimationDelay = 0.5;
+            const lyricAnimationDelay = 1;
             const adjustedTime = mainTime - lyricAnimationDelay;
             let idx = -1;
             
