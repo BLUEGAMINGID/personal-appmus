@@ -465,12 +465,10 @@ const Card = () => {
                 className="relative w-full rounded-[40px] overflow-hidden shadow-2xl bg-[#0a0a0a] transition-all duration-500 cubic-bezier(0.32, 0.72, 0, 1)" 
                 style={{ height: getCardHeight() }}
             >
-                {/* --- ALIVE BACKGROUND (ZOOM & BLUR TUNED) --- */}
+                {/* --- ALIVE BACKGROUND --- */}
                 <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#101010]">
                      {result.cover && (
                         <>
-                            {/* Layer 1: Ambient (Lower Zoom 140%, Lower Blur 40px) */}
-                            {/* Mengurangi zoom agar sisi gelap cover ikut terlihat */}
                             <div 
                                 className="absolute -top-[20%] -left-[20%] w-[140%] h-[140%] bg-cover bg-center animate-spin-slow will-change-transform transform-gpu" 
                                 style={{ 
@@ -479,20 +477,15 @@ const Card = () => {
                                     opacity: 0.6
                                 }}
                             ></div>
-                            
-                            {/* Layer 2: Shape/Silhouette (Low Zoom 120%, Low Blur 25px) */}
-                            {/* Layer ini mempertahankan bentuk/siluet (seperti merah di tengah hitam) */}
                             <div 
                                 className="absolute -bottom-[10%] -right-[10%] w-[120%] h-[120%] bg-cover bg-center animate-spin-reverse will-change-transform transform-gpu" 
                                 style={{ 
                                     backgroundImage: `url(${result.cover})`,
-                                    mixBlendMode: 'screen', // Kunci agar warna pop di atas hitam
+                                    mixBlendMode: 'screen', 
                                     filter: 'blur(25px) saturate(400%) contrast(140%) brightness(1.3)',
                                     opacity: 0.5
                                 }}
                             ></div>
-                            
-                            {/* Overlay Gradient */}
                             <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/90"></div>
                         </>
                      )}
@@ -556,9 +549,7 @@ const Card = () => {
                             </div>
                         )}
 
-                        {/* Lyrics Area (RAPAT & PX-4) */}
-                        {/* px-4: Margin kiri kanan standar (tidak terlalu tebal) */}
-                        {/* pt-20 pb-32: Tetap Full Height */}
+                        {/* Lyrics Area (DEEP MASK & RAPAT) */}
                         <div ref={scrollRef} className="w-full h-full overflow-y-auto no-scrollbar pt-20 pb-32 px-4 mask-scroller-y">
                             {processedLyrics.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center h-full text-white/30 gap-2">
@@ -585,14 +576,14 @@ const Card = () => {
                                         <div 
                                             key={i} 
                                             onClick={() => handleSeekEnd(line.time)} 
-                                            // REVERT: py-3 untuk density yang lebih rapat
+                                            // REVERT: py-3
                                             className={`cursor-pointer py-3 text-left transition-all duration-700 ease-out origin-left will-change-transform transform-gpu ${
                                                 isActive 
                                                 ? "opacity-100 scale-100 active-lyric-glow blur-0" 
                                                 : "opacity-40 scale-[0.98] blur-[1.5px] hover:opacity-60 hover:blur-[0.5px]" 
                                             }`}
                                         >
-                                            {/* REVERT: leading-tight (Rapat) */}
+                                            {/* REVERT: leading-tight */}
                                             <p className={`font-bold text-[28px] leading-tight text-white tracking-tight ${isActive ? "active-lyric-glow-text" : ""}`}>{line.text}</p>
                                         </div>
                                     );
@@ -638,16 +629,17 @@ const Card = () => {
             <style jsx global>{`
                 .no-scrollbar::-webkit-scrollbar { display: none; }
                 
+                /* DEEP MASK FIX (25%) */
                 .mask-scroller-y { 
-                    mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
-                    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
+                    mask-image: linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%);
+                    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%);
                 }
                 
                 .active-lyric-glow-text { 
                     text-shadow: 
                         0 0 5px rgba(255,255,255,0.30),   
                         0 0 10px rgba(255,255,255,0.25),  
-                        0 0 20px rgba(255,255,255,0.15); /* Reduced glow to prevent overlap in tight lines */
+                        0 0 30px rgba(255,255,255,0.15);
                 }
 
                 @keyframes spin-slow { from { transform: rotate(0deg) scale(1.5); } to { transform: rotate(360deg) scale(1.5); } }
