@@ -465,27 +465,47 @@ const Card = () => {
                 className="relative w-full rounded-[40px] overflow-hidden shadow-2xl bg-[#0a0a0a] transition-all duration-500 cubic-bezier(0.32, 0.72, 0, 1)" 
                 style={{ height: getCardHeight() }}
             >
-                {/* --- ALIVE BACKGROUND --- */}
-                <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#101010]">
+                {/* --- ALIVE BACKGROUND (3 LAYERS - DESYNCHRONIZED) --- */}
+                <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#0a0a0a]">
                      {result.cover && (
                         <>
+                            {/* Layer 1: Deep Base (Slow, Clockwise, Big Blur) */}
+                            {/* Inset -50% agar gambar "tumpah" keluar dan tidak ada sudut kosong saat diputar */}
                             <div 
-                                className="absolute -top-[20%] -left-[20%] w-[140%] h-[140%] bg-cover bg-center animate-spin-slow will-change-transform transform-gpu" 
+                                className="absolute inset-[-50%] bg-cover bg-center animate-spin-slow will-change-transform transform-gpu" 
                                 style={{ 
                                     backgroundImage: `url(${result.cover})`,
-                                    filter: 'blur(40px) saturate(300%) contrast(120%) brightness(1.1)', 
-                                    opacity: 0.6
+                                    filter: 'blur(50px) saturate(250%) brightness(0.9)', 
+                                    opacity: 0.6,
+                                    animationDelay: '-12s' // Mulai di detik ke-12 (acak)
                                 }}
                             ></div>
+                            
+                            {/* Layer 2: Mid Tones (Reverse, Slower, Color Dodge) */}
                             <div 
-                                className="absolute -bottom-[10%] -right-[10%] w-[120%] h-[120%] bg-cover bg-center animate-spin-reverse will-change-transform transform-gpu" 
+                                className="absolute inset-[-50%] bg-cover bg-center animate-spin-reverse-slower will-change-transform transform-gpu" 
                                 style={{ 
                                     backgroundImage: `url(${result.cover})`,
-                                    mixBlendMode: 'screen', 
-                                    filter: 'blur(25px) saturate(400%) contrast(140%) brightness(1.3)',
-                                    opacity: 0.5
+                                    mixBlendMode: 'screen', // Extract warna dari hitam
+                                    filter: 'blur(35px) saturate(300%) contrast(110%)',
+                                    opacity: 0.5,
+                                    animationDelay: '-45s' // Mulai beda posisi
                                 }}
                             ></div>
+
+                            {/* Layer 3: Highlights (Fastest, Breathing) */}
+                            <div 
+                                className="absolute inset-[-50%] bg-cover bg-center animate-pulse-spin will-change-transform transform-gpu" 
+                                style={{ 
+                                    backgroundImage: `url(${result.cover})`,
+                                    mixBlendMode: 'overlay', // Texture
+                                    filter: 'blur(30px) saturate(200%) brightness(1.2)',
+                                    opacity: 0.3,
+                                    animationDelay: '-23s'
+                                }}
+                            ></div>
+                            
+                            {/* Dark Gradient Overlay */}
                             <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/90"></div>
                         </>
                      )}
@@ -549,7 +569,7 @@ const Card = () => {
                             </div>
                         )}
 
-                        {/* Lyrics Area (DEEP MASK & RAPAT) */}
+                        {/* Lyrics Area */}
                         <div ref={scrollRef} className="w-full h-full overflow-y-auto no-scrollbar pt-20 pb-32 px-4 mask-scroller-y">
                             {processedLyrics.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center h-full text-white/30 gap-2">
@@ -576,14 +596,12 @@ const Card = () => {
                                         <div 
                                             key={i} 
                                             onClick={() => handleSeekEnd(line.time)} 
-                                            // REVERT: py-3
                                             className={`cursor-pointer py-3 text-left transition-all duration-700 ease-out origin-left will-change-transform transform-gpu ${
                                                 isActive 
                                                 ? "opacity-100 scale-100 active-lyric-glow blur-0" 
                                                 : "opacity-40 scale-[0.98] blur-[1.5px] hover:opacity-60 hover:blur-[0.5px]" 
                                             }`}
                                         >
-                                            {/* REVERT: leading-tight */}
                                             <p className={`font-bold text-[28px] leading-tight text-white tracking-tight ${isActive ? "active-lyric-glow-text" : ""}`}>{line.text}</p>
                                         </div>
                                     );
@@ -629,10 +647,28 @@ const Card = () => {
             <style jsx global>{`
                 .no-scrollbar::-webkit-scrollbar { display: none; }
                 
-                /* DEEP MASK FIX (25%) */
+                /* ULTRA SMOOTH FADE MASK (25% Top/Bottom) */
                 .mask-scroller-y { 
-                    mask-image: linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%);
-                    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%);
+                    mask-image: linear-gradient(to bottom, 
+                        transparent 0%, 
+                        rgba(0,0,0,0.2) 10%, 
+                        rgba(0,0,0,0.6) 20%, 
+                        black 30%, 
+                        black 70%, 
+                        rgba(0,0,0,0.6) 80%, 
+                        rgba(0,0,0,0.2) 90%, 
+                        transparent 100%
+                    );
+                    -webkit-mask-image: linear-gradient(to bottom, 
+                        transparent 0%, 
+                        rgba(0,0,0,0.2) 10%, 
+                        rgba(0,0,0,0.6) 20%, 
+                        black 30%, 
+                        black 70%, 
+                        rgba(0,0,0,0.6) 80%, 
+                        rgba(0,0,0,0.2) 90%, 
+                        transparent 100%
+                    );
                 }
                 
                 .active-lyric-glow-text { 
@@ -643,10 +679,16 @@ const Card = () => {
                 }
 
                 @keyframes spin-slow { from { transform: rotate(0deg) scale(1.5); } to { transform: rotate(360deg) scale(1.5); } }
-                @keyframes spin-reverse { from { transform: rotate(360deg) scale(1.8) translate(10px, 10px); } to { transform: rotate(0deg) scale(1.8) translate(0px, 0px); } }
+                @keyframes spin-reverse-slower { from { transform: rotate(360deg) scale(1.2); } to { transform: rotate(0deg) scale(1.2); } }
+                @keyframes pulse-spin { 
+                    0% { transform: rotate(0deg) scale(1.4); opacity: 0.3; } 
+                    50% { transform: rotate(180deg) scale(1.6); opacity: 0.5; }
+                    100% { transform: rotate(360deg) scale(1.4); opacity: 0.3; }
+                }
                 
                 .animate-spin-slow { animation: spin-slow 90s linear infinite; }
-                .animate-spin-reverse { animation: spin-reverse 120s linear infinite; }
+                .animate-spin-reverse-slower { animation: spin-reverse-slower 120s linear infinite; }
+                .animate-pulse-spin { animation: pulse-spin 60s ease-in-out infinite; }
             `}</style>
         </div>
     );
