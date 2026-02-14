@@ -475,7 +475,7 @@ const Card = () => {
                                 className="absolute inset-[-50%] bg-cover bg-center animate-spin-slow will-change-transform transform-gpu" 
                                 style={{ 
                                     backgroundImage: `url(${result.cover})`,
-                                    filter: 'blur(50px) saturate(250%) brightness(0.9)', 
+                                    filter: 'blur(50px) saturate(150%) brightness(0.9)', 
                                     opacity: 0.6,
                                     animationDelay: '-12s' // Mulai di detik ke-12 (acak)
                                 }}
@@ -487,7 +487,7 @@ const Card = () => {
                                 style={{ 
                                     backgroundImage: `url(${result.cover})`,
                                     mixBlendMode: 'screen', // Extract warna dari hitam
-                                    filter: 'blur(35px) saturate(300%) contrast(110%)',
+                                    filter: 'blur(35px) saturate(200%) contrast(110%)',
                                     opacity: 0.5,
                                     animationDelay: '-45s' // Mulai beda posisi
                                 }}
@@ -499,11 +499,11 @@ const Card = () => {
                                 style={{ 
                                     backgroundImage: `url(${result.cover})`,
                                     mixBlendMode: 'overlay', // Texture
-                                    filter: 'blur(30px) saturate(200%) brightness(1.2)',
+                                    filter: 'blur(30px) saturate(125%) brightness(1.2)',
                                     opacity: 0.3,
                                     animationDelay: '-23s'
                                 }}
-                            ></div>
+                            ></div>//danish
                             
                             {/* Dark Gradient Overlay */}
                             <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/90"></div>
