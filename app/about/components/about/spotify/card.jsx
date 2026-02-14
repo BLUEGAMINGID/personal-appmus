@@ -11,7 +11,7 @@ import {
     faMicrophone, faMusic, faSpinner, faBars, faTimes
 } from "@fortawesome/free-solid-svg-icons";
 
-// --- KOMPONEN: DYNAMIC INTERLUDE DOTS ---
+// --- KOMPONEN: DYNAMIC INTERLUDE DOTS (LOGIKA BARU) ---
 const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
     const fillRef = useRef(null);
 
@@ -24,6 +24,7 @@ const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
             let progress = (currentTime - startTime) / duration;
             progress = Math.max(0, Math.min(1, progress));
 
+            // Mengubah lebar container fill secara real-time
             fillRef.current.style.width = `${progress * 100}%`;
 
             if (isActive) {
@@ -34,6 +35,7 @@ const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
         if (isActive) {
             rafId = requestAnimationFrame(update);
         } else {
+            // Cleanup state jika lirik lewat
             if (audioRef.current && fillRef.current) {
                 if (audioRef.current.currentTime > startTime + duration) {
                     fillRef.current.style.width = '100%';
@@ -46,20 +48,26 @@ const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
     }, [isActive, startTime, duration, audioRef]);
 
     return (
+        // Padding vertical ditambah (py-4) agar GLOW tidak terpotong atas/bawah
         <div className="py-4 w-full flex flex-col items-start justify-center opacity-100 transition-opacity duration-1000">
             <div className="relative inline-block w-fit">
-                {/* Layer 1: Background */}
-                <div className="text-[28px] tracking-[4px] text-white/20 leading-tight select-none font-bold mix-blend-screen pl-1">
+                
+                {/* LAYER 1: BASE (Titik Redup - Selalu Utuh) */}
+                {/* Ini memastikan sisi kanan tidak terlihat "hilang" atau terpotong */}
+                <div className="text-[32px] tracking-[6px] text-white/20 leading-tight select-none font-bold mix-blend-screen px-1">
                     ● ● ●
                 </div>
 
-                {/* Layer 2: Filling */}
+                {/* LAYER 2: FILL (Titik Terang + Glow) */}
+                {/* Container ini memiliki overflow-hidden untuk memotong secara horizontal (progress) */}
+                {/* Tapi punya padding-y agar shadow/glow vertikal tetap muncul */}
                 <div 
                     ref={fillRef} 
-                    className="absolute top-0 left-0 h-full overflow-hidden whitespace-nowrap text-[28px] tracking-[4px] text-white leading-tight select-none font-bold will-change-[width] pl-1"
+                    className="absolute top-0 left-0 h-full overflow-hidden whitespace-nowrap will-change-[width] px-1"
                     style={{ width: '0%' }}
                 >
-                    <span className={isActive ? "active-lyric-glow-text" : ""}>
+                    {/* Teks di dalam sini identik posisinya dengan Layer 1 */}
+                    <span className={`text-[32px] tracking-[6px] leading-tight font-bold text-white ${isActive ? "active-interlude-glow" : ""}`}>
                         ● ● ●
                     </span>
                 </div>
@@ -198,17 +206,16 @@ const AppleMusicTimeSlider = ({ audioRef, duration, isPaused, onSeekStart, onSee
 
 // --- MAIN CARD ---
 const Card = () => {
-    // START: Logic Random Index (Hydration Safe)
+    // Logic Random Index (Hydration Safe)
     const [currentIndex, setCurrentIndex] = useState(0); 
     const [isMounted, setIsMounted] = useState(false);
 
     useEffect(() => {
         setIsMounted(true);
-        // Putar lagu random HANYA saat client-side load pertama kali
+        // Putar lagu random saat load pertama
         const randomIdx = Math.floor(Math.random() * playlist.length);
         setCurrentIndex(randomIdx);
     }, []);
-    // END: Logic Random
 
     const [result, setResult] = useState({ lyrics: [], title: "Loading...", artist: "Music", cover: null, audioUrl: "", karaokeUrl: null });
     const [isPaused, setIsPaused] = useState(true);
@@ -281,9 +288,8 @@ const Card = () => {
         }
     }, [showPlaylist, playlistMeta.length, currentIndex]);
 
-    // LOAD LAGU (Triggered by currentIndex change)
     useEffect(() => {
-        if (!isMounted) return; // Tunggu mount selesai
+        if (!isMounted) return;
 
         setIsLoading(true);
         setActiveIdx(-1);
@@ -315,9 +321,6 @@ const Card = () => {
                 if(audioRef.current) {
                     setDuration(audioRef.current.duration);
                     
-                    // Auto play hanya jika bukan load awal (opsional), 
-                    // tapi biasanya user ingin langsung play setelah klik. 
-                    // Di sini kita biarkan logic play berjalan.
                     const playPromise = audioRef.current.play();
                     if (playPromise !== undefined) {
                         playPromise.then(() => {
@@ -520,7 +523,7 @@ const Card = () => {
                             </div>
                         )}
 
-                        {/* Lyrics Area */}
+                        {/* Lyrics Area (DEEP MASKING & PADDING) */}
                         <div ref={scrollRef} className="w-full h-full overflow-y-auto no-scrollbar py-[180px] px-8 mask-scroller-y">
                             {processedLyrics.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center h-full text-white/30 gap-2">
@@ -585,7 +588,7 @@ const Card = () => {
 
                     {/* Controls */}
                     <div className="mt-auto flex flex-col gap-3 shrink-0 z-20 pt-2">
-                        <AppleMusicTimeSlider audioRef={audioRef} duration={duration} isPaused={isPaused} onSeekStart={() => {}} onSeekEnd={handleSeekEnd} />
+                        <AppleMusicTimeTimeSlider audioRef={audioRef} duration={duration} isPaused={isPaused} onSeekStart={() => {}} onSeekEnd={handleSeekEnd} />
                         <div className="flex justify-center items-center gap-6">
                             <button onClick={handlePrev} className="text-white/60 hover:text-white p-3 active:scale-90 transition-transform"><FontAwesomeIcon icon={faBackward} size="lg" /></button>
                             <button onClick={togglePlay} className={`bg-white text-black w-16 h-16 rounded-full flex items-center justify-center shadow-lg active:scale-90 transition-transform ${isLoading ? 'opacity-80' : ''}`}>{isLoading ? <FontAwesomeIcon icon={faSpinner} spin size="lg" className="text-black/50" /> : <FontAwesomeIcon icon={isPaused ? faPlay : faPause} size="2xl" className={isPaused ? "ml-2" : ""} />}</button>
@@ -598,19 +601,19 @@ const Card = () => {
             <style jsx global>{`
                 .no-scrollbar::-webkit-scrollbar { display: none; }
                 
-                /* MASK FIX: Gradient pudar yang SANGAT LEBAR (25%) di atas dan bawah */
+                /* DEEP MASK FIX: Fade-out yang sangat smooth di atas dan bawah (25%) */
                 .mask-scroller-y { 
                     mask-image: linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%);
                     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%);
                 }
                 
-                /* 5-LAYER ULTRA SOFT GLOW (Low Opacity) */
-                .active-lyric-glow-text { 
+                /* 5-LAYER SUBTLE GLOW (Low Opacity = Soft & Creamy) */
+                .active-lyric-glow-text, .active-interlude-glow { 
                     text-shadow: 
-                        0 0 5px rgba(255,255,255,0.30),   /* Core */
+                        0 0 5px rgba(255,255,255,0.35),   /* Core */
                         0 0 10px rgba(255,255,255,0.25),  /* Inner Glow */
-                        0 0 20px rgba(255,255,255,0.20),  /* Mid Bloom */
-                        0 0 40px rgba(255,255,255,0.10),  /* Wide Glow */
+                        0 0 20px rgba(255,255,255,0.15),  /* Mid Bloom */
+                        0 0 40px rgba(255,255,255,0.08),  /* Wide Glow */
                         0 0 80px rgba(255,255,255,0.05);  /* Atmospheric */
                 }
 
