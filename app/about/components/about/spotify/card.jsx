@@ -11,6 +11,19 @@ import {
     faMicrophone, faMusic, faSpinner, faBars, faTimes
 } from "@fortawesome/free-solid-svg-icons";
 
+// --- HOOK: DETEKSI MOBILE/DESKTOP ---
+const useMediaQuery = (query) => {
+    const [matches, setMatches] = useState(false);
+    useEffect(() => {
+        const media = window.matchMedia(query);
+        if (media.matches !== matches) setMatches(media.matches);
+        const listener = () => setMatches(media.matches);
+        media.addListener(listener);
+        return () => media.removeListener(listener);
+    }, [matches, query]);
+    return matches;
+};
+
 // --- KOMPONEN: DYNAMIC INTERLUDE DOTS ---
 const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
     const fillRef = useRef(null);
@@ -46,17 +59,18 @@ const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
     }, [isActive, startTime, duration, audioRef]);
 
     return (
-        <div className="py-4 w-full flex flex-col items-start justify-center opacity-100 transition-opacity duration-1000">
+        // Added 'py-6' for vertical breathing room (anti-collision)
+        <div className="py-6 w-full flex flex-col items-start justify-center opacity-100 transition-opacity duration-700 will-change-transform transform-gpu">
             <div className="relative inline-block w-fit">
                 {/* Layer 1: Background */}
-                <div className="text-[28px] tracking-[4px] text-white/20 leading-tight select-none font-bold mix-blend-screen pl-1">
+                <div className="text-[28px] tracking-[4px] text-white/20 leading-relaxed select-none font-bold mix-blend-screen pl-1">
                     ● ● ●
                 </div>
 
                 {/* Layer 2: Filling */}
                 <div 
                     ref={fillRef} 
-                    className="absolute top-0 left-0 h-full overflow-hidden whitespace-nowrap text-[28px] tracking-[4px] text-white leading-tight select-none font-bold will-change-[width] pl-1"
+                    className="absolute top-0 left-0 h-full overflow-hidden whitespace-nowrap text-[28px] tracking-[4px] text-white leading-relaxed select-none font-bold will-change-[width] pl-1"
                     style={{ width: '0%' }}
                 >
                     <span className={isActive ? "active-lyric-glow-text" : ""}>
@@ -198,6 +212,9 @@ const AppleMusicTimeSlider = ({ audioRef, duration, isPaused, onSeekStart, onSee
 
 // --- MAIN CARD ---
 const Card = () => {
+    // Responsive Logic
+    const isDesktop = useMediaQuery("(min-width: 768px)");
+    
     // Logic Random Index
     const [currentIndex, setCurrentIndex] = useState(0); 
     const [isMounted, setIsMounted] = useState(false);
@@ -397,7 +414,6 @@ const Card = () => {
                 const elTop = activeEl.offsetTop;
                 const elH = activeEl.clientHeight;
                 
-                // ADJUSTMENT: Scroll position disesuaikan agar mepet atas
                 let targetScroll = elTop - (containerH * 0.35);
                 if (elH > containerH * 0.5) targetScroll = elTop - (containerH * 0.30);
                 container.scrollTo({ top: targetScroll, behavior: 'smooth' });
@@ -428,20 +444,30 @@ const Card = () => {
     const handlePrev = () => setCurrentIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
     const selectSong = (idx) => { if (idx === currentIndex) { setShowPlaylist(false); return; } setCurrentIndex(idx); setShowPlaylist(false); };
 
+    // --- HEIGHT CALCULATION ---
+    const getCardHeight = () => {
+        if (showLyrics || showPlaylist) {
+            return isDesktop ? 680 : 580; // Lebih tinggi di desktop saat buka lirik
+        }
+        return isDesktop ? 260 : 190; // Desktop luas, Mobile compact
+    };
+
     return (
         <div className="mt-6 w-full max-w-md mx-auto font-jost select-none relative z-10">
             <audio ref={audioRef} preload="auto" onTimeUpdate={handleTimeUpdate} onEnded={handleNext} className="hidden" />
             <audio ref={instruRef} preload="auto" className="hidden" />
 
-            {/* HEIGHT ADJUSTMENT: 200px -> 240px (Closed), 580px -> 640px (Open) */}
-            <div className="relative w-full rounded-[40px] overflow-hidden shadow-2xl bg-[#0a0a0a]" style={{ height: showLyrics || showPlaylist ? 640 : 240, transition: 'height 0.5s cubic-bezier(0.32, 0.72, 0, 1)' }}>
-                {/* --- ALIVE BACKGROUND (Enhanced for Dark Covers) --- */}
+            <div 
+                className="relative w-full rounded-[40px] overflow-hidden shadow-2xl bg-[#0a0a0a] transition-all duration-500 cubic-bezier(0.32, 0.72, 0, 1)" 
+                style={{ height: getCardHeight() }}
+            >
+                {/* --- ALIVE BACKGROUND --- */}
                 <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#101010]">
                      {result.cover && (
                         <>
-                            {/* Layer 1: Ambient Base (High Saturation) */}
+                            {/* Layer 1: Base - High Saturation */}
                             <div 
-                                className="absolute -top-[50%] -left-[50%] w-[200%] h-[200%] bg-cover bg-center animate-spin-slow will-change-transform" 
+                                className="absolute -top-[50%] -left-[50%] w-[200%] h-[200%] bg-cover bg-center animate-spin-slow will-change-transform transform-gpu" 
                                 style={{ 
                                     backgroundImage: `url(${result.cover})`,
                                     filter: 'blur(80px) saturate(300%) contrast(120%) brightness(1.2)', 
@@ -449,19 +475,18 @@ const Card = () => {
                                 }}
                             ></div>
                             
-                            {/* Layer 2: The "Neon" Effect (Color Dodge untuk mengangkat warna dari hitam) */}
+                            {/* Layer 2: Neon Pop - Color Dodge */}
                             <div 
-                                className="absolute -bottom-[50%] -right-[50%] w-[200%] h-[200%] bg-cover bg-center animate-spin-reverse will-change-transform" 
+                                className="absolute -bottom-[50%] -right-[50%] w-[200%] h-[200%] bg-cover bg-center animate-spin-reverse will-change-transform transform-gpu" 
                                 style={{ 
                                     backgroundImage: `url(${result.cover})`,
-                                    // Mix-blend-mode screen/color-dodge adalah kunci agar cover hitam tetap berwarna
                                     mixBlendMode: 'screen', 
                                     filter: 'blur(60px) saturate(400%) contrast(150%) brightness(1.5)',
                                     opacity: 0.6
                                 }}
                             ></div>
                             
-                            {/* Dark Overlay untuk readability */}
+                            {/* Overlay */}
                             <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/90"></div>
                         </>
                      )}
@@ -525,8 +550,7 @@ const Card = () => {
                             </div>
                         )}
 
-                        {/* Lyrics Area (FULL HEIGHT PEPET) */}
-                        {/* pt-20 pb-32: Padding dikurangi dari pt-32 agar lirik bisa naik lebih tinggi */}
+                        {/* Lyrics Area (GPU Optimized & Anti-Collision) */}
                         <div ref={scrollRef} className="w-full h-full overflow-y-auto no-scrollbar pt-20 pb-32 px-8 mask-scroller-y">
                             {processedLyrics.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center h-full text-white/30 gap-2">
@@ -553,13 +577,15 @@ const Card = () => {
                                         <div 
                                             key={i} 
                                             onClick={() => handleSeekEnd(line.time)} 
-                                            className={`cursor-pointer py-3 text-left transition-all duration-1000 ease-out origin-left ${
+                                            // LINE HEIGHT & PADDING ADJUSTED: leading-relaxed + py-4
+                                            // WILL-CHANGE-TRANSFORM: Force GPU Rendering
+                                            className={`cursor-pointer py-4 text-left transition-all duration-700 ease-out origin-left will-change-transform transform-gpu ${
                                                 isActive 
                                                 ? "opacity-100 scale-100 active-lyric-glow blur-0" 
                                                 : "opacity-40 scale-[0.98] blur-[1.5px] hover:opacity-60 hover:blur-[0.5px]" 
                                             }`}
                                         >
-                                            <p className={`font-bold text-[28px] leading-tight text-white tracking-tight ${isActive ? "active-lyric-glow-text" : ""}`}>{line.text}</p>
+                                            <p className={`font-bold text-[28px] leading-relaxed text-white tracking-tight ${isActive ? "active-lyric-glow-text" : ""}`}>{line.text}</p>
                                         </div>
                                     );
                                 })
@@ -591,7 +617,6 @@ const Card = () => {
 
                     {/* Controls */}
                     <div className="mt-auto flex flex-col gap-3 shrink-0 z-20 pt-2">
-                        {/* FIX TYPO: AppleMusicTimeTimeSlider -> AppleMusicTimeSlider */}
                         <AppleMusicTimeSlider audioRef={audioRef} duration={duration} isPaused={isPaused} onSeekStart={() => {}} onSeekEnd={handleSeekEnd} />
                         <div className="flex justify-center items-center gap-6">
                             <button onClick={handlePrev} className="text-white/60 hover:text-white p-3 active:scale-90 transition-transform"><FontAwesomeIcon icon={faBackward} size="lg" /></button>
@@ -605,20 +630,18 @@ const Card = () => {
             <style jsx global>{`
                 .no-scrollbar::-webkit-scrollbar { display: none; }
                 
-                /* PEPET MASK: Gradasi dimulai dari 5% (atas) sampai 95% (bawah) */
-                /* Ini membuat lirik terlihat penuh dari ujung ke ujung sebelum menghilang */
+                /* DEEP MASK FIX */
                 .mask-scroller-y { 
                     mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
                     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
                 }
                 
+                /* PERFORMANCE FIX: Reduced Shadow Radius */
                 .active-lyric-glow-text { 
                     text-shadow: 
                         0 0 5px rgba(255,255,255,0.30),   
                         0 0 10px rgba(255,255,255,0.25),  
-                        0 0 20px rgba(255,255,255,0.20),  
-                        0 0 40px rgba(255,255,255,0.10),  
-                        0 0 80px rgba(255,255,255,0.05);  
+                        0 0 30px rgba(255,255,255,0.15); /* Capped at 30px to save GPU */
                 }
 
                 @keyframes spin-slow { from { transform: rotate(0deg) scale(1.5); } to { transform: rotate(360deg) scale(1.5); } }
