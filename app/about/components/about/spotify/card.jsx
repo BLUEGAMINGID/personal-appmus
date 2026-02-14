@@ -11,7 +11,7 @@ import {
     faMicrophone, faMusic, faSpinner, faBars, faTimes
 } from "@fortawesome/free-solid-svg-icons";
 
-// --- KOMPONEN: DYNAMIC INTERLUDE DOTS (Fixed Alignment & Smooth Glow) ---
+// --- KOMPONEN: DYNAMIC INTERLUDE DOTS (Natural Look & 5-Layer Glow) ---
 const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
     const fillRef = useRef(null);
 
@@ -46,23 +46,22 @@ const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
     }, [isActive, startTime, duration, audioRef]);
 
     return (
-        // ALIGNMENT FIX: 'items-start', 'text-left', padding disesuaikan dengan lirik
-        <div className="py-12 w-full flex flex-col items-start justify-center gap-2 opacity-100 transition-opacity duration-500 origin-left">
+        // ALIGNMENT: Padding kiri disamakan dengan lirik agar sejajar
+        <div className="py-4 w-full flex flex-col items-start justify-center opacity-100 transition-opacity duration-500">
             <div className="relative inline-block w-fit">
-                {/* Layer 1: Background (Redup & Smooth) */}
-                <div className="text-[40px] tracking-[12px] text-white/20 leading-none select-none font-bold mix-blend-screen">
+                {/* Layer 1: Background (Redup) - Ukuran disamakan dengan lirik */}
+                <div className="text-[28px] tracking-[4px] text-white/20 leading-tight select-none font-bold mix-blend-screen pl-1">
                     ● ● ●
                 </div>
 
-                {/* Layer 2: Filling (Tanpa Shadow Kotak) */}
-                {/* Kita gunakan mask text di sini untuk fill yang solid */}
+                {/* Layer 2: Filling (Masking) */}
                 <div 
                     ref={fillRef} 
-                    className="absolute top-0 left-0 h-full overflow-hidden whitespace-nowrap text-[40px] tracking-[12px] text-white leading-none select-none font-bold will-change-[width]"
+                    className="absolute top-0 left-0 h-full overflow-hidden whitespace-nowrap text-[28px] tracking-[4px] text-white leading-tight select-none font-bold will-change-[width] pl-1"
                     style={{ width: '0%' }}
                 >
-                    {/* Shadow dipindah ke text-shadow langsung agar smooth */}
-                    <span className="interlude-glow">
+                    {/* Menggunakan class glow yang sama dengan lirik */}
+                    <span className={isActive ? "active-lyric-glow-text" : ""}>
                         ● ● ●
                     </span>
                 </div>
@@ -71,7 +70,7 @@ const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
     );
 };
 
-// --- KOMPONEN: APPLE VOCAL SLIDER (Clean Glass, No Dark Glow) ---
+// --- KOMPONEN: APPLE VOCAL SLIDER (Glassmorphism) ---
 const AppleVocalSlider = ({ value, onChange, onClose }) => {
     const sliderRef = useRef(null);
     const [isDragging, setIsDragging] = useState(false);
@@ -109,12 +108,9 @@ const AppleVocalSlider = ({ value, onChange, onClose }) => {
                     ref={sliderRef}
                     className="relative w-[42px] h-[140px] rounded-[21px] overflow-hidden cursor-pointer touch-none select-none border border-white/20"
                     style={{
-                        background: "rgba(50, 50, 50, 0.4)", // Lebih terang dikit biar glassy
-                        backdropFilter: "blur(40px) saturate(180%)", // Saturate nambah efek glass
-                        // GLOW FIX: Hapus shadow hitam. Pakai shadow putih tipis untuk depth.
-                        boxShadow: isDragging 
-                            ? "0 0 20px rgba(255,255,255,0.2)" 
-                            : "0 4px 15px rgba(0,0,0,0.1)" 
+                        background: "rgba(60, 60, 60, 0.4)",
+                        backdropFilter: "blur(40px) saturate(200%)",
+                        boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.2)"
                     }}
                     onPointerDown={handlePointerDown}
                     onPointerMove={handlePointerMove}
@@ -127,19 +123,16 @@ const AppleVocalSlider = ({ value, onChange, onClose }) => {
                         style={{ height: `${value * 100}%` }}
                         transition={{ duration: isDragging ? 0 : 0.3 }}
                     >
-                        {/* Glow dalam slider */}
                         <motion.div 
                             animate={{ opacity: isDragging ? 1 : 0.5 }}
                             className="absolute top-0 left-0 right-0 h-[20px] bg-white blur-[10px]"
                         />
                     </motion.div>
                     
-                    {/* Icon Microphone */}
                     <div className="absolute inset-0 flex flex-col justify-end items-center pb-5 pointer-events-none mix-blend-difference">
                         <FontAwesomeIcon icon={faMicrophone} className="text-white text-sm opacity-80" />
                     </div>
                     
-                    {/* Reflection Gloss */}
                     <div className="absolute inset-0 rounded-[21px] pointer-events-none border border-white/10 shadow-[inset_0_0_15px_rgba(255,255,255,0.1)]">
                         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[70%] h-[2px] bg-white/40 rounded-full blur-[0.5px]" />
                     </div>
@@ -514,8 +507,9 @@ const Card = () => {
                             </div>
                         )}
 
-                        {/* Lyrics Area (Updated Mask Gradient) */}
-                        <div ref={scrollRef} className="w-full h-full overflow-y-auto no-scrollbar py-[180px] px-2 mask-scroller-y">
+                        {/* Lyrics Area (PADDING FIX & MASK FIX) */}
+                        {/* px-8: Menambah padding horizontal agar glow tidak keputus di pinggir */}
+                        <div ref={scrollRef} className="w-full h-full overflow-y-auto no-scrollbar py-[180px] px-8 mask-scroller-y">
                             {processedLyrics.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center h-full text-white/30 gap-2">
                                     <FontAwesomeIcon icon={faMusic} className="text-2xl" />
@@ -541,14 +535,14 @@ const Card = () => {
                                         <div 
                                             key={i} 
                                             onClick={() => handleSeekEnd(line.time)} 
-                                            // Efek transisi diperhalus (500ms) dan glow diperbaiki
                                             className={`cursor-pointer py-3 text-left transition-all duration-500 ease-out origin-left ${
                                                 isActive 
                                                 ? "opacity-100 scale-100 active-lyric-glow blur-0" 
                                                 : "opacity-40 scale-[0.98] blur-[1.5px] hover:opacity-60 hover:blur-[0.5px]" 
                                             }`}
                                         >
-                                            <p className="font-bold text-[28px] leading-tight text-white tracking-tight">{line.text}</p>
+                                            {/* Font size lirik disamakan dengan interlude: text-[28px] */}
+                                            <p className={`font-bold text-[28px] leading-tight text-white tracking-tight ${isActive ? "active-lyric-glow-text" : ""}`}>{line.text}</p>
                                         </div>
                                     );
                                 })
@@ -592,18 +586,23 @@ const Card = () => {
 
             <style jsx global>{`
                 .no-scrollbar::-webkit-scrollbar { display: none; }
-                /* GRADIENT MASK FIX: Lebih pudar di atas dan bawah */
+                
+                /* MASK FIX: Gradient lebih luas agar pudarnya halus */
                 .mask-scroller-y { 
                     mask-image: linear-gradient(to bottom, transparent 2%, black 20%, black 80%, transparent 98%);
                     -webkit-mask-image: linear-gradient(to bottom, transparent 2%, black 20%, black 80%, transparent 98%);
                 }
-                /* GLOW FIX: 3 Layer Soft Shadow */
-                .active-lyric-glow p, .interlude-glow { 
+                
+                /* 5-LAYER HYPER GLOW: Smooth & Creamy */
+                .active-lyric-glow-text { 
                     text-shadow: 
-                        0 0 10px rgba(255,255,255,0.6), /* Core Brightness */
-                        0 0 25px rgba(255,255,255,0.3), /* Soft Bloom */
-                        0 0 50px rgba(255,255,255,0.15); /* Wide Ambient */
+                        0 0 5px rgba(255,255,255,0.8),   /* Core */
+                        0 0 10px rgba(255,255,255,0.6),  /* Inner Glow */
+                        0 0 20px rgba(255,255,255,0.4),  /* Mid Bloom */
+                        0 0 40px rgba(255,255,255,0.2),  /* Wide Glow */
+                        0 0 80px rgba(255,255,255,0.1);  /* Ambient Atmosphere */
                 }
+
                 @keyframes spin-slow { from { transform: rotate(0deg) scale(1.5); } to { transform: rotate(360deg) scale(1.5); } }
                 @keyframes spin-reverse { from { transform: rotate(360deg) scale(1.8) translate(10px, 10px); } to { transform: rotate(0deg) scale(1.8) translate(0px, 0px); } }
                 
