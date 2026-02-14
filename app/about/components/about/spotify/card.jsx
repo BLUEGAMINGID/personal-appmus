@@ -170,11 +170,12 @@ const LyricLine = React.memo(({ line, isActive, onClick, audioRef }) => {
 }, (prev, next) => prev.isActive === next.isActive && prev.line === next.line);
 LyricLine.displayName = "LyricLine";
 
-// --- MEMOIZED BACKGROUND (KEEP 3 LAYERS BUT OPTIMIZED) ---
+// --- MEMOIZED BACKGROUND (3 LAYERS - DESKTOP & MOBILE) ---
 const AliveBackground = React.memo(({ cover }) => (
     <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#101010] contain-strict">
         {cover && (
             <>
+                {/* Layer 1: Base */}
                 <div 
                     className="absolute inset-[-50%] bg-cover bg-center animate-spin-slow will-change-transform transform-gpu" 
                     style={{ 
@@ -185,6 +186,7 @@ const AliveBackground = React.memo(({ cover }) => (
                     }} 
                 />
                 
+                {/* Layer 2: Color Pop */}
                 <div 
                     className="absolute inset-[-50%] bg-cover bg-center animate-spin-reverse-slower will-change-transform transform-gpu" 
                     style={{ 
@@ -196,6 +198,7 @@ const AliveBackground = React.memo(({ cover }) => (
                     }} 
                 />
 
+                {/* Layer 3: Texture/Breathing */}
                 <div 
                     className="absolute inset-[-50%] bg-cover bg-center animate-pulse-spin will-change-transform transform-gpu" 
                     style={{ 
@@ -361,7 +364,7 @@ const Card = () => {
         }
 
         if (processedLyrics.length > 0) {
-            const lyricAnimationDelay = -0.5;
+            const lyricAnimationDelay = -0.7;
             const adjustedTime = mainTime - lyricAnimationDelay;
             let idx = -1;
             
@@ -423,10 +426,10 @@ const Card = () => {
     const handlePrev = () => setCurrentIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
     const selectSong = (idx) => { if (idx === currentIndex) { setShowPlaylist(false); return; } setCurrentIndex(idx); setShowPlaylist(false); };
 
-    // LAYOUT RESPONSIVE LOGIC
+    // Layout: 160px Mobile (Compact), 260px Desktop (Normal)
     const getCardHeight = () => {
         if (showLyrics || showPlaylist) return isDesktop ? 680 : 580; 
-        return isDesktop ? 260 : 160; // Mobile: 160px (Compact), Desktop: 260px (Normal)
+        return isDesktop ? 260 : 160; 
     };
 
     return (
@@ -436,7 +439,7 @@ const Card = () => {
 
             <div className="relative w-full rounded-[40px] overflow-hidden shadow-2xl bg-[#0a0a0a] transition-all duration-500 cubic-bezier(0.32, 0.72, 0, 1)" style={{ height: getCardHeight() }}>
                 
-                {/* 3 LAYERS BACKGROUND */}
+                {/* 3-LAYER ALIVE BACKGROUND (OPTIMIZED) */}
                 <AliveBackground cover={result.cover} />
 
                 <div className="relative z-10 w-full h-full p-6 flex flex-col border border-white/5">
@@ -478,7 +481,7 @@ const Card = () => {
                             </div>
                         )}
 
-                        {/* Lyrics Area */}
+                        {/* Lyrics Area (GPU OPTIMIZED) */}
                         <div ref={scrollRef} className="w-full h-full overflow-y-auto no-scrollbar pt-20 pb-32 px-4 mask-scroller-y">
                             {processedLyrics.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center h-full text-white/30 gap-2"><FontAwesomeIcon icon={faMusic} className="text-2xl" /><p className="text-sm">No Lyrics</p></div>
@@ -546,9 +549,9 @@ const Card = () => {
                     );
                 }
                 
-                /* 1-LAYER SMOOTH GLOW (ALL DEVICES) */
+                /* OPTIMIZED MOBILE GLOW (crisp & fast) */
                 .active-lyric-glow-text { 
-                    text-shadow: 0 0 25px rgba(255, 255, 255, 0.6);
+                    text-shadow: 0 0 5px rgba(255,255,255,0.4), 0 0 15px rgba(255,255,255,0.1);
                 }
 
                 @keyframes spin-slow { from { transform: rotate(0deg) scale(1.5); } to { transform: rotate(360deg) scale(1.5); } }
