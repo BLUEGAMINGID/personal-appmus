@@ -170,62 +170,47 @@ const LyricLine = React.memo(({ line, isActive, onClick, audioRef }) => {
 }, (prev, next) => prev.isActive === next.isActive && prev.line === next.line);
 LyricLine.displayName = "LyricLine";
 
-// --- MEMOIZED BACKGROUND (THE UPSCALE TRICK) ---
-// Kita pakai gambar super kecil (microCover), lalu scale besar.
-// Browser akan melakukan interpolasi (blur alami) GRATIS tanpa beban filter: blur().
+// --- MEMOIZED BACKGROUND (3 LAYERS - 600x600 for Smooth Blur) ---
 const AliveBackground = React.memo(({ cover }) => (
     <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#101010] contain-strict">
         {cover && (
             <>
-                {/* PERFORMANCE HACK:
-                   1. Hapus mix-blend-mode (Berat!). Ganti opacity.
-                   2. Gunakan transform: scale(3.5). Gambar 60px akan jadi 210px+ dan pecah/blur alami.
-                   3. Tambahkan sedikit filter: blur(15px) yg ringan untuk meratakan pixel.
-                */}
-
-                {/* Layer 1: Base (Lebar, putar lambat) */}
                 <div 
-                    className="absolute inset-0 bg-cover bg-center animate-spin-slow will-change-transform transform-gpu" 
+                    className="absolute inset-[-50%] bg-cover bg-center animate-spin-slow will-change-transform transform-gpu" 
                     style={{ 
                         backgroundImage: `url(${cover})`, 
-                        filter: 'blur(15px) saturate(200%) brightness(0.8)', 
-                        opacity: 0.6,
-                        transform: 'scale(3.5)', // Upscale trick
-                        animationDelay: '-12s'
+                        filter: 'blur(50px) saturate(250%) brightness(0.9)', 
+                        opacity: 0.6, 
+                        animationDelay: '-12s' 
                     }} 
                 />
                 
-                {/* Layer 2: Color (Putar balik) */}
                 <div 
-                    className="absolute inset-0 bg-cover bg-center animate-spin-reverse-slower will-change-transform transform-gpu" 
+                    className="absolute inset-[-50%] bg-cover bg-center animate-spin-reverse-slower will-change-transform transform-gpu" 
                     style={{ 
                         backgroundImage: `url(${cover})`, 
-                        // Mix-blend dihapus untuk performa, ganti opacity lebih rendah
-                        filter: 'blur(20px) saturate(250%)', 
-                        opacity: 0.4, 
-                        transform: 'scale(3.0)', 
+                        mixBlendMode: 'screen', 
+                        filter: 'blur(35px) saturate(300%) contrast(110%)', 
+                        opacity: 0.5, 
                         animationDelay: '-45s' 
                     }} 
                 />
 
-                {/* Layer 3: Pulse (Nafas) */}
                 <div 
-                    className="absolute inset-0 bg-cover bg-center animate-pulse-spin will-change-transform transform-gpu" 
+                    className="absolute inset-[-50%] bg-cover bg-center animate-pulse-spin will-change-transform transform-gpu" 
                     style={{ 
                         backgroundImage: `url(${cover})`, 
-                        filter: 'blur(10px) saturate(150%)', 
-                        opacity: 0.3,
-                        // Scale diatur di keyframes pulse
+                        mixBlendMode: 'overlay', 
+                        filter: 'blur(30px) saturate(200%) brightness(1.2)', 
+                        opacity: 0.3, 
                         animationDelay: '-23s' 
                     }} 
                 />
                 
-                {/* Dark Overlay untuk readability */}
-                <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/90" />
+                <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/90" />
             </>
         )}
-        {/* Noise overlay juga berat jika resolusi tinggi, pakai opacity rendah */}
-        <div className="absolute inset-0 opacity-[0.05] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay" />
+        <div className="absolute inset-0 opacity-[0.07] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay" />
     </div>
 ));
 AliveBackground.displayName = "AliveBackground";
@@ -237,8 +222,8 @@ const Card = () => {
     const [currentIndex, setCurrentIndex] = useState(0); 
     const [isMounted, setIsMounted] = useState(false);
     
-    // Result now holds microCover
-    const [result, setResult] = useState({ lyrics: [], title: "Loading...", artist: "Music", cover: null, microCover: null, audioUrl: "", karaokeUrl: null });
+    // Result State includes bgCover (600x600) and cover (300x300)
+    const [result, setResult] = useState({ lyrics: [], title: "Loading...", artist: "Music", cover: null, bgCover: null, audioUrl: "", karaokeUrl: null });
     
     const [isPaused, setIsPaused] = useState(true);
     const [duration, setDuration] = useState(0);
@@ -379,7 +364,7 @@ const Card = () => {
         }
 
         if (processedLyrics.length > 0) {
-            const lyricAnimationDelay = -0.5;
+            const lyricAnimationDelay = -0.6;
             const adjustedTime = mainTime - lyricAnimationDelay;
             let idx = -1;
             
@@ -441,12 +426,10 @@ const Card = () => {
     const handlePrev = () => setCurrentIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
     const selectSong = (idx) => { if (idx === currentIndex) { setShowPlaylist(false); return; } setCurrentIndex(idx); setShowPlaylist(false); };
 
-    // LAYOUT RESPONSIVE:
-    // Mobile Closed: 190px
-    // Desktop Closed: 260px
+    // Layout: 160px Mobile (Compact), 260px Desktop
     const getCardHeight = () => {
         if (showLyrics || showPlaylist) return isDesktop ? 680 : 580; 
-        return isDesktop ? 260 : 160; 
+        return isDesktop ? 260 : 190; 
     };
 
     return (
@@ -456,14 +439,13 @@ const Card = () => {
 
             <div className="relative w-full rounded-[40px] overflow-hidden shadow-2xl bg-[#0a0a0a] transition-all duration-500 cubic-bezier(0.32, 0.72, 0, 1)" style={{ height: getCardHeight() }}>
                 
-                {/* 3-LAYER ALIVE BACKGROUND (OPTIMIZED - Uses microCover) */}
-                <AliveBackground cover={result.microCover || result.cover} />
+                {/* 3-LAYER BACKGROUND (USES 600x600 for Smooth Blur) */}
+                <AliveBackground cover={result.bgCover || result.cover} />
 
                 <div className="relative z-10 w-full h-full p-6 flex flex-col border border-white/5">
-                    {/* Header */}
+                    {/* Header (USES 300x300 for Sharpness & Speed) */}
                     <div className="flex items-center space-x-5 shrink-0 mb-4 relative z-50">
                         <div className="w-14 h-14 rounded-lg overflow-hidden shadow-lg relative shrink-0 border border-white/10 bg-white/5">
-                            {/* Main Cover must be HD (300px) */}
                             {result.cover ? <img src={result.cover} alt="Cover" className="w-full h-full object-cover" loading="eager" decoding="async" /> : <div className="w-full h-full flex items-center justify-center"><FontAwesomeIcon icon={faApple} className="text-white/30 text-xl" /></div>}
                         </div>
                         <div className="min-w-0 flex flex-col justify-center flex-1">
@@ -543,7 +525,7 @@ const Card = () => {
             <style jsx global>{`
                 .no-scrollbar::-webkit-scrollbar { display: none; }
                 
-                /* DEEP MASK FIX */
+                /* DEEP MASK FIX (25%) */
                 .mask-scroller-y { 
                     mask-image: linear-gradient(to bottom, 
                         transparent 0%, 
@@ -567,19 +549,22 @@ const Card = () => {
                     );
                 }
                 
-                /* 1-LAYER SMOOTH GLOW (MOBILE OPTIMIZED) */
-                /* Menggunakan radius 5px (tajam) + 15px (bloom) di 1 layer shadow */
+                /* 5-LAYER ULTRA SOFT GLOW (WITH GPU HACK) */
                 .active-lyric-glow-text { 
-                    text-shadow: 0 0 5px rgba(255,255,255,0.4), 0 0 15px rgba(255,255,255,0.1);
+                    text-shadow: 
+                        0 0 5px rgba(255,255,255,0.30),   
+                        0 0 10px rgba(255,255,255,0.25),  
+                        0 0 20px rgba(255,255,255,0.15),
+                        0 0 40px rgba(255,255,255,0.08),
+                        0 0 80px rgba(255,255,255,0.05);
                 }
 
-                /* ANIMATIONS (Optimized) */
-                @keyframes spin-slow { from { transform: rotate(0deg) scale(3.5); } to { transform: rotate(360deg) scale(3.5); } }
-                @keyframes spin-reverse-slower { from { transform: rotate(360deg) scale(3.0); } to { transform: rotate(0deg) scale(3.0); } }
+                @keyframes spin-slow { from { transform: rotate(0deg) scale(1.5); } to { transform: rotate(360deg) scale(1.5); } }
+                @keyframes spin-reverse-slower { from { transform: rotate(360deg) scale(1.2); } to { transform: rotate(0deg) scale(1.2); } }
                 @keyframes pulse-spin { 
-                    0% { transform: rotate(0deg) scale(3.2); opacity: 0.3; } 
-                    50% { transform: rotate(180deg) scale(3.8); opacity: 0.5; }
-                    100% { transform: rotate(360deg) scale(3.2); opacity: 0.3; }
+                    0% { transform: rotate(0deg) scale(1.4); opacity: 0.3; } 
+                    50% { transform: rotate(180deg) scale(1.6); opacity: 0.5; }
+                    100% { transform: rotate(360deg) scale(1.4); opacity: 0.3; }
                 }
                 
                 .animate-spin-slow { animation: spin-slow 90s linear infinite; }
