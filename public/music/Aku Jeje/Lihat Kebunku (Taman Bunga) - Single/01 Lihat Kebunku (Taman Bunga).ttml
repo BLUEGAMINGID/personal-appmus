@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="en">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal" leadingSilence="0.260">
+				<translations/>
+				<songwriters>
+					<songwriter>Heinriko Christiansen</songwriter>
+					<songwriter>Mohammad Zaydan Hasan Mubarok</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="3:09.897">
+		<div begin="26.770" end="36.681" itunes:songPart="Verse">
+			<p begin="26.770" end="28.764" itunes:key="L1" ttm:agent="v1">Lihat kebunku</p>
+			<p begin="29.596" end="31.523" itunes:key="L2" ttm:agent="v1">Tercipta sempurna</p>
+			<p begin="32.380" end="34.096" itunes:key="L3" ttm:agent="v1">Sederhana</p>
+			<p begin="34.921" end="36.681" itunes:key="L4" ttm:agent="v1">Satu yang kupunya</p>
+		</div>
+		<div begin="37.430" end="47.354" itunes:songPart="Verse">
+			<p begin="37.430" end="39.731" itunes:key="L5" ttm:agent="v1">Setiap hari</p>
+			<p begin="40.321" end="42.257" itunes:key="L6" ttm:agent="v1">Kusiram sendiri</p>
+			<p begin="42.940" end="44.725" itunes:key="L7" ttm:agent="v1">Wahai melati</p>
+			<p begin="45.598" end="47.354" itunes:key="L8" ttm:agent="v1">Kau cantik berseri</p>
+		</div>
+		<div begin="49.680" end="1:10.813" itunes:songPart="PreChorus">
+			<p begin="49.680" end="53.423" itunes:key="L9" ttm:agent="v1">Sungguh kelabu</p>
+			<p begin="55.620" end="58.400" itunes:key="L10" ttm:agent="v1">Kulukis indah rupamu</p>
+			<p begin="1:00.520" end="1:04.160" itunes:key="L11" ttm:agent="v1">Oh, sungguh layu</p>
+			<p begin="1:06.320" end="1:10.813" itunes:key="L12" ttm:agent="v1">Harapanku kepadamu</p>
+		</div>
+		<div begin="1:12.430" end="1:31.224" itunes:songPart="Chorus">
+			<p begin="1:12.430" end="1:14.468" itunes:key="L13" ttm:agent="v1">Oh, mengapa</p>
+			<p begin="1:15.530" end="1:19.436" itunes:key="L14" ttm:agent="v1">Bunga di taman hatiku hanya satu?</p>
+			<p begin="1:23.050" end="1:25.332" itunes:key="L15" ttm:agent="v1">Oh, menghilang</p>
+			<p begin="1:26.100" end="1:31.224" itunes:key="L16" ttm:agent="v1">Bunga kesayanganku diambil orang</p>
+		</div>
+		<div begin="1:41.750" end="2:08.454" itunes:songPart="Verse">
+			<p begin="1:41.750" end="1:46.343" itunes:key="L17" ttm:agent="v1">Mekarlah selamanya di taman yang lain</p>
+			<p begin="1:48.390" end="1:51.673" itunes:key="L18" ttm:agent="v1">Sungguh kelabu</p>
+			<p begin="1:53.000" end="1:56.367" itunes:key="L19" ttm:agent="v1">Kini tamanku tanpamu</p>
+			<p begin="1:57.830" end="2:01.703" itunes:key="L20" ttm:agent="v1">Jangan kau layu</p>
+			<p begin="2:03.550" end="2:08.454" itunes:key="L21" ttm:agent="v1">Semesta 'kan menjagamu</p>
+		</div>
+		<div begin="2:09.600" end="2:27.958" itunes:songPart="Chorus">
+			<p begin="2:09.600" end="2:11.984" itunes:key="L22" ttm:agent="v1">Oh, mengapa</p>
+			<p begin="2:12.810" end="2:16.928" itunes:key="L23" ttm:agent="v1">Bunga di taman hatiku hanya satu?</p>
+			<p begin="2:20.280" end="2:22.700" itunes:key="L24" ttm:agent="v1">Oh, menghilang</p>
+			<p begin="2:23.510" end="2:25.846" itunes:key="L25" ttm:agent="v1">Bunga kesayanganku</p>
+			<p begin="2:25.846" end="2:27.958" itunes:key="L26" ttm:agent="v1">Tak mengapa</p>
+		</div>
+		<div begin="2:28.780" end="2:43.971" itunes:songPart="Refrain">
+			<p begin="2:28.780" end="2:36.649" itunes:key="L27" ttm:agent="v1">Bila di taman hatiku tak berbunga (Oh, mengapa selamanya?)</p>
+			<p begin="2:36.490" end="2:38.657" itunes:key="L28" ttm:agent="v1">Bersenanglah</p>
+			<p begin="2:39.520" end="2:43.971" itunes:key="L29" ttm:agent="v1">Bunga kesayanganku tumbuh bahagia</p>
+		</div>
+		<div begin="2:53.900" end="3:04.863" itunes:songPart="Outro">
+			<p begin="2:53.900" end="2:57.665" itunes:key="L30" ttm:agent="v1">Hmm-mmm-mmm</p>
+			<p begin="2:58.370" end="3:04.863" itunes:key="L31" ttm:agent="v1">Hmm-mmm-mmm, hmm-mmm</p>
+		</div>
+	</body>
+</tt>
+
+

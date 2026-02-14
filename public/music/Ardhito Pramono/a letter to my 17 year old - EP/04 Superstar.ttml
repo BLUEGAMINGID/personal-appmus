@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" itunes:timing="Line" xml:lang="en">
+	<head>
+		<metadata>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal" leadingSilence="0.980">
+				<translations/>
+				<songwriters>
+					<songwriter>Ardhito Pramono</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="2:16.020">
+		<div begin="21.020" end="1:19.280">
+			<p begin="21.020" end="23.580">Will you tie my shoe, do the laundry too?</p>
+			<p begin="23.580" end="25.960">And do all that things I shouldn't do?</p>
+			<p begin="25.960" end="30.550">I'm living like a superstar</p>
+			<p begin="30.550" end="33.100">Will, would you take me to the rendezvous?</p>
+			<p begin="33.100" end="35.510">Don't forget to play my favorite tune</p>
+			<p begin="35.510" end="37.000">And pick up my friends</p>
+			<p begin="37.000" end="40.290">We talk and then we go, &quot;Blah, blah, blah, blah&quot;</p>
+			<p begin="40.290" end="42.770">We have arrived, friends! Oh, hey Wayne!</p>
+			<p begin="42.770" end="45.090">I will buy all your favorite champagne</p>
+			<p begin="45.090" end="49.410">'Cause, baby, I'm a superstar</p>
+			<p begin="49.410" end="54.250">But when the nighttime comes, I'm feeling very lonely</p>
+			<p begin="54.250" end="59.030">No ones around will come and share a bedtime story</p>
+			<p begin="59.030" end="1:03.800">And here I am, longing someone to comfort me</p>
+			<p begin="1:03.800" end="1:08.900">Will anyone? My followers on Instagram?</p>
+			<p begin="1:08.900" end="1:11.570">Will, would you take me to the rendezvous?</p>
+			<p begin="1:11.570" end="1:13.970">Don't forget to play my favorite tune</p>
+			<p begin="1:13.970" end="1:19.280">I'm living like a superstar</p>
+		</div>
+		<div begin="1:37.480" end="2:16.020">
+			<p begin="1:37.480" end="1:42.210">But when the nighttime comes, I'm feeling very lonely</p>
+			<p begin="1:42.210" end="1:47.140">No ones around will come and share a bedtime story</p>
+			<p begin="1:47.140" end="1:51.840">And here I am, longing someone to comfort me</p>
+			<p begin="1:51.840" end="1:56.970">Will anyone? My followers on Instagram?</p>
+			<p begin="1:56.970" end="1:59.600">Will, you take my loot, my whole life too</p>
+			<p begin="1:59.600" end="2:01.960">My precious baby boyfriend too</p>
+			<p begin="2:01.960" end="2:06.660">I'm living like a superstar</p>
+			<p begin="2:06.660" end="2:09.840">I'm living like a superstar</p>
+			<p begin="2:09.840" end="2:16.020">La-la-la-la-la-la, like a superstar</p>
+		</div>
+	</body>
+</tt>
+
+

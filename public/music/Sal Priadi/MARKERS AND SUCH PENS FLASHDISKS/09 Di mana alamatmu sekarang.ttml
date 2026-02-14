@@ -1,0 +1,58 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="id">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal">
+				<translations/>
+				<songwriters>
+					<songwriter>Salmantyo Ashrizky Priadi</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="5:07.925">
+		<div begin="17.469" end="59.026" itunes:songPart="Verse">
+			<p begin="17.469" end="29.270" itunes:key="L1" ttm:agent="v1">Masih kusirami bunga-bungamu dalam pot itu</p>
+			<p begin="31.012" end="42.024" itunes:key="L2" ttm:agent="v1">Hampir setiap hari sesuai instruksimu</p>
+			<p begin="43.496" end="49.354" itunes:key="L3" ttm:agent="v1">Di kertas yang kau tulis tangan</p>
+			<p begin="50.366" end="59.026" itunes:key="L4" ttm:agent="v1">Masih ada dan selalu menempel di dinding ruangan</p>
+		</div>
+		<div begin="1:01.648" end="1:44.022" itunes:songPart="Verse">
+			<p begin="1:01.648" end="1:12.960" itunes:key="L5" ttm:agent="v1">Masih kubiarkan langganan majalahmu</p>
+			<p begin="1:15.143" end="1:26.623" itunes:key="L6" ttm:agent="v1">Dikirim ke tempatku, menumpuk di atas rak buku</p>
+			<p begin="1:27.089" end="1:33.876" itunes:key="L7" ttm:agent="v1">Topik-topik yang sering kau ceritakan</p>
+			<p begin="1:34.455" end="1:44.022" itunes:key="L8" ttm:agent="v1">Asing, kadang tak mengerti, kucoba selalu dengarkan</p>
+		</div>
+		<div begin="1:45.472" end="2:13.703" itunes:songPart="Chorus">
+			<p begin="1:45.472" end="1:49.965" itunes:key="L9" ttm:agent="v1">Di mana alamatmu sekarang?</p>
+			<p begin="1:52.213" end="1:56.587" itunes:key="L10" ttm:agent="v1">Apakah sudah kau temukan</p>
+			<p begin="1:57.373" end="2:04.301" itunes:key="L11" ttm:agent="v1">Rumah dalam bentuk orang yang kau sayang?</p>
+			<p begin="2:05.625" end="2:13.703" itunes:key="L12" ttm:agent="v1">Kira-kira seberapa lama kali ini kau 'kan bertahan?</p>
+		</div>
+		<div begin="2:46.912" end="3:29.662" itunes:songPart="Verse">
+			<p begin="2:46.912" end="2:59.275" itunes:key="L13" ttm:agent="v1">Masih 'kan terbuka, tak pernah kukunci pintunya</p>
+			<p begin="3:00.232" end="3:08.635" itunes:key="L14" ttm:agent="v1">Barangkali di luar hujan, kau datang</p>
+			<p begin="3:12.864" end="3:22.346" itunes:key="L15" ttm:agent="v1">Sisi tempat tidurmu masih selalu</p>
+			<p begin="3:24.190" end="3:29.662" itunes:key="L16" ttm:agent="v1">Kurapihkan</p>
+		</div>
+		<div begin="3:30.664" end="4:01.204" itunes:songPart="Chorus">
+			<p begin="3:30.664" end="3:35.292" itunes:key="L17" ttm:agent="v1">Di mana alamatmu sekarang?</p>
+			<p begin="3:37.512" end="3:41.905" itunes:key="L18" ttm:agent="v1">Apakah sudah kau temukan</p>
+			<p begin="3:42.661" end="3:49.703" itunes:key="L19" ttm:agent="v1">Rumah dalam bentuk orang yang kau sayang?</p>
+			<p begin="3:50.833" end="4:01.204" itunes:key="L20" ttm:agent="v1">Kira-kira seberapa lama kali ini kau 'kan bertahan?</p>
+		</div>
+		<div begin="4:01.204" end="4:58.145" itunes:songPart="Chorus">
+			<p begin="4:01.204" end="4:06.212" itunes:key="L21" ttm:agent="v1">Di mana alamatmu sekarang?</p>
+			<p begin="4:07.268" end="4:12.864" itunes:key="L22" ttm:agent="v1">Apakah sudah kau temukan</p>
+			<p begin="4:13.199" end="4:20.242" itunes:key="L23" ttm:agent="v1">Rumah dalam bentuk orang yang kau sayang?</p>
+			<p begin="4:21.386" end="4:30.724" itunes:key="L24" ttm:agent="v1">Kira-kira seberapa lama kali ini kau 'kan bertahan?</p>
+			<p begin="4:33.705" end="4:37.233" itunes:key="L25" ttm:agent="v1">Kau 'kan bertahan</p>
+			<p begin="4:40.447" end="4:43.729" itunes:key="L26" ttm:agent="v1">Kau 'kan bertahan</p>
+			<p begin="4:47.266" end="4:50.234" itunes:key="L27" ttm:agent="v1">Kau 'kan bertahan</p>
+			<p begin="4:54.137" end="4:58.145" itunes:key="L28" ttm:agent="v1">Kau 'kan bertahan</p>
+		</div>
+	</body>
+</tt>
+
+

@@ -1,0 +1,113 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="id">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<ttm:agent type="other" xml:id="v2000"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal" leadingSilence="0.020">
+				<translations/>
+				<songwriters>
+					<songwriter>Baskara Putra</songwriter>
+					<songwriter>Hasief Ardiasyah</songwriter>
+					<songwriter>Iga Massardi</songwriter>
+					<songwriter>Madu Kinanti</songwriter>
+					<songwriter>Pradipta Beawiharta</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="3:50.506">
+		<div begin="0.567" end="19.448" itunes:songPart="Verse">
+			<p begin="0.567" end="2.205" itunes:key="L1" ttm:agent="v1">Dua dekade</p>
+			<p begin="2.205" end="5.026" itunes:key="L2" ttm:agent="v1">Ratusan janji yang tak selesai</p>
+			<p begin="5.241" end="6.789" itunes:key="L3" ttm:agent="v1">Taman bermain</p>
+			<p begin="6.994" end="9.611" itunes:key="L4" ttm:agent="v1">Yang berkarat dan terbengkalai</p>
+			<p begin="9.887" end="14.918" itunes:key="L5" ttm:agent="v1">Jadi saksi generasi yang dipaksa tumbuh dewasa</p>
+			<p begin="15.150" end="17.319" itunes:key="L6" ttm:agent="v1">Direnggut masa mudanya</p>
+			<p begin="17.413" end="19.448" itunes:key="L7" ttm:agent="v1">Dijajah pelayannya</p>
+		</div>
+		<div begin="19.164" end="37.388" itunes:songPart="Verse">
+			<p begin="19.164" end="23.511" itunes:key="L8" ttm:agent="v1">Apakah kita memang terpaksa harus berdamai?</p>
+			<p begin="23.841" end="25.466" itunes:key="L9" ttm:agent="v1">Bahwa semua</p>
+			<p begin="25.466" end="28.317" itunes:key="L10" ttm:agent="v1">Mimpi bersama takkan tercapai</p>
+			<p begin="28.504" end="30.105" itunes:key="L11" ttm:agent="v1">Atau sebaliknya</p>
+			<p begin="30.136" end="32.391" itunes:key="L12" ttm:agent="v1">Lihat pagar yang tak terbuka</p>
+			<p begin="32.480" end="34.776" itunes:key="L13" ttm:agent="v1">Jadi bunga di tirai besi</p>
+			<p begin="34.776" end="37.388" itunes:key="L14" ttm:agent="v1">Berjuang dan tak henti di sini</p>
+		</div>
+		<div begin="37.534" end="55.851" itunes:songPart="PreChorus" ttm:agent="v2000">
+			<p begin="37.534" end="39.425" itunes:key="L15" ttm:agent="v2000">Oh</p>
+			<p begin="39.827" end="43.987" itunes:key="L16" ttm:agent="v2000">Pray that I still have it in me</p>
+			<p begin="42.789" end="48.543" itunes:key="L17" ttm:agent="v1">Bunga di tirai besi, mengakar berlipat kali</p>
+			<p begin="46.865" end="49.239" itunes:key="L18" ttm:agent="v2000">Oh</p>
+			<p begin="49.239" end="50.866" itunes:key="L19" ttm:agent="v2000">Pray that I still</p>
+			<p begin="50.946" end="55.851" itunes:key="L20" ttm:agent="v2000">Pray that I still have it in me</p>
+		</div>
+		<div begin="56.185" end="1:14.606" itunes:songPart="Chorus">
+			<p begin="56.185" end="58.528" itunes:key="L21" ttm:agent="v1">You and me both</p>
+			<p begin="58.528" end="1:00.648" itunes:key="L22" ttm:agent="v1">We want the same thing</p>
+			<p begin="1:00.849" end="1:03.218" itunes:key="L23" ttm:agent="v1">Riding on danger</p>
+			<p begin="1:03.218" end="1:05.235" itunes:key="L24" ttm:agent="v1">Oh, like it's nothing</p>
+			<p begin="1:05.235" end="1:08.548" itunes:key="L25" ttm:agent="v1">We know it won't end well</p>
+			<p begin="1:08.721" end="1:10.569" itunes:key="L26" ttm:agent="v1">We'll keep on singing</p>
+			<p begin="1:11.030" end="1:12.697" itunes:key="L27" ttm:agent="v1">Keep holding on</p>
+			<p begin="1:12.804" end="1:14.606" itunes:key="L28" ttm:agent="v1">Bring on the letdown</p>
+		</div>
+		<div begin="1:14.835" end="1:34.451" itunes:songPart="Chorus">
+			<p begin="1:14.835" end="1:17.095" itunes:key="L29" ttm:agent="v1">You and me both</p>
+			<p begin="1:17.148" end="1:19.210" itunes:key="L30" ttm:agent="v1">We want the same thing</p>
+			<p begin="1:19.468" end="1:21.845" itunes:key="L31" ttm:agent="v1">Riding on danger</p>
+			<p begin="1:21.845" end="1:23.890" itunes:key="L32" ttm:agent="v1">Oh, like it's nothing</p>
+			<p begin="1:23.890" end="1:27.197" itunes:key="L33" ttm:agent="v1">We know it won't end well</p>
+			<p begin="1:27.357" end="1:29.096" itunes:key="L34" ttm:agent="v1">We'll keep on singing</p>
+			<p begin="1:29.662" end="1:31.241" itunes:key="L35" ttm:agent="v1">Keep holding on</p>
+			<p begin="1:31.393" end="1:34.451" itunes:key="L36" ttm:agent="v1">Bring on the letdown</p>
+		</div>
+		<div begin="1:38.399" end="1:56.583" itunes:songPart="Bridge">
+			<p begin="1:38.399" end="1:39.981" itunes:key="L37" ttm:agent="v1">Ku tak terima</p>
+			<p begin="1:40.021" end="1:42.814" itunes:key="L38" ttm:agent="v1">Jika kita yang harus mengalah</p>
+			<p begin="1:43.068" end="1:44.695" itunes:key="L39" ttm:agent="v1">Beranjak pergi</p>
+			<p begin="1:44.695" end="1:47.495" itunes:key="L40" ttm:agent="v1">Di tanah ibu, aku terjajah</p>
+			<p begin="1:47.714" end="1:49.343" itunes:key="L41" ttm:agent="v1">Atau sebaliknya</p>
+			<p begin="1:49.343" end="1:51.549" itunes:key="L42" ttm:agent="v1">Tegap kencangkan kuda-kuda</p>
+			<p begin="1:51.698" end="1:53.962" itunes:key="L43" ttm:agent="v1">Tuang semen di mata kaki</p>
+			<p begin="1:54.017" end="1:56.583" itunes:key="L44" ttm:agent="v1">Berjuang dan tak henti di sini</p>
+		</div>
+		<div begin="2:15.444" end="2:33.530" itunes:songPart="PreChorus">
+			<p begin="2:15.444" end="2:17.055" itunes:key="L45" ttm:agent="v2000">Oh</p>
+			<p begin="2:17.744" end="2:21.881" itunes:key="L46" ttm:agent="v2000">Pray that I still have it in me</p>
+			<p begin="2:20.688" end="2:25.523" itunes:key="L47" ttm:agent="v1">Bunga di tirai besi, mengakar berlipat kali</p>
+			<p begin="2:24.666" end="2:27.091" itunes:key="L48" ttm:agent="v1">Oh</p>
+			<p begin="2:27.091" end="2:28.536" itunes:key="L49" ttm:agent="v1">Pray that I still</p>
+			<p begin="2:28.838" end="2:33.530" itunes:key="L50" ttm:agent="v1">Pray that I still have it in me</p>
+		</div>
+		<div begin="2:34.029" end="2:53.125" itunes:songPart="Chorus">
+			<p begin="2:34.029" end="2:36.366" itunes:key="L51" ttm:agent="v1">You and me both</p>
+			<p begin="2:36.366" end="2:40.869" itunes:key="L52" ttm:agent="v1">We want the same thing (We want the same thing)</p>
+			<p begin="2:38.687" end="2:41.085" itunes:key="L53" ttm:agent="v1">Riding on danger</p>
+			<p begin="2:41.085" end="2:45.470" itunes:key="L54" ttm:agent="v1">Oh, like it's nothing (Oh, like it's nothing)</p>
+			<p begin="2:43.095" end="2:46.349" itunes:key="L55" ttm:agent="v1">We know it won't end well</p>
+			<p begin="2:46.606" end="2:48.329" itunes:key="L56" ttm:agent="v1">We'll keep on singing</p>
+			<p begin="2:48.905" end="2:50.607" itunes:key="L57" ttm:agent="v1">Keep holding on</p>
+			<p begin="2:50.607" end="2:53.125" itunes:key="L58" ttm:agent="v1">Bring on the letdown</p>
+		</div>
+		<div begin="2:52.674" end="3:12.076" itunes:songPart="Chorus">
+			<p begin="2:52.674" end="2:55.896" itunes:key="L59" ttm:agent="v1">You and me both (You and me both)</p>
+			<p begin="2:55.026" end="2:58.872" itunes:key="L60" ttm:agent="v1">We want the same thing (We want the same thing)</p>
+			<p begin="2:57.306" end="2:59.709" itunes:key="L61" ttm:agent="v1">Riding on danger</p>
+			<p begin="2:59.709" end="3:04.357" itunes:key="L62" ttm:agent="v1">Oh, like it's nothing (Like it was nothing)</p>
+			<p begin="3:01.727" end="3:05.071" itunes:key="L63" ttm:agent="v1">We know it won't end well</p>
+			<p begin="3:05.246" end="3:07.049" itunes:key="L64" ttm:agent="v1">We'll keep on singing</p>
+			<p begin="3:07.566" end="3:09.055" itunes:key="L65" ttm:agent="v1">Keep holding on</p>
+			<p begin="3:09.283" end="3:12.076" itunes:key="L66" ttm:agent="v1">Bring on the letdown</p>
+		</div>
+		<div begin="3:11.637" end="3:48.755" itunes:songPart="Chorus">
+			<p begin="3:11.637" end="3:16.094" itunes:key="L67" ttm:agent="v1">We get high from the letdown</p>
+			<p begin="3:16.309" end="3:20.728" itunes:key="L68" ttm:agent="v1">We get high from the letdown</p>
+			<p begin="3:20.944" end="3:25.352" itunes:key="L69" ttm:agent="v1">We get high from the letdown</p>
+			<p begin="3:25.614" end="3:48.755" itunes:key="L70" ttm:agent="v1">We get high from the letdown</p>
+		</div>
+	</body>
+</tt>
+
+

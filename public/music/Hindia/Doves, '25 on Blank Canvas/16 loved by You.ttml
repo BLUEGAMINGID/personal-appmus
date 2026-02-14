@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="en">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal">
+				<translations/>
+				<songwriters>
+					<songwriter>Hasief Ardiasyah</songwriter>
+					<songwriter>Hindia</songwriter>
+					<songwriter>Kusuma Widhiana</songwriter>
+					<songwriter>Lafa Pratomo</songwriter>
+					<songwriter>Petra Sihombing</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="4:43.025">
+		<div begin="43.383" end="1:10.478" itunes:songPart="Verse">
+			<p begin="43.383" end="48.664" itunes:key="L1" ttm:agent="v1">It’s been a year since my last therapy</p>
+			<p begin="50.456" end="56.514" itunes:key="L2" ttm:agent="v1">If I'm being honest I've been looking for signs to come back</p>
+			<p begin="57.512" end="1:03.310" itunes:key="L3" ttm:agent="v1">It’s been three years since I moved closer to the city</p>
+			<p begin="1:04.540" end="1:10.478" itunes:key="L4" ttm:agent="v1">If I'm being honest I've been looking for signs to go back</p>
+		</div>
+		<div begin="1:11.353" end="1:38.844" itunes:songPart="PreChorus">
+			<p begin="1:11.353" end="1:17.690" itunes:key="L5" ttm:agent="v1">I've been so fast to judge that I'm sick</p>
+			<p begin="1:18.428" end="1:24.602" itunes:key="L6" ttm:agent="v1">I've been so fast to judge that I'm hated</p>
+			<p begin="1:25.529" end="1:31.039" itunes:key="L7" ttm:agent="v1">I’ve been thinking maybe your attention’s just a trick</p>
+			<p begin="1:32.395" end="1:38.844" itunes:key="L8" ttm:agent="v1">Some twisted game that would come to bite me much later</p>
+		</div>
+		<div begin="1:39.525" end="2:07.752" itunes:songPart="PreChorus">
+			<p begin="1:39.525" end="1:45.553" itunes:key="L9" ttm:agent="v1">Most days it seems impossible for me to get better</p>
+			<p begin="1:46.607" end="1:52.730" itunes:key="L10" ttm:agent="v1">Most days it seems impossible for me to remember</p>
+			<p begin="1:53.510" end="1:57.109" itunes:key="L11" ttm:agent="v1">That you would be there to catch me when I fall</p>
+			<p begin="1:57.109" end="2:00.669" itunes:key="L12" ttm:agent="v1">That I have you that would answer when I call</p>
+			<p begin="2:00.801" end="2:04.222" itunes:key="L13" ttm:agent="v1">Today I started to count all my blessings</p>
+			<p begin="2:04.355" end="2:07.752" itunes:key="L14" ttm:agent="v1">Today I realized that I've been</p>
+		</div>
+		<div begin="2:08.526" end="2:58.896" itunes:songPart="Chorus">
+			<p begin="2:08.526" end="2:11.669" itunes:key="L15" ttm:agent="v1">Loved by You</p>
+			<p begin="2:12.273" end="2:17.592" itunes:key="L16" ttm:agent="v1">All along</p>
+			<p begin="2:22.684" end="2:26.044" itunes:key="L17" ttm:agent="v1">Loved by You</p>
+			<p begin="2:26.398" end="2:30.995" itunes:key="L18" ttm:agent="v1">All along</p>
+			<p begin="2:33.424" end="2:38.244" itunes:key="L19" ttm:agent="v1">Loved by You</p>
+			<p begin="2:36.888" end="2:40.212" itunes:key="L20" ttm:agent="v1">Loved by You</p>
+			<p begin="2:40.511" end="2:45.893" itunes:key="L21" ttm:agent="v1">All along</p>
+			<p begin="2:50.980" end="2:54.379" itunes:key="L22" ttm:agent="v1">Loved by You</p>
+			<p begin="2:54.613" end="2:58.896" itunes:key="L23" ttm:agent="v1">All along</p>
+		</div>
+		<div begin="3:04.311" end="3:26.511" itunes:songPart="Chorus">
+			<p begin="3:04.311" end="3:12.651" itunes:key="L24" ttm:agent="v1">Loved by You, loved by You</p>
+			<p begin="3:18.461" end="3:26.511" itunes:key="L25" ttm:agent="v1">Loved by You, loved by You</p>
+		</div>
+	</body>
+</tt>
+
+

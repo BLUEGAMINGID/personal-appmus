@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" itunes:timing="Line" xml:lang="id">
+	<head>
+		<metadata>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal" leadingSilence="0">
+				<translations/>
+				<songwriters>
+					<songwriter>Salmantyo Ashrizky Priadi</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="3:56.432">
+		<div begin="0.760" end="39.777" itunes:songPart="Verse">
+			<p begin="0.760" end="2.967" itunes:key="L55989">Lewat sudah</p>
+			<p begin="4.070" end="6.405" itunes:key="L55990">Pukul dua</p>
+			<p begin="7.273" end="13.325" itunes:key="L55991">Makin banyak bicara kita</p>
+			<p begin="13.876" end="25.526" itunes:key="L55992">Kau semakin merah delima</p>
+			<p begin="26.900" end="29.403" itunes:key="L55993">Lewat sudah</p>
+			<p begin="30.238" end="32.835" itunes:key="L55994">Pukul dua</p>
+			<p begin="33.420" end="39.777" itunes:key="L55995">Merayakan tahun kesekian bersama</p>
+		</div>
+		<div begin="41.450" end="1:34.356" itunes:songPart="Verse">
+			<p begin="41.450" end="50.978" itunes:key="L55996">Aku semakin mirip kau, sebaliknya</p>
+			<p begin="51.270" end="1:03.686" itunes:key="L55997">Orang sepertimu dan varian macam aku dibenturkan jadi satu</p>
+			<p begin="1:04.370" end="1:17.838" itunes:key="L55998">Ternyata unik, meski berisik, tapi dari segala sisi kita menarik</p>
+			<p begin="1:18.224" end="1:25.349" itunes:key="L55999">Kita jangan jadi tua dan membosankan</p>
+			<p begin="1:25.659" end="1:34.356" itunes:key="L56000">Selamanya janjinya menyenangkan, oh</p>
+		</div>
+		<div begin="1:40.426" end="2:30.910" itunes:songPart="Verse">
+			<p begin="1:40.426" end="1:50.024" itunes:key="L56002">Selamanya menyenangkan</p>
+			<p begin="1:53.492" end="2:04.467" itunes:key="L56003">Selamanya mengesankan</p>
+			<p begin="2:06.568" end="2:16.628" itunes:key="L56004">Selamanya menenangkan</p>
+			<p begin="2:19.650" end="2:30.910" itunes:key="L56005">Selamanya menyenangkan</p>
+		</div>
+		<div begin="2:32.689" end="2:48.367" itunes:songPart="Verse">
+			<p begin="2:32.689" end="2:38.858" itunes:key="L56006">Kalaupun tua, terkadang menyebalkan</p>
+			<p begin="2:39.016" end="2:48.367" itunes:key="L56007">Tapi janjinya selamanya menyenangkan, oh</p>
+		</div>
+		<div begin="2:52.363" end="3:42.510" itunes:songPart="Verse">
+			<p begin="2:52.363" end="3:02.709" itunes:key="L56009">Selamanya menyenangkan</p>
+			<p begin="3:05.451" end="3:15.900" itunes:key="L56010">Selamanya mengesankan</p>
+			<p begin="3:18.567" end="3:29.132" itunes:key="L56011">Selamanya menenangkan</p>
+			<p begin="3:31.683" end="3:42.510" itunes:key="L56012">Selamanya menyenangkan</p>
+		</div>
+		<div begin="3:44.888" end="3:55.570" itunes:songPart="Verse">
+			<p begin="3:44.888" end="3:49.524" itunes:key="L57723">Selamanya menyenangkan</p>
+			<p begin="3:49.696" end="3:55.570" itunes:key="L57793">Oh-oh-uh-hu-uh-uh, hey-eh-eh</p>
+		</div>
+	</body>
+</tt>
+
+

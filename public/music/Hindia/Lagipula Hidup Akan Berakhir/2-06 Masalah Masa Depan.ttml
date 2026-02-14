@@ -1,0 +1,86 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="id">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<ttm:agent type="other" xml:id="v2000"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal" leadingSilence="0">
+				<translations/>
+				<songwriters>
+					<songwriter>Baskara Putra</songwriter>
+					<songwriter>Enrico Octaviano</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="4:45.853">
+		<div begin="16.635" end="34.987" itunes:songPart="Verse">
+			<p begin="16.635" end="20.592" itunes:key="L1" ttm:agent="v1">Ku tak cukup pintar 'tuk bicarakan uang</p>
+			<p begin="21.382" end="25.278" itunes:key="L2" ttm:agent="v1">Ku tak cukup peka 'tuk bicarakan alam</p>
+			<p begin="25.808" end="30.024" itunes:key="L3" ttm:agent="v1">Tak cukup bijak 'tuk bicarakan orang</p>
+			<p begin="30.218" end="34.987" itunes:key="L4" ttm:agent="v1">Pikiranku bertandang, jauh dari sekarang</p>
+		</div>
+		<div begin="35.170" end="53.841" itunes:songPart="PreChorus" ttm:agent="v2000">
+			<p begin="35.170" end="39.550" itunes:key="L5" ttm:agent="v2000">Yang ku tahu besok hancur berantakan</p>
+			<p begin="39.550" end="44.660" itunes:key="L6" ttm:agent="v1">Seperti kata orang pintar macam Gita Wirjawan</p>
+			<p begin="44.660" end="49.044" itunes:key="L7" ttm:agent="v2000">Dan ku tahu siapa untuk disalahkan</p>
+			<p begin="49.044" end="53.841" itunes:key="L8" ttm:agent="v1">Masalah masa depan, biar mereka bereskan</p>
+		</div>
+		<div begin="54.015" end="1:12.440" itunes:songPart="Chorus">
+			<p begin="54.015" end="58.228" itunes:key="L9" ttm:agent="v1">Berdiri di penghujung buku</p>
+			<p begin="58.710" end="1:02.875" itunes:key="L10" ttm:agent="v1">Gemetar lututku, tersisa ragu</p>
+			<p begin="1:03.446" end="1:07.571" itunes:key="L11" ttm:agent="v1">Berlindung di belakang tawa</p>
+			<p begin="1:08.150" end="1:12.440" itunes:key="L12" ttm:agent="v1">Di dalam hati tersisa ragu</p>
+		</div>
+		<div begin="1:12.797" end="1:31.253" itunes:songPart="Chorus">
+			<p begin="1:12.797" end="1:17.186" itunes:key="L13" ttm:agent="v1">Hari ini apa yang lucu?</p>
+			<p begin="1:17.525" end="1:21.783" itunes:key="L14" ttm:agent="v1">Jutaan cara 'tuk batin yang gagu</p>
+			<p begin="1:22.266" end="1:26.421" itunes:key="L15" ttm:agent="v1">Berdiri di akhir dunia</p>
+			<p begin="1:26.962" end="1:31.253" itunes:key="L16" ttm:agent="v1">Di minggu ini tersisa ragu</p>
+		</div>
+		<div begin="1:31.941" end="1:50.314" itunes:songPart="Verse">
+			<p begin="1:31.941" end="1:36.016" itunes:key="L17" ttm:agent="v1">Lawan resesi, modalku hanya pas-pasan</p>
+			<p begin="1:36.619" end="1:40.702" itunes:key="L18" ttm:agent="v1">Lawan emisi pun aku hanya figuran</p>
+			<p begin="1:41.111" end="1:45.319" itunes:key="L19" ttm:agent="v1">Tak cukup penting 'tuk bikin perubahan</p>
+			<p begin="1:45.477" end="1:50.314" itunes:key="L20" ttm:agent="v1">Nasibku tak karuan, tidak digenggam tangan</p>
+		</div>
+		<div begin="1:50.485" end="2:09.209" itunes:songPart="PreChorus" ttm:agent="v2000">
+			<p begin="1:50.485" end="1:54.833" itunes:key="L21" ttm:agent="v2000">Yang ku tahu hadapi sambil berjalan</p>
+			<p begin="1:54.833" end="1:59.908" itunes:key="L22" ttm:agent="v1">Seperti kata orang bijak yang paham kebatinan</p>
+			<p begin="1:59.908" end="2:04.319" itunes:key="L23" ttm:agent="v2000">Yang ku tahu siapa untuk disalahkan</p>
+			<p begin="2:04.319" end="2:09.209" itunes:key="L24" ttm:agent="v1">Masalah masa depan, aku punya peranan</p>
+		</div>
+		<div begin="2:09.344" end="2:27.751" itunes:songPart="Chorus">
+			<p begin="2:09.344" end="2:13.587" itunes:key="L25" ttm:agent="v1">Berdiri di penghujung buku</p>
+			<p begin="2:14.033" end="2:18.257" itunes:key="L26" ttm:agent="v1">Gemetar lututku, tersisa ragu</p>
+			<p begin="2:18.735" end="2:22.943" itunes:key="L27" ttm:agent="v1">Berlindung di belakang tawa</p>
+			<p begin="2:23.426" end="2:27.751" itunes:key="L28" ttm:agent="v1">Di dalam hati tersisa ragu</p>
+		</div>
+		<div begin="2:28.092" end="2:46.577" itunes:songPart="Chorus">
+			<p begin="2:28.092" end="2:32.453" itunes:key="L29" ttm:agent="v1">Hari ini apa yang lucu?</p>
+			<p begin="2:32.782" end="2:37.124" itunes:key="L30" ttm:agent="v1">Jutaan cara 'tuk batin yang gagu</p>
+			<p begin="2:37.538" end="2:41.790" itunes:key="L31" ttm:agent="v1">Berdiri di akhir dunia</p>
+			<p begin="2:42.257" end="2:46.577" itunes:key="L32" ttm:agent="v1">Di minggu ini tersisa ragu</p>
+		</div>
+		<div begin="3:05.805" end="3:43.957" itunes:songPart="Bridge">
+			<p begin="3:05.805" end="3:13.272" itunes:key="L33" ttm:agent="v1">Ke mana kah</p>
+			<p begin="3:13.714" end="3:22.826" itunes:key="L34" ttm:agent="v1">Pelik esok hari 'kan bawaku pergi?</p>
+			<p begin="3:24.617" end="3:32.181" itunes:key="L35" ttm:agent="v1">Di antara</p>
+			<p begin="3:32.559" end="3:43.957" itunes:key="L36" ttm:agent="v1">Berjuta nama, aku hanya angka, bukan sesiapa</p>
+		</div>
+		<div begin="3:44.594" end="4:03.016" itunes:songPart="Chorus">
+			<p begin="3:44.594" end="3:48.876" itunes:key="L37" ttm:agent="v1">Berdiri di penghujung buku</p>
+			<p begin="3:49.308" end="3:53.730" itunes:key="L38" ttm:agent="v1">Gemetar lututku, tersisa ragu</p>
+			<p begin="3:53.750" end="3:58.187" itunes:key="L39" ttm:agent="v1">Oh, berlindung di belakang tawa</p>
+			<p begin="3:58.726" end="4:03.016" itunes:key="L40" ttm:agent="v1">Di dalam hati tersisa ragu</p>
+		</div>
+		<div begin="4:03.405" end="4:21.824" itunes:songPart="Chorus">
+			<p begin="4:03.405" end="4:07.666" itunes:key="L41" ttm:agent="v1">Hari ini apa yang lucu?</p>
+			<p begin="4:08.133" end="4:12.301" itunes:key="L42" ttm:agent="v1">Jutaan cara 'tuk batin yang gagu</p>
+			<p begin="4:12.819" end="4:17.088" itunes:key="L43" ttm:agent="v1">Berdiri di akhir dunia</p>
+			<p begin="4:17.555" end="4:21.824" itunes:key="L44" ttm:agent="v1">Di minggu ini tersisa ragu</p>
+		</div>
+	</body>
+</tt>
+
+

@@ -1,0 +1,60 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="id">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal" leadingSilence="0.080">
+				<translations/>
+				<songwriters>
+					<songwriter>Salmantyo Ashrizky Priadi</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="5:13.847">
+		<div begin="37.501" end="1:26.524" itunes:songPart="Verse">
+			<p begin="37.501" end="49.287" itunes:key="L1" ttm:agent="v1">Di umurku yang segini teman dekat makin sedikit</p>
+			<p begin="50.591" end="1:00.636" itunes:key="L2" ttm:agent="v1">Ada untuk tempat cerita juga jadi teman pesta</p>
+			<p begin="1:03.740" end="1:15.447" itunes:key="L3" ttm:agent="v1">Kalau dulu lain cerita, sehari bisa tiga</p>
+			<p begin="1:16.696" end="1:26.524" itunes:key="L4" ttm:agent="v1">Sampai lima tempat berbeda, di sana aktif semua</p>
+		</div>
+		<div begin="1:30.132" end="1:56.694" itunes:songPart="PreChorus">
+			<p begin="1:30.132" end="1:40.537" itunes:key="L5" ttm:agent="v1">Sekarang tubuhku sering minta waktu untuk sendirian</p>
+			<p begin="1:41.570" end="1:46.233" itunes:key="L6" ttm:agent="v1">Karena banyak pertanyaan</p>
+			<p begin="1:46.508" end="1:49.452" itunes:key="L7" ttm:agent="v1">Menemukan jawaban</p>
+			<p begin="1:49.764" end="1:56.694" itunes:key="L8" ttm:agent="v1">Bukan di keramaian</p>
+		</div>
+		<div begin="1:58.417" end="2:25.379" itunes:songPart="Chorus">
+			<p begin="1:58.417" end="2:04.997" itunes:key="L9" ttm:agent="v1">Pergi yang jauh sendirian</p>
+			<p begin="2:04.997" end="2:11.546" itunes:key="L10" ttm:agent="v1">Tidur, bangun, melamun berjam-jam</p>
+			<p begin="2:11.546" end="2:19.356" itunes:key="L11" ttm:agent="v1">Lebih banyak dengarkan badanku</p>
+			<p begin="2:19.356" end="2:25.379" itunes:key="L12" ttm:agent="v1">Ajak dia 'tuk kenalan lagi</p>
+		</div>
+		<div begin="2:24.710" end="2:52.641" itunes:songPart="Chorus">
+			<p begin="2:24.710" end="2:31.300" itunes:key="L13" ttm:agent="v1">Pergi yang jauh sendirian</p>
+			<p begin="2:31.300" end="2:37.852" itunes:key="L14" ttm:agent="v1">Tidur, bangun, melamun berjam-jam</p>
+			<p begin="2:37.852" end="2:45.673" itunes:key="L15" ttm:agent="v1">Lebih banyak dengarkan badanku</p>
+			<p begin="2:45.673" end="2:52.641" itunes:key="L16" ttm:agent="v1">Ajak dia 'tuk kenalan lagi</p>
+		</div>
+		<div begin="3:18.727" end="3:45.498" itunes:songPart="PreChorus">
+			<p begin="3:18.727" end="3:29.962" itunes:key="L17" ttm:agent="v1">Sekarang tubuhku sering minta waktu untuk sendirian</p>
+			<p begin="3:30.285" end="3:34.737" itunes:key="L18" ttm:agent="v1">Karena banyak pertanyaan</p>
+			<p begin="3:35.013" end="3:38.014" itunes:key="L19" ttm:agent="v1">Menemukan jawaban</p>
+			<p begin="3:38.266" end="3:45.498" itunes:key="L20" ttm:agent="v1">Bukan di keramaian</p>
+		</div>
+		<div begin="3:43.640" end="4:10.384" itunes:songPart="Chorus">
+			<p begin="3:43.640" end="3:50.233" itunes:key="L21" ttm:agent="v1">Pergi yang jauh sendirian</p>
+			<p begin="3:50.233" end="3:56.788" itunes:key="L22" ttm:agent="v1">Tidur, bangun, melamun berjam-jam</p>
+			<p begin="3:56.788" end="4:04.577" itunes:key="L23" ttm:agent="v1">Lebih banyak dengarkan badanku</p>
+			<p begin="4:04.577" end="4:10.384" itunes:key="L24" ttm:agent="v1">Ajak dia 'tuk kenalan lagi</p>
+		</div>
+		<div begin="4:09.936" end="4:37.910" itunes:songPart="Chorus">
+			<p begin="4:09.936" end="4:16.502" itunes:key="L25" ttm:agent="v1">Pergi yang jauh sendirian</p>
+			<p begin="4:16.502" end="4:23.085" itunes:key="L26" ttm:agent="v1">Tidur, bangun, melamun berjam-jam</p>
+			<p begin="4:23.085" end="4:30.898" itunes:key="L27" ttm:agent="v1">Lebih banyak dengarkan badanku</p>
+			<p begin="4:30.898" end="4:37.910" itunes:key="L28" ttm:agent="v1">Ajak dia 'tuk kenalan lagi</p>
+		</div>
+	</body>
+</tt>
+
+

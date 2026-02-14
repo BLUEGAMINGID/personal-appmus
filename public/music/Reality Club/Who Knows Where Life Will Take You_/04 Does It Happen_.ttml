@@ -1,0 +1,67 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="en">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal" leadingSilence="0.060">
+				<translations/>
+				<songwriters>
+					<songwriter>Anugrah Wicaksono</songwriter>
+					<songwriter>Faiz Novascotia Saripudin</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="3:54.831">
+		<div begin="16.005" end="31.720" itunes:songPart="Verse">
+			<p begin="16.005" end="23.888" itunes:key="L1" ttm:agent="v1">Well, I tried so hard to ignore all the ways you enter my mind</p>
+			<p begin="23.888" end="31.720" itunes:key="L2" ttm:agent="v1">And the nights are full of what-ifs and what-can-I-dos?</p>
+		</div>
+		<div begin="32.526" end="48.923" itunes:songPart="PreChorus">
+			<p begin="32.526" end="36.460" itunes:key="L3" ttm:agent="v1">You got me thinking ahead then go and leave me on read</p>
+			<p begin="36.460" end="39.171" itunes:key="L4" ttm:agent="v1">Hopeful then I'm filled with dread</p>
+			<p begin="40.360" end="44.205" itunes:key="L5" ttm:agent="v1">I never know if I'm right, going off wavering lights</p>
+			<p begin="44.263" end="48.923" itunes:key="L6" ttm:agent="v1">Within myself is a fight and I wonder</p>
+		</div>
+		<div begin="49.139" end="1:14.790" itunes:songPart="Chorus">
+			<p begin="49.139" end="53.057" itunes:key="L7" ttm:agent="v1">Does it happen to you, does it happen to me?</p>
+			<p begin="53.057" end="55.882" itunes:key="L8" ttm:agent="v1">Does it happen to us both?</p>
+			<p begin="56.977" end="1:00.773" itunes:key="L9" ttm:agent="v1">Does it happen to you, does it happen to me?</p>
+			<p begin="1:00.873" end="1:04.772" itunes:key="L10" ttm:agent="v1">Are you wondering what this is about?</p>
+			<p begin="1:04.905" end="1:08.539" itunes:key="L11" ttm:agent="v1">Does it happen to you, does it happen to me?</p>
+			<p begin="1:08.671" end="1:14.790" itunes:key="L12" ttm:agent="v1">Can we put in the feelings we left out?</p>
+		</div>
+		<div begin="1:18.466" end="1:34.486" itunes:songPart="Verse">
+			<p begin="1:18.466" end="1:25.618" itunes:key="L13" ttm:agent="v1">I'm not trying to adore too early, I know we just started</p>
+			<p begin="1:25.638" end="1:29.731" itunes:key="L14" ttm:agent="v1">Oh, but don't you think we should be more?</p>
+			<p begin="1:30.139" end="1:34.486" itunes:key="L15" ttm:agent="v1">When these feelings are hard to ignore</p>
+		</div>
+		<div begin="1:35.006" end="1:57.273" itunes:songPart="PreChorus">
+			<p begin="1:35.006" end="1:38.789" itunes:key="L16" ttm:agent="v1">I know it's scary but then why meet a premature end?</p>
+			<p begin="1:38.889" end="1:41.689" itunes:key="L17" ttm:agent="v1">That can't be what you intend</p>
+			<p begin="1:42.787" end="1:46.589" itunes:key="L18" ttm:agent="v1">Don't care about what they say or if it's going away</p>
+			<p begin="1:46.675" end="1:49.510" itunes:key="L19" ttm:agent="v1">I'm coming down anyways</p>
+			<p begin="1:49.650" end="1:57.273" itunes:key="L20" ttm:agent="v1">On these nights that I'm under, I'm alone and I wonder</p>
+		</div>
+		<div begin="1:57.443" end="2:29.770" itunes:songPart="Chorus">
+			<p begin="1:57.443" end="2:01.321" itunes:key="L21" ttm:agent="v1">Does it happen to you, does it happen to me?</p>
+			<p begin="2:01.321" end="2:04.003" itunes:key="L22" ttm:agent="v1">Does it happen to us both?</p>
+			<p begin="2:05.255" end="2:09.070" itunes:key="L23" ttm:agent="v1">Does it happen to you, does it happen to me?</p>
+			<p begin="2:09.121" end="2:12.921" itunes:key="L24" ttm:agent="v1">Are you wondering what this is about?</p>
+			<p begin="2:13.062" end="2:16.938" itunes:key="L25" ttm:agent="v1">Does it happen to you, does it happen to me?</p>
+			<p begin="2:16.938" end="2:23.070" itunes:key="L26" ttm:agent="v1">Can we put in the feelings we left out?</p>
+			<p begin="2:27.189" end="2:29.770" itunes:key="L27" ttm:agent="v1">And I think we should give it a go</p>
+		</div>
+		<div begin="2:59.963" end="3:33.571" itunes:songPart="Chorus">
+			<p begin="2:59.963" end="3:03.789" itunes:key="L28" ttm:agent="v1">Does it happen to you, does it happen to me?</p>
+			<p begin="3:03.789" end="3:06.571" itunes:key="L29" ttm:agent="v1">Does it happen to us both?</p>
+			<p begin="3:07.722" end="3:11.603" itunes:key="L30" ttm:agent="v1">Does it happen to you, does it happen to me?</p>
+			<p begin="3:11.705" end="3:15.289" itunes:key="L31" ttm:agent="v1">Are you wondering what this is about?</p>
+			<p begin="3:15.585" end="3:19.270" itunes:key="L32" ttm:agent="v1">Does it happen to you, does it happen to me?</p>
+			<p begin="3:19.420" end="3:25.803" itunes:key="L33" ttm:agent="v1">Can we put in the feelings we left out?</p>
+			<p begin="3:27.289" end="3:33.571" itunes:key="L34" ttm:agent="v1">Can we put in the feelings we left out?</p>
+		</div>
+	</body>
+</tt>
+
+

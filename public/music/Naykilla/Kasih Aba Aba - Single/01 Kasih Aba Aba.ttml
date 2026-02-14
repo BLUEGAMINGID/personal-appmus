@@ -1,0 +1,93 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="id">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<ttm:agent type="person" xml:id="v2"/>
+			<ttm:agent type="group" xml:id="v1000"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal">
+				<translations/>
+				<songwriters>
+					<songwriter>Jemsii</songwriter>
+					<songwriter>Joan Pasha Syahputra</songwriter>
+					<songwriter>Nayya Rahmania</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="2:56.609">
+		<div begin="1.432" end="4.705" itunes:songPart="Intro">
+			<p begin="1.432" end="2.448" itunes:key="L1" ttm:agent="v1">Oh, wow</p>
+			<p begin="2.954" end="4.705" itunes:key="L2" ttm:agent="v1">Oy, Jemsii</p>
+		</div>
+		<div begin="8.400" end="25.898" itunes:songPart="Chorus">
+			<p begin="8.400" end="12.837" itunes:key="L3" ttm:agent="v1">Ku merasakan apa yang kau rasakan</p>
+			<p begin="12.911" end="17.558" itunes:key="L4" ttm:agent="v1">Tanpa ragu kubilang, kamu yang paling paham aku</p>
+			<p begin="17.577" end="21.674" itunes:key="L5" ttm:agent="v1">Dua jadi satu, belah hati aku</p>
+			<p begin="21.807" end="25.898" itunes:key="L6" ttm:agent="v1">Aku mau maju, tapi tinggal tunggu waktu</p>
+		</div>
+		<div begin="26.488" end="40.644" itunes:songPart="Verse" ttm:agent="v2">
+			<p begin="26.488" end="30.116" itunes:key="L7" ttm:agent="v2">Kasih aba-aba kalo udah siap</p>
+			<p begin="30.706" end="34.309" itunes:key="L8" ttm:agent="v2">Kucoba melihat, tapi masih gelap</p>
+			<p begin="34.816" end="37.179" itunes:key="L9" ttm:agent="v2">Kamu paling bright (Silau, silau)</p>
+			<p begin="36.945" end="37.860" itunes:key="L10" ttm:agent="v2">Gapapa le</p>
+			<p begin="39.009" end="40.644" itunes:key="L11" ttm:agent="v2">Gapapa lebay</p>
+		</div>
+		<div begin="41.110" end="57.948" itunes:songPart="Verse">
+			<p begin="41.110" end="42.502" itunes:key="L12" ttm:agent="v1">Yeah, aku mau test</p>
+			<p begin="42.670" end="44.628" itunes:key="L13" ttm:agent="v1">Dia mau aku atau mau cash</p>
+			<p begin="44.712" end="46.833" itunes:key="L14" ttm:agent="v1">But she know that I'm the best</p>
+			<p begin="46.567" end="48.849" itunes:key="L15" ttm:agent="v1">Udah pintar, ku ngga usah les</p>
+			<p begin="48.614" end="51.617" itunes:key="L16" ttm:agent="v1">Dia suka baju hitamku, celana camo-ku</p>
+			<p begin="51.785" end="53.710" itunes:key="L17" ttm:agent="v1">Kalo kurang asik kita putar lagu</p>
+			<p begin="53.836" end="54.719" itunes:key="L18" ttm:agent="v1">Lagu siapa?</p>
+			<p begin="54.719" end="56.147" itunes:key="L19" ttm:agent="v1">Ya lagu aku</p>
+			<p begin="55.890" end="57.948" itunes:key="L20" ttm:agent="v1000">Kalo duet, ya sama kamu</p>
+		</div>
+		<div begin="58.465" end="1:15.999" itunes:songPart="Chorus">
+			<p begin="58.465" end="1:02.917" itunes:key="L21" ttm:agent="v1">Ku merasakan apa yang kau rasakan</p>
+			<p begin="1:03.078" end="1:07.644" itunes:key="L22" ttm:agent="v1">Tanpa ragu kubilang, kamu yang paling paham aku</p>
+			<p begin="1:07.673" end="1:11.836" itunes:key="L23" ttm:agent="v1">Dua jadi satu, belah hati aku</p>
+			<p begin="1:11.899" end="1:15.999" itunes:key="L24" ttm:agent="v1">Aku mau maju, tapi tinggal tunggu waktu</p>
+		</div>
+		<div begin="1:15.274" end="1:32.706" itunes:songPart="Chorus" ttm:agent="v2">
+			<p begin="1:15.274" end="1:19.533" itunes:key="L25" ttm:agent="v2">Ku merasakan apa yang kau rasakan</p>
+			<p begin="1:19.698" end="1:24.269" itunes:key="L26" ttm:agent="v2">Tanpa ragu kubilang kamu yang paling paham aku</p>
+			<p begin="1:24.412" end="1:28.469" itunes:key="L27" ttm:agent="v2">Dua jadi satu, belah hati aku</p>
+			<p begin="1:28.661" end="1:32.706" itunes:key="L28" ttm:agent="v2">Aku mau maju, tapi tinggal tunggu waktu</p>
+		</div>
+		<div begin="1:32.193" end="1:40.070" itunes:songPart="Verse">
+			<p begin="1:32.193" end="1:34.141" itunes:key="L29" ttm:agent="v1">Dia tanya aku punya plan (Hey)</p>
+			<p begin="1:34.280" end="1:36.267" itunes:key="L30" ttm:agent="v1">Dia tau kalo I'm the man (Hey, hey)</p>
+			<p begin="1:35.862" end="1:37.958" itunes:key="L31" ttm:agent="v1">Kamu Tinker Bell, aku Peter Pan</p>
+			<p begin="1:37.978" end="1:40.070" itunes:key="L32" ttm:agent="v1">Tapi ini nyata, no, bukan cerpen</p>
+		</div>
+		<div begin="1:40.070" end="1:48.468" itunes:songPart="Verse">
+			<p begin="1:40.070" end="1:41.098" itunes:key="L33" ttm:agent="v1">Ini bukan cerpen</p>
+			<p begin="1:41.098" end="1:42.567" itunes:key="L34" ttm:agent="v1">She's ten outta ten</p>
+			<p begin="1:42.162" end="1:44.594" itunes:key="L35" ttm:agent="v1">Pilih mau mana, dollar atau yen?</p>
+			<p begin="1:44.228" end="1:46.717" itunes:key="L36" ttm:agent="v1">Angkat koper, kita pergi Japan</p>
+			<p begin="1:46.289" end="1:48.468" itunes:key="L37" ttm:agent="v1">I'll give you the best that I can</p>
+		</div>
+		<div begin="1:47.891" end="1:56.302" itunes:songPart="Verse" ttm:agent="v2">
+			<p begin="1:47.891" end="1:50.029" itunes:key="L38" ttm:agent="v2">Aku mau cari jalan tengah</p>
+			<p begin="1:50.029" end="1:52.112" itunes:key="L39" ttm:agent="v2">Buat kamu apa yang ngga bisa</p>
+			<p begin="1:52.297" end="1:54.210" itunes:key="L40" ttm:agent="v2">Ajak kamu ke angkasa</p>
+			<p begin="1:54.404" end="1:56.302" itunes:key="L41" ttm:agent="v2">Go to the moon, kita berdansa</p>
+		</div>
+		<div begin="1:56.302" end="2:05.866" itunes:songPart="Verse" ttm:agent="v2">
+			<p begin="1:56.302" end="1:58.324" itunes:key="L42" ttm:agent="v2">Aku wish you best</p>
+			<p begin="1:58.324" end="2:00.573" itunes:key="L43" ttm:agent="v2">Kamu yang the best</p>
+			<p begin="2:00.411" end="2:02.168" itunes:key="L44" ttm:agent="v2">Kata mamaku</p>
+			<p begin="2:02.456" end="2:05.866" itunes:key="L45" ttm:agent="v2">Masih muda, banyak waktu</p>
+		</div>
+		<div begin="2:05.371" end="2:22.823" itunes:songPart="Chorus" ttm:agent="v1000">
+			<p begin="2:05.371" end="2:09.631" itunes:key="L46" ttm:agent="v2">Ku merasakan apa yang kau rasakan</p>
+			<p begin="2:09.814" end="2:14.324" itunes:key="L47" ttm:agent="v1000">Tanpa ragu kubilang, kamu yang paling paham aku</p>
+			<p begin="2:14.494" end="2:18.538" itunes:key="L48" ttm:agent="v1000">Dua jadi satu, belah hati aku</p>
+			<p begin="2:18.662" end="2:22.823" itunes:key="L49" ttm:agent="v1000">Aku mau maju, tapi tinggal tunggu waktu</p>
+		</div>
+	</body>
+</tt>
+
+

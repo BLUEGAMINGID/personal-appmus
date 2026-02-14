@@ -1,0 +1,83 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="id">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal" leadingSilence="0">
+				<translations/>
+				<songwriters>
+					<songwriter>Baskara Putra</songwriter>
+					<songwriter>Kareem Soenharjo</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="4:25.317">
+		<div begin="3.473" end="12.351" itunes:songPart="Verse">
+			<p begin="3.473" end="6.165" itunes:key="L1" ttm:agent="v1">Kali ini ke mana lagi</p>
+			<p begin="7.026" end="9.442" itunes:key="L2" ttm:agent="v1">Kau ajak tas ranselmu pergi?</p>
+			<p begin="9.722" end="12.351" itunes:key="L3" ttm:agent="v1">Kami khawatir, kawan</p>
+		</div>
+		<div begin="17.660" end="26.627" itunes:songPart="Verse">
+			<p begin="17.660" end="20.340" itunes:key="L4" ttm:agent="v1">Sumpah, sudah berapa kali</p>
+			<p begin="21.297" end="23.582" itunes:key="L5" ttm:agent="v1">Kau bilang tak mungkin kembali</p>
+			<p begin="23.910" end="26.627" itunes:key="L6" ttm:agent="v1">Kami khawatir, kawan</p>
+		</div>
+		<div begin="31.282" end="58.453" itunes:songPart="Chorus">
+			<p begin="31.282" end="33.797" itunes:key="L7" ttm:agent="v1">Kau tahu ku tahu</p>
+			<p begin="34.605" end="38.853" itunes:key="L8" ttm:agent="v1">Betapa beracunnya benakmu</p>
+			<p begin="38.853" end="45.099" itunes:key="L9" ttm:agent="v1">Bertahan melawan sumpah serapah di rumah</p>
+			<p begin="45.448" end="47.915" itunes:key="L10" ttm:agent="v1">Ku tahu kau tahu</p>
+			<p begin="48.822" end="54.190" itunes:key="L11" ttm:agent="v1">Tak mudah membelah antah berantah</p>
+			<p begin="54.825" end="58.453" itunes:key="L12" ttm:agent="v1">Berkali-kali kita ulangi</p>
+		</div>
+		<div begin="59.301" end="1:12.032" itunes:songPart="Verse">
+			<p begin="59.301" end="1:03.016" itunes:key="L13" ttm:agent="v1">Ayo pulang, kawan</p>
+			<p begin="1:06.532" end="1:12.032" itunes:key="L14" ttm:agent="v1">Masuk dulu, hujan</p>
+		</div>
+		<div begin="1:14.556" end="1:23.517" itunes:songPart="Verse">
+			<p begin="1:14.556" end="1:17.239" itunes:key="L15" ttm:agent="v1">Kau menyerah, sakit hati</p>
+			<p begin="1:18.151" end="1:20.493" itunes:key="L16" ttm:agent="v1">Pasti lelah bertengkar lagi</p>
+			<p begin="1:20.831" end="1:23.517" itunes:key="L17" ttm:agent="v1">Dengan ayahmu, kawan</p>
+		</div>
+		<div begin="1:28.812" end="1:37.612" itunes:songPart="Verse">
+			<p begin="1:28.812" end="1:31.537" itunes:key="L18" ttm:agent="v1">Percayalah, dengar kami</p>
+			<p begin="1:32.372" end="1:34.825" itunes:key="L19" ttm:agent="v1">Banyak yang rindu dan peduli</p>
+			<p begin="1:34.825" end="1:37.612" itunes:key="L20" ttm:agent="v1">Kakakmu dan kawan-kawan</p>
+		</div>
+		<div begin="1:43.040" end="1:51.997" itunes:songPart="Verse">
+			<p begin="1:43.040" end="1:45.675" itunes:key="L21" ttm:agent="v1">Pasti ada waktunya nanti</p>
+			<p begin="1:46.603" end="1:49.048" itunes:key="L22" ttm:agent="v1">Kau bayar semuanya sendiri</p>
+			<p begin="1:49.048" end="1:51.997" itunes:key="L23" ttm:agent="v1">Tapi tak sekarang, kawan</p>
+		</div>
+		<div begin="1:57.037" end="2:06.180" itunes:songPart="Verse">
+			<p begin="1:57.037" end="2:00.296" itunes:key="L24" ttm:agent="v1">Dan jikalau jengah kami mengerti</p>
+			<p begin="2:00.803" end="2:03.486" itunes:key="L25" ttm:agent="v1">Namun jangan enggan dicari</p>
+			<p begin="2:03.486" end="2:06.180" itunes:key="L26" ttm:agent="v1">Hampiri kawan-kawan</p>
+		</div>
+		<div begin="2:10.786" end="2:37.979" itunes:songPart="Chorus">
+			<p begin="2:10.786" end="2:13.352" itunes:key="L27" ttm:agent="v1">Kau tahu ku tahu</p>
+			<p begin="2:14.122" end="2:18.400" itunes:key="L28" ttm:agent="v1">Betapa beracunnya benakmu</p>
+			<p begin="2:18.400" end="2:24.689" itunes:key="L29" ttm:agent="v1">Bertahan melawan sumpah serapah di rumah</p>
+			<p begin="2:25.046" end="2:27.494" itunes:key="L30" ttm:agent="v1">Ku tahu kau tahu</p>
+			<p begin="2:28.371" end="2:33.757" itunes:key="L31" ttm:agent="v1">Tak mudah membelah antah berantah</p>
+			<p begin="2:34.363" end="2:37.979" itunes:key="L32" ttm:agent="v1">Berkali-kali kita ulangi</p>
+		</div>
+		<div begin="2:39.014" end="3:19.955" itunes:songPart="Verse">
+			<p begin="2:39.014" end="2:42.624" itunes:key="L33" ttm:agent="v1">Ayo pulang, kawan</p>
+			<p begin="2:46.137" end="2:51.518" itunes:key="L34" ttm:agent="v1">Masuk dulu, hujan</p>
+			<p begin="2:53.230" end="2:56.592" itunes:key="L35" ttm:agent="v1">Ada waktunya, nanti</p>
+			<p begin="3:00.355" end="3:06.317" itunes:key="L36" ttm:agent="v1">Kau bisa menjauh pergi</p>
+			<p begin="3:07.429" end="3:10.546" itunes:key="L37" ttm:agent="v1">Namun belum, kawan</p>
+			<p begin="3:14.568" end="3:19.955" itunes:key="L38" ttm:agent="v1">Masuk dulu, hujan</p>
+		</div>
+		<div begin="3:21.603" end="3:37.329" itunes:songPart="Verse">
+			<p begin="3:21.603" end="3:25.618" itunes:key="L39" ttm:agent="v1">Ada caranya melepas diri</p>
+			<p begin="3:25.910" end="3:29.225" itunes:key="L40" ttm:agent="v1">Waktu yang tepat untuk dirimu pergi</p>
+			<p begin="3:29.468" end="3:32.708" itunes:key="L41" ttm:agent="v1">Namun tidak seperti ini</p>
+			<p begin="3:33.031" end="3:37.329" itunes:key="L42" ttm:agent="v1">Namun jangan menghilang lagi, kawan</p>
+		</div>
+	</body>
+</tt>
+
+

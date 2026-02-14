@@ -1,0 +1,67 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" itunes:timing="Line" xml:lang="en">
+	<head>
+		<metadata>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal" leadingSilence="0.140">
+				<translations/>
+				<songwriters>
+					<songwriter>Faiz Novascotia Saripudin</songwriter>
+					<songwriter>Muhammad Iqbal Kusumah</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="4:27.350">
+		<div begin="55.000" end="1:57.510">
+			<p begin="55.000" end="59.300">After all this time</p>
+			<p begin="59.300" end="1:03.790">It ended with a cry</p>
+			<p begin="1:03.790" end="1:08.160">Lost what once was mine</p>
+			<p begin="1:08.160" end="1:12.720">Should've seen the signs</p>
+			<p begin="1:12.720" end="1:17.160">Stuck inside my mind</p>
+			<p begin="1:17.160" end="1:21.630">I guess I was blind</p>
+			<p begin="1:21.630" end="1:26.070">The last thing I knew</p>
+			<p begin="1:26.070" end="1:30.860">This isn't what you do</p>
+			<p begin="1:30.860" end="1:35.310">Ooh it was something, baby</p>
+			<p begin="1:35.310" end="1:39.330">That I wouldn't do</p>
+			<p begin="1:39.330" end="1:44.240">Ooh I have to leave for a while</p>
+			<p begin="1:44.240" end="1:48.150">But I couldn't tell you</p>
+			<p begin="1:48.150" end="1:52.360">Maybe its for the better</p>
+			<p begin="1:52.360" end="1:57.510">But someday I'm going back to you</p>
+		</div>
+		<div begin="2:16.370" end="2:49.210">
+			<p begin="2:16.370" end="2:20.440">Ooh baby, it took you a while</p>
+			<p begin="2:20.440" end="2:25.230">Forget what you said just to make me smile</p>
+			<p begin="2:25.230" end="2:31.200">Caught up in reasons I can't remember anymore</p>
+			<p begin="2:31.200" end="2:38.400">Now its much to late, took the car and left</p>
+			<p begin="2:38.400" end="2:42.980">Forget goodbyes we never kept</p>
+			<p begin="2:42.980" end="2:49.210">The promises of yesterday</p>
+		</div>
+		<div begin="2:52.450" end="3:18.300">
+			<p begin="2:52.450" end="2:56.110">Ooh it was something, baby</p>
+			<p begin="2:56.110" end="2:59.950">That I wouldn't do</p>
+			<p begin="2:59.950" end="3:04.960">Ooh I have to leave for a while</p>
+			<p begin="3:04.960" end="3:08.980">But I couldn't tell you</p>
+			<p begin="3:08.980" end="3:13.180">Maybe its for the better</p>
+			<p begin="3:13.180" end="3:18.300">But someday I'm going back to you</p>
+		</div>
+		<div begin="3:54.450" end="4:27.350">
+			<p begin="3:54.450" end="3:56.490">After all this time</p>
+			<p begin="3:56.490" end="3:59.320">(I had to go)</p>
+			<p begin="3:59.320" end="4:01.070">It ended with a cry</p>
+			<p begin="4:01.070" end="4:02.600">(Go and leave you alone)</p>
+			<p begin="4:02.600" end="4:06.190">Lost what once was mine</p>
+			<p begin="4:06.190" end="4:07.730">(I'm coming back)</p>
+			<p begin="4:07.730" end="4:10.560">Should've seen the signs</p>
+			<p begin="4:10.560" end="4:12.200">(I'm coming back soon)</p>
+			<p begin="4:12.200" end="4:15.010">Stuck inside my mind</p>
+			<p begin="4:15.010" end="4:16.090">(I had to go)</p>
+			<p begin="4:16.090" end="4:19.200">I guess I was blind</p>
+			<p begin="4:19.200" end="4:20.350">(Go and leave you alone)</p>
+			<p begin="4:20.350" end="4:23.520">The last thing I knew</p>
+			<p begin="4:23.520" end="4:25.570">(The last thing I knew)</p>
+			<p begin="4:25.570" end="4:27.350">This isn't what you do</p>
+		</div>
+	</body>
+</tt>
+
+

@@ -1,0 +1,91 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="id">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal" leadingSilence="0.080">
+				<translations/>
+				<songwriters>
+					<songwriter>Baskara Putra</songwriter>
+					<songwriter>RAYHAN NOOR</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="4:37.457">
+		<div begin="10.080" end="25.280" itunes:songPart="Verse">
+			<p begin="10.080" end="12.538" itunes:key="L1" ttm:agent="v1">Menyesal, tak kusampaikan</p>
+			<p begin="13.741" end="17.265" itunes:key="L2" ttm:agent="v1">Cinta monyetku ke Kanya dan Rebecca</p>
+			<p begin="17.877" end="20.800" itunes:key="L3" ttm:agent="v1">Apa kabar kalian di sana?</p>
+			<p begin="21.955" end="25.280" itunes:key="L4" ttm:agent="v1">Semoga hidup baik-baik saja</p>
+		</div>
+		<div begin="26.086" end="41.675" itunes:songPart="Verse">
+			<p begin="26.086" end="29.497" itunes:key="L5" ttm:agent="v1">Tak belajar, terkena getahnya</p>
+			<p begin="30.231" end="33.772" itunes:key="L6" ttm:agent="v1">Saat bersama Tanya dan Saphira</p>
+			<p begin="34.385" end="37.630" itunes:key="L7" ttm:agent="v1">Ku percaya, mungkin bukan jalannya</p>
+			<p begin="38.547" end="41.675" itunes:key="L8" ttm:agent="v1">Namun kalian banyak salah juga</p>
+		</div>
+		<div begin="42.681" end="58.225" itunes:songPart="Verse">
+			<p begin="42.681" end="46.089" itunes:key="L9" ttm:agent="v1">Jika dahulu ku tak cepat berubah</p>
+			<p begin="46.833" end="50.486" itunes:key="L10" ttm:agent="v1">Ini maafku untukmu, Sharfina</p>
+			<p begin="50.913" end="54.038" itunes:key="L11" ttm:agent="v1">Segala doa yang baik adanya</p>
+			<p begin="55.097" end="58.225" itunes:key="L12" ttm:agent="v1">Untukmu dan mimpimu yang mulia</p>
+		</div>
+		<div begin="59.771" end="1:15.108" itunes:songPart="Chorus">
+			<p begin="59.771" end="1:03.510" itunes:key="L13" ttm:agent="v1">Pindah berkala, rumah ke rumah</p>
+			<p begin="1:03.937" end="1:07.639" itunes:key="L14" ttm:agent="v1">Berharap bisa berujung indah</p>
+			<p begin="1:08.079" end="1:11.767" itunes:key="L15" ttm:agent="v1">Walau akhirnya harus berpisah</p>
+			<p begin="1:12.160" end="1:15.108" itunes:key="L16" ttm:agent="v1">Terima kasih karena ku tak mudah</p>
+		</div>
+		<div begin="1:16.319" end="1:31.831" itunes:songPart="Chorus">
+			<p begin="1:16.319" end="1:20.079" itunes:key="L17" ttm:agent="v1">Pindah berkala, rumah ke rumah</p>
+			<p begin="1:20.441" end="1:24.188" itunes:key="L18" ttm:agent="v1">Berharap bisa berujung indah</p>
+			<p begin="1:24.615" end="1:28.314" itunes:key="L19" ttm:agent="v1">Walau akhirnya harus berpisah</p>
+			<p begin="1:28.725" end="1:31.831" itunes:key="L20" ttm:agent="v1">Terima kasih karena ku tak mudah</p>
+		</div>
+		<div begin="1:40.617" end="1:56.341" itunes:songPart="Verse">
+			<p begin="1:40.617" end="1:44.240" itunes:key="L21" ttm:agent="v1">Maaf jika ku sering buat susah</p>
+			<p begin="1:44.730" end="1:48.354" itunes:key="L22" ttm:agent="v1">Indisya, Fanda, Anggra, Caca, Sismita</p>
+			<p begin="1:48.863" end="1:52.099" itunes:key="L23" ttm:agent="v1">Perempuan terkuat dalam hidupku</p>
+			<p begin="1:52.999" end="1:56.341" itunes:key="L24" ttm:agent="v1">Terjanglah apapun yang kalian tuju</p>
+		</div>
+		<div begin="1:57.170" end="2:12.680" itunes:songPart="Verse">
+			<p begin="1:57.170" end="2:00.829" itunes:key="L25" ttm:agent="v1">Kau datang saat gelapku merekah</p>
+			<p begin="2:01.253" end="2:04.968" itunes:key="L26" ttm:agent="v1">Seluruh hatiku untukmu, Meidiana</p>
+			<p begin="2:05.424" end="2:09.512" itunes:key="L27" ttm:agent="v1">Kau pantas dapatkan yang baik di dunia</p>
+			<p begin="2:10.028" end="2:12.680" itunes:key="L28" ttm:agent="v1">Semoga kita bertahan lama</p>
+		</div>
+		<div begin="2:14.243" end="2:29.547" itunes:songPart="Chorus">
+			<p begin="2:14.243" end="2:17.977" itunes:key="L29" ttm:agent="v1">Pindah berkala, rumah ke rumah</p>
+			<p begin="2:18.396" end="2:22.110" itunes:key="L30" ttm:agent="v1">Mengambil pelajaran jika berpisah</p>
+			<p begin="2:22.518" end="2:26.283" itunes:key="L31" ttm:agent="v1">Jikalau suatu saat berujung indah</p>
+			<p begin="2:26.606" end="2:29.547" itunes:key="L32" ttm:agent="v1">Catat nama kita dalam sejarah</p>
+		</div>
+		<div begin="2:30.798" end="2:46.245" itunes:songPart="Chorus">
+			<p begin="2:30.798" end="2:34.537" itunes:key="L33" ttm:agent="v1">Pindah berkala, rumah ke rumah</p>
+			<p begin="2:34.918" end="2:38.624" itunes:key="L34" ttm:agent="v1">Mengambil pelajaran jika berpisah</p>
+			<p begin="2:39.073" end="2:42.834" itunes:key="L35" ttm:agent="v1">Jikalau suatu saat berujung indah</p>
+			<p begin="2:43.222" end="2:46.245" itunes:key="L36" ttm:agent="v1">Catat nama kita dalam sejarah</p>
+		</div>
+		<div begin="2:47.356" end="3:02.970" itunes:songPart="Bridge">
+			<p begin="2:47.356" end="2:51.135" itunes:key="L37" ttm:agent="v1">Letih mengembara, rumah ke rumah</p>
+			<p begin="2:51.495" end="2:55.167" itunes:key="L38" ttm:agent="v1">Kadang ku lupa akanmu, Amalia</p>
+			<p begin="2:55.584" end="2:59.339" itunes:key="L39" ttm:agent="v1">Siap sedia tiap ku bercerita</p>
+			<p begin="2:59.748" end="3:02.970" itunes:key="L40" ttm:agent="v1">Ku beruntung jadi anakmu, bunda</p>
+		</div>
+		<div begin="3:20.464" end="3:35.811" itunes:songPart="Chorus">
+			<p begin="3:20.464" end="3:24.165" itunes:key="L41" ttm:agent="v1">Pindah berkala, rumah ke rumah</p>
+			<p begin="3:24.526" end="3:28.326" itunes:key="L42" ttm:agent="v1">Selalu pada dirimu, aku berserah</p>
+			<p begin="3:28.696" end="3:32.514" itunes:key="L43" ttm:agent="v1">Jika ku disebut dalam sejarah</p>
+			<p begin="3:32.891" end="3:35.811" itunes:key="L44" ttm:agent="v1">Mereka takkan lupa karena siapa</p>
+		</div>
+		<div begin="3:37.016" end="3:52.457" itunes:songPart="Verse">
+			<p begin="3:37.016" end="3:40.757" itunes:key="L45" ttm:agent="v1">Pindah berkala, rumah ke rumah</p>
+			<p begin="3:41.114" end="3:44.981" itunes:key="L46" ttm:agent="v1">Selalu pada dirimu, aku berserah</p>
+			<p begin="3:45.266" end="3:49.129" itunes:key="L47" ttm:agent="v1">Jika ku disebut dalam sejarah</p>
+			<p begin="3:49.420" end="3:52.457" itunes:key="L48" ttm:agent="v1">Mereka takkan lupa pada siapa</p>
+		</div>
+	</body>
+</tt>
+
+

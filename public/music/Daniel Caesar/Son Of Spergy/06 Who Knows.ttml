@@ -1,0 +1,58 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="en">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal" leadingSilence="0.240">
+				<translations/>
+				<songwriters>
+					<songwriter>Alex O'Connor</songwriter>
+					<songwriter>Ashton Simmonds</songwriter>
+					<songwriter>Dylan Wiggins</songwriter>
+					<songwriter>Justin Vernon</songwriter>
+					<songwriter>Matthew Burnett</songwriter>
+					<songwriter>Mustafa Ahmed</songwriter>
+					<songwriter>Romil Hemnani</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="3:46.283">
+		<div begin="0.518" end="24.047" itunes:songPart="Verse">
+			<p begin="0.518" end="6.235" itunes:key="L1" ttm:agent="v1">I'll probably be a waste of your time, but who knows?</p>
+			<p begin="8.607" end="14.187" itunes:key="L2" ttm:agent="v1">Chances are I'll step out of line, but who knows?</p>
+			<p begin="16.584" end="19.429" itunes:key="L3" ttm:agent="v1">Lately, you've set up in my mind</p>
+			<p begin="19.589" end="24.047" itunes:key="L4" ttm:agent="v1">Yeah, girl, you and I like that</p>
+		</div>
+		<div begin="32.395" end="55.296" itunes:songPart="Verse">
+			<p begin="32.395" end="39.368" itunes:key="L5" ttm:agent="v1">Lately, I've been thinking that perhaps I am a coward</p>
+			<p begin="40.365" end="47.283" itunes:key="L6" ttm:agent="v1">Hiding in a disguise of an ever-giving flower</p>
+			<p begin="48.299" end="55.296" itunes:key="L7" ttm:agent="v1">Incompetent steward of all of that sweet, sweet power</p>
+		</div>
+		<div begin="1:04.163" end="1:27.100" itunes:songPart="Verse">
+			<p begin="1:04.163" end="1:09.431" itunes:key="L8" ttm:agent="v1">Yesterday was feeling so good, now it's gone</p>
+			<p begin="1:11.916" end="1:17.259" itunes:key="L9" ttm:agent="v1">I'd feel like that always if I could, is that wrong?</p>
+			<p begin="1:19.980" end="1:22.860" itunes:key="L10" ttm:agent="v1">Tell me 'bout the city you're from</p>
+			<p begin="1:23.056" end="1:27.100" itunes:key="L11" ttm:agent="v1">Is it hot? Does it snow there?</p>
+		</div>
+		<div begin="1:35.915" end="1:58.771" itunes:songPart="Verse">
+			<p begin="1:35.915" end="1:42.864" itunes:key="L12" ttm:agent="v1">Lately, I've been thinking 'bout my precarious future</p>
+			<p begin="1:43.890" end="1:50.819" itunes:key="L13" ttm:agent="v1">Will you be there with me by my side, my girl, my shooter?</p>
+			<p begin="1:51.753" end="1:58.771" itunes:key="L14" ttm:agent="v1">Who's to say who calculates? Not me, I'm no computer</p>
+		</div>
+		<div begin="2:07.144" end="2:36.935" itunes:songPart="Bridge">
+			<p begin="2:07.144" end="2:12.495" itunes:key="L15" ttm:agent="v1">Is it a crime to be unsure?</p>
+			<p begin="2:13.160" end="2:21.138" itunes:key="L16" ttm:agent="v1">In time, we'll find if it's sustainable</p>
+			<p begin="2:23.063" end="2:30.581" itunes:key="L17" ttm:agent="v1">You're pure, you're kind, mature, divine</p>
+			<p begin="2:30.591" end="2:36.935" itunes:key="L18" ttm:agent="v1">You might be too good for me, unattainable</p>
+		</div>
+		<div begin="3:11.113" end="3:34.797" itunes:songPart="Outro">
+			<p begin="3:11.113" end="3:17.064" itunes:key="L19" ttm:agent="v1">Maybe we get married one day, but who knows?</p>
+			<p begin="3:19.016" end="3:25.080" itunes:key="L20" ttm:agent="v1">Think I'll take that thought to the grave, but who knows?</p>
+			<p begin="3:27.053" end="3:29.913" itunes:key="L21" ttm:agent="v1">I know that I'll love you always</p>
+			<p begin="3:30.048" end="3:34.797" itunes:key="L22" ttm:agent="v1">Yeah, girl, you and I like that</p>
+		</div>
+	</body>
+</tt>
+
+

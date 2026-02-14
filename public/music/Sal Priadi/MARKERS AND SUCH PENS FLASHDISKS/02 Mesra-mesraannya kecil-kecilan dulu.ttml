@@ -1,0 +1,63 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="id">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal">
+				<translations/>
+				<songwriters>
+					<songwriter>Salmantyo Ashrizky Priadi</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="3:29.720">
+		<div begin="0.351" end="23.042" itunes:songPart="Verse">
+			<p begin="0.351" end="1.498" itunes:key="L1" ttm:agent="v1">Ba</p>
+			<p begin="2.175" end="4.146" itunes:key="L2" ttm:agent="v1">Sementara</p>
+			<p begin="6.018" end="10.218" itunes:key="L3" ttm:agent="v1">Kita mesra-mesraannya</p>
+			<p begin="13.163" end="17.568" itunes:key="L4" ttm:agent="v1">Kecil-kecilan dulu, ya</p>
+			<p begin="18.004" end="23.042" itunes:key="L5" ttm:agent="v1">Tunggu sampai semua mereda</p>
+		</div>
+		<div begin="24.870" end="46.694" itunes:songPart="Verse">
+			<p begin="24.870" end="28.920" itunes:key="L6" ttm:agent="v1">Kau kukenalkan</p>
+			<p begin="30.574" end="35.316" itunes:key="L7" ttm:agent="v1">Penampilan hujan di tempat lain</p>
+			<p begin="36.373" end="41.738" itunes:key="L8" ttm:agent="v1">Pemandangan bagus di tempat yang jauh</p>
+			<p begin="42.216" end="46.694" itunes:key="L9" ttm:agent="v1">Bukan yang di dekat rumah saja</p>
+		</div>
+		<div begin="47.931" end="1:33.403" itunes:songPart="Chorus">
+			<p begin="47.931" end="52.000" itunes:key="L10" ttm:agent="v1">Kita 'kan</p>
+			<p begin="52.715" end="54.752" itunes:key="L11" ttm:agent="v1">Tangkap</p>
+			<p begin="55.411" end="57.894" itunes:key="L12" ttm:agent="v1">Banyak</p>
+			<p begin="58.105" end="1:02.697" itunes:key="L13" ttm:agent="v1">Kejadian</p>
+			<p begin="1:03.500" end="1:08.431" itunes:key="L14" ttm:agent="v1">Yang menarik</p>
+			<p begin="1:08.938" end="1:13.929" itunes:key="L15" ttm:agent="v1">Koleksi suasana asik</p>
+			<p begin="1:14.438" end="1:19.743" itunes:key="L16" ttm:agent="v1">Perasaan-perasaan yang baik</p>
+			<p begin="1:20.566" end="1:25.237" itunes:key="L17" ttm:agent="v1">Cintanya besar-besaran</p>
+			<p begin="1:25.412" end="1:33.403" itunes:key="L18" ttm:agent="v1">Meski mesranya kecil-kecilan</p>
+		</div>
+		<div begin="1:53.321" end="2:14.374" itunes:songPart="Verse">
+			<p begin="1:53.321" end="1:54.942" itunes:key="L19" ttm:agent="v1">Ba</p>
+			<p begin="1:54.952" end="1:57.355" itunes:key="L20" ttm:agent="v1">Sementara</p>
+			<p begin="1:58.395" end="2:02.928" itunes:key="L21" ttm:agent="v1">Kita mesra-mesraannya</p>
+			<p begin="2:04.922" end="2:09.242" itunes:key="L22" ttm:agent="v1">Kecil-kecilan dulu, ya</p>
+			<p begin="2:09.378" end="2:14.374" itunes:key="L23" ttm:agent="v1">Tunggu sampai semua mereda</p>
+		</div>
+		<div begin="2:15.142" end="2:36.439" itunes:songPart="Verse">
+			<p begin="2:15.142" end="2:19.137" itunes:key="L24" ttm:agent="v1">Baju pergimu</p>
+			<p begin="2:20.202" end="2:24.788" itunes:key="L25" ttm:agent="v1">Jangan kekecilan dulu</p>
+			<p begin="2:25.717" end="2:30.961" itunes:key="L26" ttm:agent="v1">Kalau iya, nanti beli baru</p>
+			<p begin="2:31.199" end="2:36.439" itunes:key="L27" ttm:agent="v1">Karena engkau tiba-tiba besar</p>
+		</div>
+		<div begin="2:36.969" end="3:11.333" itunes:songPart="Chorus">
+			<p begin="2:36.969" end="2:43.846" itunes:key="L28" ttm:agent="v1">(Kita 'kan tangkap) Kita 'kan tangkap</p>
+			<p begin="2:43.604" end="2:47.111" itunes:key="L29" ttm:agent="v1">Kejadian yang menarik</p>
+			<p begin="2:47.219" end="2:52.431" itunes:key="L30" ttm:agent="v1">Koleksi suasana asik</p>
+			<p begin="2:52.679" end="2:58.362" itunes:key="L31" ttm:agent="v1">Perasaan-perasaan yang baik</p>
+			<p begin="2:58.741" end="3:03.492" itunes:key="L32" ttm:agent="v1">Cintanya besar-besaran</p>
+			<p begin="3:03.625" end="3:11.333" itunes:key="L33" ttm:agent="v1">Meski mesranya kecil-kecilan</p>
+		</div>
+	</body>
+</tt>
+
+

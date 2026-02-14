@@ -1,0 +1,61 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" itunes:timing="Line" xml:lang="en">
+	<head>
+		<metadata>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal" leadingSilence="1.000">
+				<translations/>
+				<songwriters>
+					<songwriter>Ardhito Pramono</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="3:31.785">
+		<div begin="13.053" end="33.856" itunes:songPart="Verse">
+			<p begin="13.053" end="18.124" itunes:key="L15095">Living with something that I couldn't see</p>
+			<p begin="18.473" end="22.362" itunes:key="L15096">And somehow fade internally</p>
+			<p begin="23.854" end="29.136" itunes:key="L15097">If you came a long way to get to know me</p>
+			<p begin="29.682" end="33.856" itunes:key="L15098">And maybe it's just meant to be</p>
+		</div>
+		<div begin="35.575" end="56.803" itunes:songPart="Verse">
+			<p begin="35.575" end="40.404" itunes:key="L15099">Come here I just found a new recipe</p>
+			<p begin="41.012" end="45.303" itunes:key="L15100">The flower the bricks and the sea</p>
+			<p begin="46.975" end="51.700" itunes:key="L15101">My intuition says you will like me</p>
+			<p begin="52.316" end="56.803" itunes:key="L15102">And I don't know where should I be</p>
+		</div>
+		<div begin="57.993" end="1:19.094" itunes:songPart="Verse">
+			<p begin="57.993" end="1:02.393" itunes:key="L15103">And maybe you want to be a star</p>
+			<p begin="1:03.629" end="1:08.070" itunes:key="L15104">It may seem you want to be in love</p>
+			<p begin="1:09.312" end="1:13.300" itunes:key="L15105">I don't care it's taking me apart</p>
+			<p begin="1:15.013" end="1:19.094" itunes:key="L15106">But I just couldn't save you tonight</p>
+		</div>
+		<div begin="1:20.760" end="1:41.338" itunes:songPart="Verse">
+			<p begin="1:20.760" end="1:25.589" itunes:key="L15107">Falling in love is a new world for me</p>
+			<p begin="1:26.260" end="1:30.895" itunes:key="L15108">Do you want to be my company</p>
+			<p begin="1:31.829" end="1:36.909" itunes:key="L15109">From thousands of miles you will like it in here</p>
+			<p begin="1:37.454" end="1:41.338" itunes:key="L15110">No need, no anniversary</p>
+		</div>
+		<div begin="1:43.200" end="2:04.500" itunes:songPart="Verse">
+			<p begin="1:43.200" end="1:47.549" itunes:key="L15111">And maybe you want to be a star</p>
+			<p begin="1:48.707" end="1:53.296" itunes:key="L15112">It may seem you want to be in love</p>
+			<p begin="1:54.440" end="1:58.549" itunes:key="L15113">I don't care it's taking me apart</p>
+			<p begin="2:00.036" end="2:04.500" itunes:key="L15114">But I just couldn't save you tonight</p>
+		</div>
+		<div begin="2:28.272" end="2:49.773" itunes:songPart="Verse">
+			<p begin="2:28.272" end="2:32.765" itunes:key="L16055">And maybe you want to be a star</p>
+			<p begin="2:33.995" end="2:38.442" itunes:key="L16056">It may seem you want to be in love</p>
+			<p begin="2:39.615" end="2:44.351" itunes:key="L16057">I don't care it's taking me apart</p>
+			<p begin="2:45.257" end="2:49.773" itunes:key="L16058">But I just couldn't save you tonight</p>
+		</div>
+		<div begin="2:50.955" end="3:32.785" itunes:songPart="Verse">
+			<p begin="2:50.955" end="2:55.485" itunes:key="L16275">And maybe you want to be a star</p>
+			<p begin="2:56.571" end="3:01.314" itunes:key="L16326">It may seem you want to be in love</p>
+			<p begin="3:02.161" end="3:06.730" itunes:key="L16405">I don't care it's taking me apart</p>
+			<p begin="3:07.821" end="3:13.741" itunes:key="L16487">But I just couldn't save you tonight</p>
+			<p begin="3:13.751" end="3:21.196" itunes:key="L16572">I just couldn't save you tonight</p>
+			<p begin="3:23.654" end="3:32.785" itunes:key="L16689">And I just couldn't save you tonight</p>
+		</div>
+	</body>
+</tt>
+
+

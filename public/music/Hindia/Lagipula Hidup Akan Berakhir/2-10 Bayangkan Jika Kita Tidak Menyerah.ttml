@@ -1,0 +1,80 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="id">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal" leadingSilence="0">
+				<translations/>
+				<songwriters>
+					<songwriter>Baskara Putra</songwriter>
+					<songwriter>Enrico Octaviano</songwriter>
+					<songwriter>Mohammed Kamga</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="3:13.761">
+		<div begin="0.589" end="23.077" itunes:songPart="Verse">
+			<p begin="0.589" end="3.387" itunes:key="L1" ttm:agent="v1">Pernah kau bayangkan jika kita menikah?</p>
+			<p begin="6.343" end="11.002" itunes:key="L2" ttm:agent="v1">Selucu apa anak-anak karena Ibunya manis sekali</p>
+			<p begin="13.930" end="17.791" itunes:key="L3" ttm:agent="v1">Pernah kau bayangkan jika Abang dan Madu hidup selamanya?</p>
+			<p begin="19.762" end="23.077" itunes:key="L4" ttm:agent="v1">Menungguku pulang di tur ke-lima puluh nanti</p>
+		</div>
+		<div begin="26.873" end="52.960" itunes:songPart="Chorus">
+			<p begin="26.873" end="29.683" itunes:key="L5" ttm:agent="v1">Bayangkan jika kita tidak menyerah</p>
+			<p begin="30.598" end="33.964" itunes:key="L6" ttm:agent="v1">Tantangan apapun dari Ayah atau dunia</p>
+			<p begin="33.964" end="36.773" itunes:key="L7" ttm:agent="v1">Kita hadapi, kita lewati</p>
+			<p begin="37.239" end="40.415" itunes:key="L8" ttm:agent="v1">Kita ikuti, kita nikmati</p>
+			<p begin="40.141" end="43.214" itunes:key="L9" ttm:agent="v1">Pemanasan global dan perbedaan agama</p>
+			<p begin="43.925" end="46.768" itunes:key="L10" ttm:agent="v1">Kita hadapi, kita lewati</p>
+			<p begin="46.865" end="49.512" itunes:key="L11" ttm:agent="v1">Bayangkan jika kita tidak menyerah</p>
+			<p begin="50.212" end="52.960" itunes:key="L12" ttm:agent="v1">Bayangkan jika kita tidak menyerah</p>
+		</div>
+		<div begin="57.242" end="1:20.557" itunes:songPart="Verse">
+			<p begin="57.242" end="1:00.160" itunes:key="L13" ttm:agent="v1">Pernah kau bayangkan langit Jakarta cerah?</p>
+			<p begin="1:03.027" end="1:07.431" itunes:key="L14" ttm:agent="v1">Saat kau mendarat pulang pandanganmu tak tertutup polusi</p>
+			<p begin="1:10.589" end="1:14.470" itunes:key="L15" ttm:agent="v1">Pernah kau bayangkan percaya dengan yang ada di istana?</p>
+			<p begin="1:16.397" end="1:20.557" itunes:key="L16" ttm:agent="v1">Karena yang kita taruh di sana akhirnya memiliki hati</p>
+		</div>
+		<div begin="1:23.914" end="1:36.837" itunes:songPart="Verse">
+			<p begin="1:23.914" end="1:27.143" itunes:key="L17" ttm:agent="v1">Pernah kau bayangkan tak takut melihat berita?</p>
+			<p begin="1:27.222" end="1:30.525" itunes:key="L18" ttm:agent="v1">Tak takut jadi dirimu yang seada-adanya?</p>
+			<p begin="1:30.617" end="1:33.846" itunes:key="L19" ttm:agent="v1">Tak takut punya mimpi yang lumayan agak gila?</p>
+			<p begin="1:33.961" end="1:36.837" itunes:key="L20" ttm:agent="v1">Berat tapi besok ada di tangan kita</p>
+		</div>
+		<div begin="1:36.877" end="2:03.063" itunes:songPart="Chorus">
+			<p begin="1:36.877" end="1:39.667" itunes:key="L21" ttm:agent="v1">Bayangkan jika kita tidak menyerah</p>
+			<p begin="1:40.637" end="1:43.965" itunes:key="L22" ttm:agent="v1">Tantangan apapun dari Ayah atau dunia</p>
+			<p begin="1:43.965" end="1:46.829" itunes:key="L23" ttm:agent="v1">Kita hadapi, kita lewati</p>
+			<p begin="1:47.240" end="1:50.355" itunes:key="L24" ttm:agent="v1">Kita ikuti, kita nikmati</p>
+			<p begin="1:50.203" end="1:53.337" itunes:key="L25" ttm:agent="v1">Pemanasan global dan perbedaan agama</p>
+			<p begin="1:53.945" end="1:56.765" itunes:key="L26" ttm:agent="v1">Kita hadapi, kita lewati</p>
+			<p begin="1:56.849" end="1:59.708" itunes:key="L27" ttm:agent="v1">Bayangkan jika kita tidak menyerah</p>
+			<p begin="2:00.164" end="2:03.063" itunes:key="L28" ttm:agent="v1">Bayangkan jika kita tidak menyerah</p>
+		</div>
+		<div begin="2:03.923" end="2:17.106" itunes:songPart="Bridge">
+			<p begin="2:03.923" end="2:08.404" itunes:key="L29" ttm:agent="v1">Aku tahu kuhabiskan rekaman ini banyak mengeluh</p>
+			<p begin="2:09.760" end="2:13.858" itunes:key="L30" ttm:agent="v1">Di penghujung album ini satu kesempatan kupakai untuk</p>
+			<p begin="2:13.920" end="2:17.106" itunes:key="L31" ttm:agent="v1">Tersenyum, tertawa, berkhayal maka</p>
+		</div>
+		<div begin="2:16.892" end="2:42.978" itunes:songPart="Chorus">
+			<p begin="2:16.892" end="2:19.612" itunes:key="L32" ttm:agent="v1">Bayangkan jika kita tidak menyerah</p>
+			<p begin="2:20.572" end="2:23.939" itunes:key="L33" ttm:agent="v1">Tantangan apapun dari Ayah atau dunia</p>
+			<p begin="2:23.939" end="2:26.800" itunes:key="L34" ttm:agent="v1">Kita hadapi, kita lewati</p>
+			<p begin="2:27.245" end="2:30.344" itunes:key="L35" ttm:agent="v1">Kita ikuti, kita nikmati</p>
+			<p begin="2:30.202" end="2:33.826" itunes:key="L36" ttm:agent="v1">Pemanasan global dan perbedaan agama</p>
+			<p begin="2:33.930" end="2:36.708" itunes:key="L37" ttm:agent="v1">Kita hadapi, kita lewati</p>
+			<p begin="2:36.852" end="2:39.652" itunes:key="L38" ttm:agent="v1">Bayangkan jika kita tidak menyerah</p>
+			<p begin="2:40.180" end="2:42.978" itunes:key="L39" ttm:agent="v1">Bayangkan jika kita tidak menyerah</p>
+		</div>
+		<div begin="2:43.484" end="3:09.664" itunes:songPart="Outro">
+			<p begin="2:43.484" end="2:46.449" itunes:key="L40" ttm:agent="v1">Bayangkan jika kita tidak menyerah</p>
+			<p begin="2:47.305" end="2:49.067" itunes:key="L41" ttm:agent="v1">Tantangan apapun</p>
+			<p begin="2:49.333" end="2:57.058" itunes:key="L42" ttm:agent="v1">Dari Ayah, dari Bunda, dari dunia, dari mana, maju semua</p>
+			<p begin="3:03.522" end="3:06.320" itunes:key="L43" ttm:agent="v1">Bayangkan jika kita tidak menyerah</p>
+			<p begin="3:06.848" end="3:09.664" itunes:key="L44" ttm:agent="v1">Bayangkan jika kita tidak menyerah</p>
+		</div>
+	</body>
+</tt>
+
+

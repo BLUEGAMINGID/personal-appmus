@@ -1,0 +1,65 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="id">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<ttm:agent type="other" xml:id="v2000"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal" leadingSilence="0">
+				<translations/>
+				<songwriters>
+					<songwriter>Baskara Putra</songwriter>
+					<songwriter>Enrico Octaviano</songwriter>
+					<songwriter>Mohammed Kamga</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="4:48.004">
+		<div begin="8.617" end="53.054" itunes:songPart="Verse">
+			<p begin="8.617" end="13.560" itunes:key="L1" ttm:agent="v1">Sasa, malam ini mau pergi ke mana?</p>
+			<p begin="16.253" end="21.644" itunes:key="L2" ttm:agent="v1">Masih bisakah kau dan teman-temanmu rayakan dunia?</p>
+			<p begin="24.715" end="28.962" itunes:key="L3" ttm:agent="v1">Tengah malam ini 'kan bertemu siapa?</p>
+			<p begin="32.244" end="37.625" itunes:key="L4" ttm:agent="v1">Bisakah ia tersenyum menyikapi dunia?</p>
+			<p begin="40.735" end="45.114" itunes:key="L5" ttm:agent="v1">Maukah kalian memaafkan kami semua?</p>
+			<p begin="48.246" end="53.054" itunes:key="L6" ttm:agent="v1">Kami rampas berbagai hal yang bisa buatmu bahagia</p>
+		</div>
+		<div begin="57.885" end="1:28.035" itunes:songPart="Chorus">
+			<p begin="57.885" end="1:04.997" itunes:key="L7" ttm:agent="v1">Jalanmu berat seumur hidup</p>
+			<p begin="1:05.768" end="1:12.010" itunes:key="L8" ttm:agent="v1">Semoga ada bara yang tersisa</p>
+			<p begin="1:13.912" end="1:24.926" itunes:key="L9" ttm:agent="v1">Pun kata maaf, jauh terlambat datang</p>
+			<p begin="1:25.603" end="1:28.035" itunes:key="L10" ttm:agent="v1">Salahkan kami</p>
+		</div>
+		<div begin="1:28.767" end="1:57.242" itunes:songPart="Verse">
+			<p begin="1:28.767" end="1:33.038" itunes:key="L11" ttm:agent="v1">Jika suatu saat kau jadi ibu juga</p>
+			<p begin="1:36.249" end="1:41.335" itunes:key="L12" ttm:agent="v1">Paman harap kau ajarkan ia 'tuk merayakan dunia</p>
+			<p begin="1:44.587" end="1:48.996" itunes:key="L13" ttm:agent="v1">Semoga ia tak ulangi lalai kami semua</p>
+			<p begin="1:52.275" end="1:57.242" itunes:key="L14" ttm:agent="v1">Bisakah tak kau rampas api itu dari dalam dirinya?</p>
+		</div>
+		<div begin="2:03.904" end="2:34.154" itunes:songPart="Chorus">
+			<p begin="2:03.904" end="2:10.973" itunes:key="L15" ttm:agent="v1">Jalanmu berat seumur hidup</p>
+			<p begin="2:11.696" end="2:17.979" itunes:key="L16" ttm:agent="v1">Semoga ada bara yang tersisa</p>
+			<p begin="2:19.892" end="2:30.940" itunes:key="L17" ttm:agent="v1">Pun kata maaf, jauh terlambat datang</p>
+			<p begin="2:31.585" end="2:34.154" itunes:key="L18" ttm:agent="v1">Salahkan kami</p>
+		</div>
+		<div begin="2:35.576" end="3:05.814" itunes:songPart="Bridge">
+			<p begin="2:35.576" end="2:42.527" itunes:key="L19" ttm:agent="v1">Salahkan kami, kami mengerti</p>
+			<p begin="2:43.355" end="2:50.429" itunes:key="L20" ttm:agent="v1">Satu hal yang bisa kau tiru hanya perihal merusak diri</p>
+			<p begin="2:51.419" end="2:58.054" itunes:key="L21" ttm:agent="v1">Berharap hal baik yang kau temui hari ini berarti</p>
+			<p begin="3:01.585" end="3:05.814" itunes:key="L22" ttm:agent="v1">Saat kau dewasa nanti</p>
+		</div>
+		<div begin="3:09.898" end="3:41.836" itunes:songPart="Chorus">
+			<p begin="3:09.898" end="3:16.978" itunes:key="L23" ttm:agent="v1">Jalanmu berat seumur hidup</p>
+			<p begin="3:17.746" end="3:24.080" itunes:key="L24" ttm:agent="v1">Semoga ada bara yang tersisa</p>
+			<p begin="3:25.879" end="3:36.876" itunes:key="L25" ttm:agent="v1">Pun kata maaf, jauh terlambat datang</p>
+			<p begin="3:37.644" end="3:41.836" itunes:key="L26" ttm:agent="v2000">Salahkan kami, salah, salah, salah</p>
+		</div>
+		<div begin="3:41.939" end="4:11.881" itunes:songPart="Chorus">
+			<p begin="3:41.939" end="3:48.928" itunes:key="L27" ttm:agent="v1">Jalanmu berat seumur hidup</p>
+			<p begin="3:49.754" end="3:56.024" itunes:key="L28" ttm:agent="v1">Semoga ada bara yang tersisa</p>
+			<p begin="3:57.939" end="4:08.569" itunes:key="L29" ttm:agent="v1">Pun kata maaf, jauh terlambat datang</p>
+			<p begin="4:09.593" end="4:11.881" itunes:key="L30" ttm:agent="v1">Salahkan kami</p>
+		</div>
+	</body>
+</tt>
+
+

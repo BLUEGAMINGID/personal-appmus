@@ -1,0 +1,116 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="id">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal">
+				<translations/>
+				<songwriters>
+					<songwriter>Baskara Putra</songwriter>
+					<songwriter>Petra Sihombing</songwriter>
+					<songwriter>Rizky Indrayadi</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="6:18.514">
+		<div begin="27.622" end="44.208" itunes:songPart="Verse">
+			<p begin="27.622" end="31.126" itunes:key="L1" ttm:agent="v1">Rumah ini dahulu sederhana</p>
+			<p begin="32.011" end="35.632" itunes:key="L2" ttm:agent="v1">Ruang demi ruang dibangun bersama</p>
+			<p begin="36.368" end="39.887" itunes:key="L3" ttm:agent="v1">Angan-angan yang dulu mimpi belaka</p>
+			<p begin="40.717" end="44.208" itunes:key="L4" ttm:agent="v1">Kita gapai segala yang tak disangka</p>
+		</div>
+		<div begin="45.067" end="1:01.716" itunes:songPart="Verse">
+			<p begin="45.067" end="48.619" itunes:key="L5" ttm:agent="v1">Tak sadar menimbun lebih berharga</p>
+			<p begin="49.451" end="53.286" itunes:key="L6" ttm:agent="v1">Berdiri di atas yang lebih bermakna</p>
+			<p begin="53.781" end="57.646" itunes:key="L7" ttm:agent="v1">Anak tangga yang berlebihan jumlahnya</p>
+			<p begin="58.198" end="1:01.716" itunes:key="L8" ttm:agent="v1">Mendaki terus entah mau ke mana</p>
+		</div>
+		<div begin="1:02.548" end="1:19.417" itunes:songPart="Verse">
+			<p begin="1:02.548" end="1:06.386" itunes:key="L9" ttm:agent="v1">Dan kau selalu bertanya untuk apa</p>
+			<p begin="1:06.914" end="1:10.735" itunes:key="L10" ttm:agent="v1">Mengelak kerap kutemukan jawabnya</p>
+			<p begin="1:11.274" end="1:15.114" itunes:key="L11" ttm:agent="v1">Medusa dan semakin keras kepala</p>
+			<p begin="1:15.572" end="1:19.417" itunes:key="L12" ttm:agent="v1">Seakan hidup hanya untuk bekerja</p>
+		</div>
+		<div begin="1:19.934" end="1:36.662" itunes:songPart="Verse">
+			<p begin="1:19.934" end="1:23.793" itunes:key="L13" ttm:agent="v1">Mengejar mimpi sampai tak punya rasa</p>
+			<p begin="1:24.310" end="1:28.291" itunes:key="L14" ttm:agent="v1">Mengejar mimpi sampai lupa keluarga</p>
+			<p begin="1:28.718" end="1:32.704" itunes:key="L15" ttm:agent="v1">Mengejar mimpi lupa dunia nyata</p>
+			<p begin="1:33.075" end="1:36.662" itunes:key="L16" ttm:agent="v1">Mengejar mimpi tapi tidak bersama</p>
+		</div>
+		<div begin="1:36.101" end="1:53.002" itunes:songPart="Verse">
+			<p begin="1:36.101" end="1:39.888" itunes:key="L17" ttm:agent="v1">Padahal katanya uang takkan ke mana</p>
+			<p begin="1:39.888" end="1:44.043" itunes:key="L18" ttm:agent="v1">Jika memang rezeki ya 'kan ditransfer juga</p>
+			<p begin="1:44.246" end="1:48.683" itunes:key="L19" ttm:agent="v1">Namun dikejar terus seakan satwa langka</p>
+			<p begin="1:48.917" end="1:53.002" itunes:key="L20" ttm:agent="v1">Di prosesnya melintah, lupa jadi manusia</p>
+		</div>
+		<div begin="1:53.541" end="2:10.528" itunes:songPart="Verse">
+			<p begin="1:53.541" end="1:57.344" itunes:key="L21" ttm:agent="v1">Melihat hawa jadi panas lupa cuaca</p>
+			<p begin="1:57.344" end="2:01.712" itunes:key="L22" ttm:agent="v1">Tertiup angin buah jatuh digigit juga</p>
+			<p begin="2:01.712" end="2:06.133" itunes:key="L23" ttm:agent="v1">Seakan perlu banyak seperti Dewa Siwa</p>
+			<p begin="2:06.355" end="2:10.528" itunes:key="L24" ttm:agent="v1">Padahal manusia hanya bertangan dua</p>
+		</div>
+		<div begin="2:10.996" end="2:27.975" itunes:songPart="Verse">
+			<p begin="2:10.996" end="2:14.834" itunes:key="L25" ttm:agent="v1">Kasur yang luas tapi bangun sendiri</p>
+			<p begin="2:14.834" end="2:19.183" itunes:key="L26" ttm:agent="v1">Mobil baru mengkilap tanpa penumpang di kiri</p>
+			<p begin="2:19.466" end="2:23.549" itunes:key="L27" ttm:agent="v1">Banyak sepatu, minim privasi, susah pergi</p>
+			<p begin="2:23.815" end="2:27.975" itunes:key="L28" ttm:agent="v1">PS4, Nintendo Switch tanpa player dua</p>
+		</div>
+		<div begin="2:29.789" end="2:46.501" itunes:songPart="PreChorus">
+			<p begin="2:29.789" end="2:33.674" itunes:key="L29" ttm:agent="v1">Dan dahulu kau bertanya untuk apa</p>
+			<p begin="2:34.161" end="2:37.945" itunes:key="L30" ttm:agent="v1">Lalu kuperhatikan ini semua</p>
+			<p begin="2:38.532" end="2:42.017" itunes:key="L31" ttm:agent="v1">Barang mahal yang tidak ada harganya</p>
+			<p begin="2:42.918" end="2:46.501" itunes:key="L32" ttm:agent="v1">Dan sekarang kubertanya untuk apa</p>
+		</div>
+		<div begin="2:47.254" end="3:04.170" itunes:songPart="Chorus">
+			<p begin="2:47.254" end="2:51.075" itunes:key="L33" ttm:agent="v1">Terlepas apa yang engkau percayai</p>
+			<p begin="2:51.630" end="2:55.256" itunes:key="L34" ttm:agent="v1">Tetap takkan ada yang dibawa mati</p>
+			<p begin="2:55.974" end="2:59.830" itunes:key="L35" ttm:agent="v1">Kembali ke tanah dan tumbuh cemara</p>
+			<p begin="3:00.367" end="3:04.170" itunes:key="L36" ttm:agent="v1">Mana saja harta yang lebih berharga</p>
+		</div>
+		<div begin="3:04.706" end="3:21.640" itunes:songPart="Chorus">
+			<p begin="3:04.706" end="3:08.357" itunes:key="L37" ttm:agent="v1">Terlepas apa yang engkau percayai</p>
+			<p begin="3:09.098" end="3:12.643" itunes:key="L38" ttm:agent="v1">Tetap takkan ada yang dibawa mati</p>
+			<p begin="3:13.434" end="3:17.061" itunes:key="L39" ttm:agent="v1">Kembali ke tanah dan tumbuh cemara</p>
+			<p begin="3:17.795" end="3:21.640" itunes:key="L40" ttm:agent="v1">Mana saja harta yang lebih berharga</p>
+		</div>
+		<div begin="3:22.111" end="3:39.109" itunes:songPart="Chorus">
+			<p begin="3:22.111" end="3:25.974" itunes:key="L41" ttm:agent="v1">Terlepas apa yang engkau percayai</p>
+			<p begin="3:26.465" end="3:30.355" itunes:key="L42" ttm:agent="v1">Tetap takkan ada yang dibawa mati</p>
+			<p begin="3:30.859" end="3:34.723" itunes:key="L43" ttm:agent="v1">Menimbun surga yang tak bisa dibagi</p>
+			<p begin="3:35.224" end="3:39.109" itunes:key="L44" ttm:agent="v1">Akhirnya pun wafat sendiri-sendiri</p>
+		</div>
+		<div begin="3:57.623" end="4:27.341" itunes:songPart="Verse">
+			<p begin="3:57.623" end="4:02.823" itunes:key="L45" ttm:agent="v1">Mengangkat ikat rambutmu yang tertinggal</p>
+			<p begin="4:06.354" end="4:13.407" itunes:key="L46" ttm:agent="v1">Di lengan kiri mobilku, terakhir kita menonton</p>
+			<p begin="4:15.088" end="4:20.755" itunes:key="L47" ttm:agent="v1">Jariku tak juga kuat, sungguh janggal</p>
+			<p begin="4:23.805" end="4:27.341" itunes:key="L48" ttm:agent="v1">Lebih berat dari seribu ton</p>
+		</div>
+		<div begin="4:32.449" end="4:48.903" itunes:songPart="Verse">
+			<p begin="4:32.449" end="4:35.763" itunes:key="L49" ttm:agent="v1">Satu dari ribuan hal kecil</p>
+			<p begin="4:36.870" end="4:40.187" itunes:key="L50" ttm:agent="v1">Yang sekarang menjadi terampil</p>
+			<p begin="4:41.254" end="4:44.461" itunes:key="L51" ttm:agent="v1">Menggosok garam di atas luka</p>
+			<p begin="4:45.635" end="4:48.903" itunes:key="L52" ttm:agent="v1">Dulu tak ada apa-apanya</p>
+		</div>
+		<div begin="4:49.419" end="5:06.272" itunes:songPart="Verse">
+			<p begin="4:49.419" end="4:53.216" itunes:key="L53" ttm:agent="v1">Rute pagi yang dahulu ceria</p>
+			<p begin="4:53.784" end="4:57.349" itunes:key="L54" ttm:agent="v1">Menu favorit kini hambar rasanya</p>
+			<p begin="4:58.082" end="5:01.994" itunes:key="L55" ttm:agent="v1">Foto yang tak berani dilirik mata</p>
+			<p begin="5:02.527" end="5:06.272" itunes:key="L56" ttm:agent="v1">Kontak sekarang jadi sebatas nama</p>
+		</div>
+		<div begin="5:07.447" end="5:23.447" itunes:songPart="PreChorus">
+			<p begin="5:07.447" end="5:15.351" itunes:key="L57" ttm:agent="v1">Masing-masing selamat dan bercerita</p>
+			<p begin="5:16.135" end="5:23.447" itunes:key="L58" ttm:agent="v1">Namun tidak lagi miliki bersama</p>
+		</div>
+		<div begin="5:23.447" end="6:14.774" itunes:songPart="Chorus">
+			<p begin="5:23.447" end="5:31.345" itunes:key="L59" ttm:agent="v1">Cepat namun sendiri, untuk apa?</p>
+			<p begin="5:32.242" end="5:40.023" itunes:key="L60" ttm:agent="v1">Bersama tapi meracuni, untuk apa?</p>
+			<p begin="5:40.903" end="5:48.849" itunes:key="L61" ttm:agent="v1">Cepat namun sendiri, untuk apa?</p>
+			<p begin="5:49.646" end="5:57.550" itunes:key="L62" ttm:agent="v1">Bersama tapi meracuni, untuk apa?</p>
+			<p begin="5:58.389" end="6:06.267" itunes:key="L63" ttm:agent="v1">Cepat namun sendiri, untuk apa?</p>
+			<p begin="6:07.151" end="6:14.774" itunes:key="L64" ttm:agent="v1">Bersama tapi meracuni, untuk apa?</p>
+		</div>
+	</body>
+</tt>
+
+

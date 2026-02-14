@@ -1,0 +1,79 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="id">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal" leadingSilence="0.080">
+				<translations/>
+				<songwriters>
+					<songwriter>Salmantyo Ashrizky Priadi</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="3:29.694">
+		<div begin="0.827" end="21.117" itunes:songPart="Verse">
+			<p begin="0.827" end="2.880" itunes:key="L1" ttm:agent="v1">Mungkinkah?</p>
+			<p begin="3.299" end="5.245" itunes:key="L2" ttm:agent="v1">Mungkinkah?</p>
+			<p begin="5.541" end="6.842" itunes:key="L3" ttm:agent="v1">Mungkinkah</p>
+			<p begin="7.528" end="11.776" itunes:key="L4" ttm:agent="v1">Kau mampir hari ini?</p>
+			<p begin="12.218" end="21.117" itunes:key="L5" ttm:agent="v1">Bila tidak mirip kau jadilah bunga matahari</p>
+		</div>
+		<div begin="22.671" end="41.686" itunes:songPart="Verse">
+			<p begin="22.671" end="26.742" itunes:key="L6" ttm:agent="v1">Yang tiba-tiba mekar di taman</p>
+			<p begin="27.120" end="31.645" itunes:key="L7" ttm:agent="v1">Meski bicara dengan bahasa tumbuhan</p>
+			<p begin="31.959" end="35.466" itunes:key="L8" ttm:agent="v1">Ceritakan padaku</p>
+			<p begin="36.375" end="41.686" itunes:key="L9" ttm:agent="v1">Bagaimana tempat tinggalmu yang baru?</p>
+		</div>
+		<div begin="43.393" end="1:22.365" itunes:songPart="Chorus">
+			<p begin="43.393" end="47.766" itunes:key="L10" ttm:agent="v1">Adakah sungai-sungai itu benar-benar</p>
+			<p begin="48.022" end="53.002" itunes:key="L11" ttm:agent="v1">Dilintasi dengan air susu?</p>
+			<p begin="55.060" end="59.023" itunes:key="L12" ttm:agent="v1">Juga badanmu tak sakit-sakit lagi?</p>
+			<p begin="59.679" end="1:04.069" itunes:key="L13" ttm:agent="v1">Kau dan orang-orang di sana muda lagi?</p>
+			<p begin="1:04.303" end="1:06.372" itunes:key="L14" ttm:agent="v1">Semua pertanyaan</p>
+			<p begin="1:06.634" end="1:08.701" itunes:key="L15" ttm:agent="v1">Temukan jawaban</p>
+			<p begin="1:08.954" end="1:13.277" itunes:key="L16" ttm:agent="v1">Hati yang gembira, sering kau tertawa</p>
+			<p begin="1:13.629" end="1:22.365" itunes:key="L17" ttm:agent="v1">Benarkah orang bilang ia memang suka bercanda?</p>
+		</div>
+		<div begin="1:22.425" end="1:43.143" itunes:songPart="Verse">
+			<p begin="1:22.425" end="1:24.755" itunes:key="L18" ttm:agent="v1">Mungkinkah?</p>
+			<p begin="1:24.755" end="1:26.811" itunes:key="L19" ttm:agent="v1">Mungkinkah?</p>
+			<p begin="1:27.040" end="1:28.268" itunes:key="L20" ttm:agent="v1">Mungkinkah</p>
+			<p begin="1:29.068" end="1:33.417" itunes:key="L21" ttm:agent="v1">Kau mampir hari ini?</p>
+			<p begin="1:33.773" end="1:43.143" itunes:key="L22" ttm:agent="v1">Bila tidak mirip kau jadilah bunga matahari</p>
+		</div>
+		<div begin="1:44.226" end="2:03.079" itunes:songPart="Verse">
+			<p begin="1:44.226" end="1:48.279" itunes:key="L23" ttm:agent="v1">Yang tiba-tiba mekar di taman</p>
+			<p begin="1:48.602" end="1:52.967" itunes:key="L24" ttm:agent="v1">Meski bicara dengan bahasa tumbuhan</p>
+			<p begin="1:53.226" end="1:57.336" itunes:key="L25" ttm:agent="v1">'Kan kuceritakan padamu</p>
+			<p begin="1:57.939" end="2:03.079" itunes:key="L26" ttm:agent="v1">Bagaimana hidupku tanpamu</p>
+		</div>
+		<div begin="2:07.262" end="2:25.573" itunes:songPart="Chorus">
+			<p begin="2:07.262" end="2:11.584" itunes:key="L27" ttm:agent="v1">Kangennya masih ada di setiap waktu</p>
+			<p begin="2:11.894" end="2:16.267" itunes:key="L28" ttm:agent="v1">Kadang aku menangis bila aku perlu</p>
+			<p begin="2:16.569" end="2:20.935" itunes:key="L29" ttm:agent="v1">Tapi aku sekarang sudah lebih lucu</p>
+			<p begin="2:21.210" end="2:25.573" itunes:key="L30" ttm:agent="v1">Jadilah menyenangkan seperti katamu</p>
+		</div>
+		<div begin="2:25.878" end="2:37.538" itunes:songPart="Chorus">
+			<p begin="2:25.878" end="2:30.297" itunes:key="L31" ttm:agent="v1">Jalani hidup dengan penuh suka cita</p>
+			<p begin="2:30.534" end="2:34.365" itunes:key="L32" ttm:agent="v1">Dan percaya kau ada di hatiku</p>
+			<p begin="2:34.570" end="2:37.538" itunes:key="L33" ttm:agent="v1">Selamanya</p>
+		</div>
+		<div begin="2:39.288" end="2:59.680" itunes:songPart="Chorus">
+			<p begin="2:39.288" end="2:41.618" itunes:key="L34" ttm:agent="v1">Mungkinkah?</p>
+			<p begin="2:41.618" end="2:43.380" itunes:key="L35" ttm:agent="v1">Mungkinkah?</p>
+			<p begin="2:43.936" end="2:45.357" itunes:key="L36" ttm:agent="v1">Mungkinkah</p>
+			<p begin="2:45.992" end="2:49.559" itunes:key="L37" ttm:agent="v1">Kau mampir hari ini?</p>
+			<p begin="2:50.629" end="2:59.680" itunes:key="L38" ttm:agent="v1">Bila tidak mirip kau jadilah bunga matahari</p>
+		</div>
+		<div begin="3:00.202" end="3:21.281" itunes:songPart="Chorus">
+			<p begin="3:00.202" end="3:02.599" itunes:key="L39" ttm:agent="v1">Mungkinkah?</p>
+			<p begin="3:02.599" end="3:04.693" itunes:key="L40" ttm:agent="v1">Mungkinkah?</p>
+			<p begin="3:04.967" end="3:06.415" itunes:key="L41" ttm:agent="v1">Mungkinkah</p>
+			<p begin="3:06.972" end="3:11.307" itunes:key="L42" ttm:agent="v1">Kau mampir hari ini?</p>
+			<p begin="3:11.619" end="3:21.281" itunes:key="L43" ttm:agent="v1">Bila tidak sekarang, janji kita pasti 'kan bertemu lagi</p>
+		</div>
+	</body>
+</tt>
+
+

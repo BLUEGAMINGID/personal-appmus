@@ -1,0 +1,36 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="id">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal" leadingSilence="0">
+				<translations/>
+				<songwriters>
+					<songwriter>Baskara Putra</songwriter>
+					<songwriter>Enrico Octaviano</songwriter>
+					<songwriter>Meidiana Tahir</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="1:24.160">
+		<div begin="4.988" end="38.212" itunes:songPart="Verse">
+			<p begin="4.988" end="9.450" itunes:key="L1" ttm:agent="v1">Pernah kau bayangkan jika kau tak menyerah?</p>
+			<p begin="13.406" end="20.075" itunes:key="L2" ttm:agent="v1">Hadir sepenuhnya untuk masalah yang sedang kau hadapi?</p>
+			<p begin="24.177" end="30.370" itunes:key="L3" ttm:agent="v1">Pernah kau bayangkan bagaimana jika kita selamanya?</p>
+			<p begin="32.548" end="38.212" itunes:key="L4" ttm:agent="v1">Di ujung hari catat kita berdua dalam sejarah</p>
+		</div>
+		<div begin="42.780" end="1:20.374" itunes:songPart="Verse">
+			<p begin="42.780" end="47.361" itunes:key="L5" ttm:agent="v1">Bayangkan jika kita tidak menyerah</p>
+			<p begin="48.162" end="52.969" itunes:key="L6" ttm:agent="v1">Bangun semua hal yang selalu kita lamunkan</p>
+			<p begin="52.969" end="57.207" itunes:key="L7" ttm:agent="v1">Bagaimana pun, kau jaga aku</p>
+			<p begin="57.768" end="1:01.990" itunes:key="L8" ttm:agent="v1">Di mana aku, kau pun di situ</p>
+			<p begin="1:01.990" end="1:07.022" itunes:key="L9" ttm:agent="v1">Dalam tawa atau palung sedalam-dalamnya</p>
+			<p begin="1:07.354" end="1:11.635" itunes:key="L10" ttm:agent="v1">Ku jaga kamu, kau jaga aku</p>
+			<p begin="1:11.635" end="1:16.000" itunes:key="L11" ttm:agent="v1">Bayangkan jika kita tidak menyerah</p>
+			<p begin="1:16.436" end="1:20.374" itunes:key="L12" ttm:agent="v1">Bayangkan jika kita tidak menyerah</p>
+		</div>
+	</body>
+</tt>
+
+

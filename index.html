@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Playlist Fetcher</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Outfit', sans-serif; background-color: #050505; color: white; }
+        
+        /* Glass Effect */
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+
+        /* Animations */
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(220, 38, 38, 0.2); }
+            50% { box-shadow: 0 0 40px rgba(220, 38, 38, 0.5); }
+        }
+        .animate-glow { animation: pulse-glow 2s infinite; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center selection:bg-red-500 selection:text-white">
+
+    <main class="w-full max-w-3xl p-6 pb-32">
+        
+        <div class="flex justify-between items-center mb-10 sticky top-4 z-40 glass p-4 pl-6 rounded-2xl shadow-2xl bg-black/80">
+            <div class="flex items-center gap-4">
+                <div class="w-10 h-10 bg-red-600 rounded-lg flex items-center justify-center shadow-lg shadow-red-900/40">
+                    <i class="fa-brands fa-youtube text-white text-xl"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-sm tracking-widest uppercase">Batch Fetcher</h1>
+                    <p class="text-[10px] text-gray-500 font-mono">Support: Video & Playlist</p>
+                </div>
+            </div>
+            <button id="exportBtn" onclick="exportPlaylist()" disabled class="bg-white text-black hover:bg-gray-200 disabled:opacity-30 disabled:cursor-not-allowed px-6 py-2.5 rounded-xl font-bold text-[11px] tracking-widest transition-all shadow-lg active:scale-95">
+                EXPORT DATA
+            </button>
+        </div>
+
+        <div class="relative mb-8 group">
+            <div class="absolute -inset-0.5 bg-gradient-to-r from-red-600 to-orange-600 rounded-2xl blur opacity-20 group-focus-within:opacity-60 transition duration-500"></div>
+            <div class="relative flex bg-[#0f0f0f] rounded-2xl overflow-hidden border border-white/5">
+                <input 
+                    type="text" 
+                    id="urlInput"
+                    class="flex-1 bg-transparent p-5 text-sm text-white placeholder:text-white/20 focus:outline-none" 
+                    placeholder="Paste Link YouTube (Video atau Playlist)..." 
+                    autocomplete="off"
+                    onkeypress="handleEnter(event)"
+                >
+                <button onclick="processLink()" id="fetchBtn" class="px-8 font-bold text-xs tracking-wider bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white border-l border-white/5 transition-colors">
+                    FETCH
+                </button>
+            </div>
+        </div>
+
+        <div id="statusMsg" class="hidden text-center mb-8 p-4 rounded-xl border text-xs font-mono"></div>
+
+        <div id="progressArea" class="hidden mb-8">
+            <div class="flex justify-between text-[10px] uppercase font-bold tracking-widest text-gray-500 mb-2">
+                <span>Fetching Playlist...</span>
+                <span id="progressText">0%</span>
+            </div>
+            <div class="h-1 w-full bg-gray-800 rounded-full overflow-hidden">
+                <div id="progressBar" class="h-full bg-red-600 w-0 transition-all duration-300"></div>
+            </div>
+        </div>
+
+        <div class="space-y-6">
+            
+            <div class="flex justify-between items-end border-b border-white/5 pb-4 px-2">
+                <h3 class="text-xs font-bold text-gray-400 tracking-[0.2em] uppercase">
+                    Queue List <span id="countDisplay" class="text-white ml-1 bg-white/10 px-2 py-0.5 rounded text-[10px]">0</span>
+                </h3>
+                <button id="resetBtn" onclick="resetPlaylist()" class="hidden text-[10px] text-red-500 hover:text-red-400 font-bold tracking-wider transition">CLEAR ALL</button>
+            </div>
+
+            <div id="emptyState" class="text-center py-20 opacity-20 bg-white/5 rounded-3xl border border-dashed border-white/10">
+                <i class="fa-solid fa-layer-group text-4xl mb-4"></i>
+                <p class="text-sm font-medium">List Kosong</p>
+                <p class="text-[10px] mt-2">Paste link video atau playlist untuk memulai</p>
+            </div>
+
+            <div id="playlistContainer" class="space-y-2">
+                </div>
+
+        </div>
+    </main>
+
+    <script>
+        // --- CONFIG ---
+        // Mirror API Piped (Untuk membaca playlist)
+        const PIPED_MIRRORS = [
+            "https://pipedapi.kavin.rocks",
+            "https://api.piped.ot.ax",
+            "https://pipedapi.drgns.space",
+            "https://pa.il.ax"
+        ];
+
+        // --- STATE ---
+        let playlist = [];
+
+        // --- DOM ---
+        const els = {
+            input: document.getElementById('urlInput'),
+            container: document.getElementById('playlistContainer'),
+            emptyState: document.getElementById('emptyState'),
+            count: document.getElementById('countDisplay'),
+            resetBtn: document.getElementById('resetBtn'),
+            exportBtn: document.getElementById('exportBtn'),
+            status: document.getElementById('statusMsg'),
+            progressArea: document.getElementById('progressArea'),
+            progressBar: document.getElementById('progressBar'),
+            progressText: document.getElementById('progressText'),
+            fetchBtn: document.getElementById('fetchBtn')
+        };
+
+        // --- INIT ---
+        window.onload = () => {
+            const saved = localStorage.getItem('proBatchPlaylist');
+            if (saved) {
+                playlist = JSON.parse(saved);
+                renderList();
+            }
+            els.input.focus();
+        };
+
+        function handleEnter(e) { if(e.key === 'Enter') processLink(); }
+
+        // --- CORE LOGIC ---
+        async function processLink() {
+            const url = els.input.value.trim();
+            if(!url) return;
+
+            setLoading(true);
+            setStatus(null);
+
+            // 1. Cek apakah ini Playlist? (list=...)
+            if (url.includes('list=') && !url.includes('watch?v=')) {
+                // Murni link playlist (bukan video yang ada di playlist)
+                await fetchFullPlaylist(url);
+            } 
+            else if (url.includes('list=') && url.includes('watch?v=')) {
+                // Video di dalam playlist. Tanya user?
+                // Defaultnya kita ambil videonya saja agar cepat.
+                // Atau kita bisa ambil playlist ID nya.
+                // Untuk amannya, kita ekstrak Playlist ID nya.
+                const listId = new URL(url).searchParams.get('list');
+                const conf = confirm("Link ini mengandung Playlist.\n\nKlik OK untuk ambil SEMUA lagu di playlist.\nKlik Cancel untuk ambil video ini saja.");
+                
+                if (conf) {
+                    await fetchFullPlaylist(`https://www.youtube.com/playlist?list=${listId}`);
+                } else {
+                    await fetchSingleVideo(url);
+                }
+            }
+            else {
+                // Video Biasa
+                await fetchSingleVideo(url);
+            }
+
+            setLoading(false);
+            els.input.value = '';
+        }
+
+        // --- SINGLE VIDEO FETCH (Pakai NoEmbed - Cepat) ---
+        async function fetchSingleVideo(url) {
+            try {
+                const res = await fetch(`https://noembed.com/embed?url=${url}`);
+                const data = await res.json();
+                if(data.error) throw new Error("Video private atau invalid");
+
+                addTrack({
+                    id: Date.now(),
+                    title: data.title,
+                    artist: data.author_name,
+                    thumb: data.thumbnail_url,
+                    url: url
+                });
+                
+                setStatus("Berhasil menambahkan 1 video.", "success");
+            } catch (e) {
+                setStatus("Gagal mengambil video. Pastikan link publik.", "error");
+            }
+        }
+
+        // --- PLAYLIST FETCH (Pakai Piped API - Powerful) ---
+        async function fetchFullPlaylist(url) {
+            try {
+                // Ekstrak ID
+                let listId = "";
+                try {
+                    listId = new URL(url).searchParams.get('list');
+                } catch(e) { listId = url; } // Asumsi user paste ID doang
+
+                if(!listId) throw new Error("ID Playlist tidak ditemukan");
+
+                els.progressArea.classList.remove('hidden');
+                updateProgress(10);
+
+                // Rotasi Mirror Server
+                let data = null;
+                for (const host of PIPED_MIRRORS) {
+                    try {
+                        const res = await fetch(`${host}/playlists/${listId}`);
+                        if(!res.ok) continue;
+                        data = await res.json();
+                        break;
+                    } catch(e) { console.log("Mirror failed, trying next..."); }
+                }
+
+                if (!data || !data.relatedStreams) throw new Error("Gagal mengambil data playlist dari server.");
+
+                updateProgress(50);
+                
+                // Proses Data
+                const tracks = data.relatedStreams;
+                let addedCount = 0;
+
+                tracks.forEach(item => {
+                    const fullUrl = `https://www.youtube.com${item.url}`; // Piped kasih relative URL
+                    
+                    // Cek duplikat
+                    if(!playlist.some(p => p.url === fullUrl)) {
+                        playlist.push({
+                            id: Date.now() + Math.random(),
+                            title: item.title,
+                            artist: item.uploaderName,
+                            thumb: item.thumbnail,
+                            url: fullUrl
+                        });
+                        addedCount++;
+                    }
+                });
+
+                updateProgress(100);
+                saveAndRender();
+                setStatus(`Sukses! Menambahkan ${addedCount} lagu dari playlist.`, "success");
+
+            } catch (e) {
+                console.error(e);
+                setStatus("Gagal load playlist. Pastikan playlist Publik/Unlisted.", "error");
+            } finally {
+                setTimeout(() => { els.progressArea.classList.add('hidden'); updateProgress(0); }, 2000);
+            }
+        }
+
+        // --- LIST MANAGEMENT ---
+        function addTrack(item) {
+            if(playlist.some(p => p.url === item.url)) return;
+            playlist.push(item);
+            saveAndRender();
+        }
+
+        function removeTrack(id) {
+            playlist = playlist.filter(p => p.id !== id);
+            saveAndRender();
+        }
+
+        function resetPlaylist() {
+            if(confirm("Hapus semua list?")) {
+                playlist = [];
+                saveAndRender();
+            }
+        }
+
+        function saveAndRender() {
+            localStorage.setItem('proBatchPlaylist', JSON.stringify(playlist));
+            renderList();
+        }
+
+        function renderList() {
+            els.container.innerHTML = '';
+            els.count.innerText = playlist.length;
+            
+            // Buttons State
+            if (playlist.length === 0) {
+                els.emptyState.classList.remove('hidden');
+                els.resetBtn.classList.add('hidden');
+                els.exportBtn.disabled = true;
+            } else {
+                els.emptyState.classList.add('hidden');
+                els.resetBtn.classList.remove('hidden');
+                els.exportBtn.disabled = false;
+            }
+
+            playlist.forEach((track, i) => {
+                const div = document.createElement('div');
+                div.className = 'group flex items-center gap-4 bg-[#0a0a0a] p-3 rounded-xl border border-white/5 hover:border-white/20 transition-all hover:bg-[#111] animate-[fadeIn_0.3s_ease-out]';
+                div.innerHTML = `
+                    <div class="font-mono text-[10px] text-gray-600 w-6 text-center shrink-0">${i + 1}</div>
+                    
+                    <div class="relative w-12 h-12 rounded-lg overflow-hidden shrink-0 bg-gray-900">
+                        <img src="${track.thumb}" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition-opacity" loading="lazy">
+                    </div>
+
+                    <div class="flex-1 min-w-0">
+                        <h4 class="text-xs font-bold text-gray-300 truncate group-hover:text-white transition-colors">${track.title}</h4>
+                        <p class="text-[10px] text-gray-600 truncate mt-0.5">${track.artist}</p>
+                    </div>
+
+                    <button onclick="removeTrack(${track.id})" class="w-8 h-8 flex items-center justify-center rounded-lg text-gray-600 hover:text-red-500 hover:bg-red-500/10 transition-all opacity-0 group-hover:opacity-100">
+                        <i class="fa-solid fa-trash text-xs"></i>
+                    </button>
+                `;
+                els.container.appendChild(div);
+            });
+        }
+
+        function exportPlaylist() {
+            const lines = playlist.map(p => `\t"${p.url}" // ${p.title.replace(/"/g, '')}`);
+            const content = `// components/about/components/about/spotify/list.js\nexport const playlist = [\n${lines.join(',\n')}\n];`;
+            
+            const blob = new Blob([content], { type: 'text/javascript' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'list.js';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+        }
+
+        // --- UTILS ---
+        function setStatus(msg, type) {
+            if(!msg) {
+                els.status.className = "hidden";
+                return;
+            }
+            els.status.innerText = msg;
+            els.status.classList.remove('hidden');
+            if(type === 'success') els.status.className = "mb-8 p-4 rounded-xl border text-xs font-mono bg-green-500/10 border-green-500/20 text-green-400";
+            else els.status.className = "mb-8 p-4 rounded-xl border text-xs font-mono bg-red-500/10 border-red-500/20 text-red-400";
+        }
+
+        function setLoading(state) {
+            if(state) {
+                els.fetchBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i>';
+                els.input.disabled = true;
+            } else {
+                els.fetchBtn.innerText = 'FETCH';
+                els.input.disabled = false;
+                els.input.focus();
+            }
+        }
+
+        function updateProgress(percent) {
+            els.progressBar.style.width = `${percent}%`;
+            els.progressText.innerText = `${percent}%`;
+        }
+    </script>
+</body>
+</html>
