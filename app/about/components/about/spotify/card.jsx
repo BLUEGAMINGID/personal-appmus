@@ -18,8 +18,8 @@ const useMediaQuery = (query) => {
         const media = window.matchMedia(query);
         if (media.matches !== matches) setMatches(media.matches);
         const listener = () => setMatches(media.matches);
-        media.addListener(listener);
-        return () => media.removeListener(listener);
+        media.addEventListener("change", listener);
+        return () => media.removeEventListener("change", listener);
     }, [matches, query]);
     return matches;
 };
@@ -61,12 +61,9 @@ const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
     return (
         <div className="py-3 w-full flex flex-col items-start justify-center opacity-100 transition-opacity duration-700 will-change-transform transform-gpu">
             <div className="relative inline-block w-fit">
-                {/* Layer 1: Background */}
                 <div className="text-[28px] tracking-[4px] text-white/20 leading-tight select-none font-bold mix-blend-screen pl-1">
                     ● ● ●
                 </div>
-
-                {/* Layer 2: Filling */}
                 <div 
                     ref={fillRef} 
                     className="absolute top-0 left-0 h-full overflow-hidden whitespace-nowrap text-[28px] tracking-[4px] text-white leading-tight select-none font-bold will-change-[width] pl-1"
@@ -139,11 +136,9 @@ const AppleVocalSlider = ({ value, onChange, onClose }) => {
                             className="absolute top-0 left-0 right-0 h-[20px] bg-white blur-[10px]"
                         />
                     </motion.div>
-                    
                     <div className="absolute inset-0 flex flex-col justify-end items-center pb-5 pointer-events-none mix-blend-difference">
                         <FontAwesomeIcon icon={faMicrophone} className="text-white text-sm opacity-80" />
                     </div>
-                    
                     <div className="absolute inset-0 rounded-[21px] pointer-events-none border border-white/10 shadow-[inset_0_0_15px_rgba(255,255,255,0.1)]">
                         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[70%] h-[2px] bg-white/40 rounded-full blur-[0.5px]" />
                     </div>
@@ -153,7 +148,7 @@ const AppleVocalSlider = ({ value, onChange, onClose }) => {
     );
 };
 
-// --- TIME SLIDER ---
+// --- KOMPONEN: TIME SLIDER ---
 const AppleMusicTimeSlider = ({ audioRef, duration, isPaused, onSeekStart, onSeekEnd }) => {
     const progressRef = useRef(null);
     const timeRef = useRef(null);
@@ -211,10 +206,7 @@ const AppleMusicTimeSlider = ({ audioRef, duration, isPaused, onSeekStart, onSee
 
 // --- MAIN CARD ---
 const Card = () => {
-    // Responsive Logic
     const isDesktop = useMediaQuery("(min-width: 768px)");
-    
-    // Logic Random Index
     const [currentIndex, setCurrentIndex] = useState(0); 
     const [isMounted, setIsMounted] = useState(false);
 
@@ -327,7 +319,6 @@ const Card = () => {
             const onLoadedMetadata = () => {
                 if(audioRef.current) {
                     setDuration(audioRef.current.duration);
-                    
                     const playPromise = audioRef.current.play();
                     if (playPromise !== undefined) {
                         playPromise.then(() => {
@@ -372,7 +363,6 @@ const Card = () => {
 
         if (processedLyrics.length > 0) {
             let idx = -1;
-            
             if (activeIdx !== -1 && activeIdx < processedLyrics.length) {
                 const currentLine = processedLyrics[activeIdx];
                 const nextLine = processedLyrics[activeIdx + 1];
@@ -404,7 +394,6 @@ const Card = () => {
         }
     };
 
-    // --- AUTO SCROLL LOGIC ---
     useEffect(() => {
         if (showLyrics && scrollRef.current && !showPlaylist && activeIdx !== -1) {
             const activeEl = scrollRef.current.children[activeIdx];
@@ -413,13 +402,10 @@ const Card = () => {
                 const containerH = container.clientHeight;
                 const elTop = activeEl.offsetTop;
                 const elH = activeEl.clientHeight;
-                
-                // ADJUSTMENT: 22% Top Bias
                 let targetScroll = elTop - (containerH * 0.22); 
                 if (elH > containerH * 0.4) {
                     targetScroll = elTop - (containerH * 0.15);
                 }
-
                 container.scrollTo({ top: targetScroll, behavior: 'smooth' });
             }
         }
@@ -448,12 +434,14 @@ const Card = () => {
     const handlePrev = () => setCurrentIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
     const selectSong = (idx) => { if (idx === currentIndex) { setShowPlaylist(false); return; } setCurrentIndex(idx); setShowPlaylist(false); };
 
-    // --- HEIGHT CALCULATION ---
+    // --- FIX: RESPONSIVE HEIGHT LOGIC ---
     const getCardHeight = () => {
         if (showLyrics || showPlaylist) {
-            return isDesktop ? 680 : 580; 
+            // Mobile lebih compact (520px), Desktop tetap luas (680px)
+            return isDesktop ? 680 : 520; 
         }
-        return isDesktop ? 260 : 190; 
+        // Mobile tertutup lebih pendek (180px), Desktop (260px)
+        return isDesktop ? 260 : 180; 
     };
 
     return (
@@ -465,47 +453,39 @@ const Card = () => {
                 className="relative w-full rounded-[40px] overflow-hidden shadow-2xl bg-[#0a0a0a] transition-all duration-500 cubic-bezier(0.32, 0.72, 0, 1)" 
                 style={{ height: getCardHeight() }}
             >
-                {/* --- ALIVE BACKGROUND (3 LAYERS - DESYNCHRONIZED) --- */}
-                <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#0a0a0a]">
+                {/* --- ALIVE BACKGROUND --- */}
+                <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#101010]">
                      {result.cover && (
                         <>
-                            {/* Layer 1: Deep Base (Slow, Clockwise, Big Blur) */}
-                            {/* Inset -50% agar gambar "tumpah" keluar dan tidak ada sudut kosong saat diputar */}
                             <div 
                                 className="absolute inset-[-50%] bg-cover bg-center animate-spin-slow will-change-transform transform-gpu" 
                                 style={{ 
                                     backgroundImage: `url(${result.cover})`,
                                     filter: 'blur(50px) saturate(250%) brightness(0.9)', 
                                     opacity: 0.6,
-                                    animationDelay: '-12s' // Mulai di detik ke-12 (acak)
+                                    animationDelay: '-12s'
                                 }}
                             ></div>
-                            
-                            {/* Layer 2: Mid Tones (Reverse, Slower, Color Dodge) */}
                             <div 
                                 className="absolute inset-[-50%] bg-cover bg-center animate-spin-reverse-slower will-change-transform transform-gpu" 
                                 style={{ 
                                     backgroundImage: `url(${result.cover})`,
-                                    mixBlendMode: 'screen', // Extract warna dari hitam
+                                    mixBlendMode: 'screen',
                                     filter: 'blur(35px) saturate(300%) contrast(110%)',
                                     opacity: 0.5,
-                                    animationDelay: '-45s' // Mulai beda posisi
+                                    animationDelay: '-45s'
                                 }}
                             ></div>
-
-                            {/* Layer 3: Highlights (Fastest, Breathing) */}
                             <div 
                                 className="absolute inset-[-50%] bg-cover bg-center animate-pulse-spin will-change-transform transform-gpu" 
                                 style={{ 
                                     backgroundImage: `url(${result.cover})`,
-                                    mixBlendMode: 'overlay', // Texture
+                                    mixBlendMode: 'overlay',
                                     filter: 'blur(30px) saturate(200%) brightness(1.2)',
                                     opacity: 0.3,
                                     animationDelay: '-23s'
                                 }}
                             ></div>
-                            
-                            {/* Dark Gradient Overlay */}
                             <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/90"></div>
                         </>
                      )}
@@ -569,8 +549,8 @@ const Card = () => {
                             </div>
                         )}
 
-                        {/* Lyrics Area */}
-                        <div ref={scrollRef} className="w-full h-full overflow-y-auto no-scrollbar pt-20 pb-32 px-4 mask-scroller-y">
+                        {/* Lyrics Area (Mobile Optimized Padding) */}
+                        <div ref={scrollRef} className={`w-full h-full overflow-y-auto no-scrollbar px-4 mask-scroller-y ${isDesktop ? 'pt-20 pb-32' : 'pt-12 pb-24'}`}>
                             {processedLyrics.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center h-full text-white/30 gap-2">
                                     <FontAwesomeIcon icon={faMusic} className="text-2xl" />
@@ -579,7 +559,6 @@ const Card = () => {
                             ) : (
                                 processedLyrics.map((line, i) => {
                                     const isActive = activeIdx === i;
-
                                     if (line.isInterlude) {
                                         return (
                                             <LiveInterlude 
@@ -591,7 +570,6 @@ const Card = () => {
                                             />
                                         );
                                     }
-
                                     return (
                                         <div 
                                             key={i} 
@@ -647,35 +625,13 @@ const Card = () => {
             <style jsx global>{`
                 .no-scrollbar::-webkit-scrollbar { display: none; }
                 
-                /* ULTRA SMOOTH FADE MASK (25% Top/Bottom) */
                 .mask-scroller-y { 
-                    mask-image: linear-gradient(to bottom, 
-                        transparent 0%, 
-                        rgba(0,0,0,0.2) 10%, 
-                        rgba(0,0,0,0.6) 20%, 
-                        black 30%, 
-                        black 70%, 
-                        rgba(0,0,0,0.6) 80%, 
-                        rgba(0,0,0,0.2) 90%, 
-                        transparent 100%
-                    );
-                    -webkit-mask-image: linear-gradient(to bottom, 
-                        transparent 0%, 
-                        rgba(0,0,0,0.2) 10%, 
-                        rgba(0,0,0,0.6) 20%, 
-                        black 30%, 
-                        black 70%, 
-                        rgba(0,0,0,0.6) 80%, 
-                        rgba(0,0,0,0.2) 90%, 
-                        transparent 100%
-                    );
+                    mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.2) 10%, rgba(0,0,0,0.6) 20%, black 30%, black 70%, rgba(0,0,0,0.6) 80%, rgba(0,0,0,0.2) 90%, transparent 100%);
+                    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.2) 10%, rgba(0,0,0,0.6) 20%, black 30%, black 70%, rgba(0,0,0,0.6) 80%, rgba(0,0,0,0.2) 90%, transparent 100%);
                 }
                 
                 .active-lyric-glow-text { 
-                    text-shadow: 
-                        0 0 5px rgba(255,255,255,0.30),   
-                        0 0 10px rgba(255,255,255,0.25),  
-                        0 0 30px rgba(255,255,255,0.15);
+                    text-shadow: 0 0 5px rgba(255,255,255,0.30), 0 0 10px rgba(255,255,255,0.25), 0 0 30px rgba(255,255,255,0.15);
                 }
 
                 @keyframes spin-slow { from { transform: rotate(0deg) scale(1.5); } to { transform: rotate(360deg) scale(1.5); } }
