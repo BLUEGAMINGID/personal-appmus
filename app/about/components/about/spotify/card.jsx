@@ -170,61 +170,48 @@ const LyricLine = React.memo(({ line, isActive, onClick, audioRef }) => {
 }, (prev, next) => prev.isActive === next.isActive && prev.line === next.line);
 LyricLine.displayName = "LyricLine";
 
-// --- MEMOIZED BACKGROUND (THE UPSCALE TRICK) ---
-// Kita pakai gambar super kecil (microCover), lalu scale besar.
-// Browser akan melakukan interpolasi (blur alami) GRATIS tanpa beban filter: blur().
+// --- MEMOIZED BACKGROUND (STATIC CANVAS TECHNIQUE) ---
 const AliveBackground = React.memo(({ cover }) => (
     <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#101010] contain-strict">
         {cover && (
-            <>
-                {/* PERFORMANCE HACK:
-                   1. Hapus mix-blend-mode (Berat!). Ganti opacity.
-                   2. Gunakan transform: scale(3.5). Gambar 60px akan jadi 210px+ dan pecah/blur alami.
-                   3. Tambahkan sedikit filter: blur(15px) yg ringan untuk meratakan pixel.
-                */}
-
-                {/* Layer 1: Base (Lebar, putar lambat) */}
-                <div 
-                    className="absolute inset-0 bg-cover bg-center animate-spin-slow will-change-transform transform-gpu" 
-                    style={{ 
-                        backgroundImage: `url(${cover})`, 
-                        filter: 'blur(15px) saturate(200%) brightness(0.8)', 
-                        opacity: 0.6,
-                        transform: 'scale(3.5)', // Upscale trick
-                        animationDelay: '-12s'
-                    }} 
-                />
-                
-                {/* Layer 2: Color (Putar balik) */}
-                <div 
-                    className="absolute inset-0 bg-cover bg-center animate-spin-reverse-slower will-change-transform transform-gpu" 
-                    style={{ 
-                        backgroundImage: `url(${cover})`, 
-                        // Mix-blend dihapus untuk performa, ganti opacity lebih rendah
-                        filter: 'blur(20px) saturate(250%)', 
-                        opacity: 0.4, 
-                        transform: 'scale(3.0)', 
-                        animationDelay: '-45s' 
-                    }} 
-                />
-
-                {/* Layer 3: Pulse (Nafas) */}
-                <div 
-                    className="absolute inset-0 bg-cover bg-center animate-pulse-spin will-change-transform transform-gpu" 
-                    style={{ 
-                        backgroundImage: `url(${cover})`, 
-                        filter: 'blur(10px) saturate(150%)', 
-                        opacity: 0.3,
-                        // Scale diatur di keyframes pulse
-                        animationDelay: '-23s' 
-                    }} 
-                />
-                
-                {/* Dark Overlay untuk readability */}
+            <div className="absolute inset-0 overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-[800px] will-change-transform">
+                    {/* Layer 1 */}
+                    <div 
+                        className="absolute inset-0 bg-cover bg-center animate-spin-slow will-change-transform transform-gpu" 
+                        style={{ 
+                            backgroundImage: `url(${cover})`, 
+                            filter: 'blur(15px) saturate(200%) brightness(0.8)', 
+                            opacity: 0.6,
+                            transform: 'scale(3.5)', 
+                            animationDelay: '-12s'
+                        }} 
+                    />
+                    {/* Layer 2 */}
+                    <div 
+                        className="absolute inset-0 bg-cover bg-center animate-spin-reverse-slower will-change-transform transform-gpu" 
+                        style={{ 
+                            backgroundImage: `url(${cover})`, 
+                            filter: 'blur(20px) saturate(250%)', 
+                            opacity: 0.4, 
+                            transform: 'scale(3.0)', 
+                            animationDelay: '-45s' 
+                        }} 
+                    />
+                    {/* Layer 3 */}
+                    <div 
+                        className="absolute inset-0 bg-cover bg-center animate-pulse-spin will-change-transform transform-gpu" 
+                        style={{ 
+                            backgroundImage: `url(${cover})`, 
+                            filter: 'blur(10px) saturate(150%)', 
+                            opacity: 0.3,
+                            animationDelay: '-23s' 
+                        }} 
+                    />
+                </div>
                 <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/90" />
-            </>
+            </div>
         )}
-        {/* Noise overlay juga berat jika resolusi tinggi, pakai opacity rendah */}
         <div className="absolute inset-0 opacity-[0.05] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay" />
     </div>
 ));
@@ -237,7 +224,6 @@ const Card = () => {
     const [currentIndex, setCurrentIndex] = useState(0); 
     const [isMounted, setIsMounted] = useState(false);
     
-    // Result now holds microCover
     const [result, setResult] = useState({ lyrics: [], title: "Loading...", artist: "Music", cover: null, microCover: null, audioUrl: "", karaokeUrl: null });
     
     const [isPaused, setIsPaused] = useState(true);
@@ -254,6 +240,7 @@ const Card = () => {
     const instruRef = useRef(null);
     const scrollRef = useRef(null);
     const playlistContainerRef = useRef(null);
+    const syncRef = useRef(null); // RAF ID for High Precision Sync
 
     useEffect(() => {
         setIsMounted(true);
@@ -290,6 +277,78 @@ const Card = () => {
         }
         return newLyrics;
     }, [result.lyrics]);
+
+    // --- HIGH PRECISION AUDIO ENGINE (NO CRACKLING) ---
+    const startSyncEngine = useCallback(() => {
+        const loop = () => {
+            if (!audioRef.current) return;
+            
+            // 1. INSTRUMENTAL SYNC (DRIFT CORRECTION - NO SEEKING)
+            if (instruRef.current && result.karaokeUrl && !instruRef.current.paused && !audioRef.current.paused) {
+                const mainTime = audioRef.current.currentTime;
+                const instruTime = instruRef.current.currentTime;
+                const drift = mainTime - instruTime;
+
+                // Jika drift kecil (dibawah 0.05s), anggap sinkron
+                if (Math.abs(drift) < 0.03) {
+                    instruRef.current.playbackRate = 1.0; 
+                } 
+                // Jika drift medium (0.03s - 0.5s), mainkan speed (NUDGING)
+                else if (Math.abs(drift) < 0.5) {
+                    // Jika vokal lebih cepat, percepat instrumen sedikit
+                    // Jika vokal lebih lambat, perlambat instrumen sedikit
+                    // K = 0.1 adalah konstanta koreksi yang smooth
+                    const correction = 1.0 + (drift * 0.5); 
+                    // Clamp speed agar suara tidak terlalu aneh (0.95x - 1.05x)
+                    instruRef.current.playbackRate = Math.min(Math.max(correction, 0.95), 1.05);
+                } 
+                // Jika drift parah (> 0.5s), baru lakukan HARD SEEK (Jarang terjadi)
+                else {
+                    instruRef.current.currentTime = mainTime;
+                }
+            }
+
+            // 2. LYRIC SYNC (Frame Perfect)
+            if (processedLyrics.length > 0) {
+                const currentTime = audioRef.current.currentTime;
+                const lyricDelay = -0.5; 
+                const adjustedTime = currentTime - lyricDelay;
+                
+                // Optimized Search
+                let idx = -1;
+                // Cek activeIdx dulu (most likely case)
+                if (activeIdx !== -1 && activeIdx < processedLyrics.length) {
+                    const current = processedLyrics[activeIdx];
+                    const next = processedLyrics[activeIdx + 1];
+                    if (adjustedTime >= current.time && (!next || adjustedTime < next.time)) idx = activeIdx;
+                }
+                
+                // Fallback loop
+                if (idx === -1) {
+                    for (let i = 0; i < processedLyrics.length; i++) {
+                        if (adjustedTime >= processedLyrics[i].time && 
+                           (i === processedLyrics.length - 1 || adjustedTime < processedLyrics[i+1].time)) {
+                            idx = i;
+                            break;
+                        }
+                    }
+                }
+                
+                if (idx !== -1 && idx !== activeIdx) setActiveIdx(idx);
+            }
+
+            syncRef.current = requestAnimationFrame(loop);
+        };
+        
+        cancelAnimationFrame(syncRef.current);
+        syncRef.current = requestAnimationFrame(loop);
+    }, [result.karaokeUrl, processedLyrics, activeIdx]);
+
+    useEffect(() => {
+        if (!isPaused) startSyncEngine();
+        return () => cancelAnimationFrame(syncRef.current);
+    }, [isPaused, startSyncEngine]);
+
 
     useEffect(() => {
         if (showPlaylist && playlistMeta.length === 0) {
@@ -369,40 +428,7 @@ const Card = () => {
         if (instruRef.current && result.karaokeUrl) instruRef.current.volume = 1.0; 
     }, [vocalMix, result.karaokeUrl]);
 
-    const handleTimeUpdate = useCallback(() => {
-        if (!audioRef.current) return;
-        const mainTime = audioRef.current.currentTime;
-
-        if (instruRef.current && result.karaokeUrl && !instruRef.current.paused && !audioRef.current.paused) {
-            const diff = Math.abs(instruRef.current.currentTime - mainTime);
-            if (diff > 0.2) instruRef.current.currentTime = mainTime;
-        }
-
-        if (processedLyrics.length > 0) {
-            const lyricAnimationDelay = -0.5;
-            const adjustedTime = mainTime - lyricAnimationDelay;
-            let idx = -1;
-            
-            if (activeIdx !== -1 && activeIdx < processedLyrics.length) {
-                const current = processedLyrics[activeIdx];
-                const next = processedLyrics[activeIdx + 1];
-                if (adjustedTime >= current.time && (!next || adjustedTime < next.time)) idx = activeIdx;
-            }
-
-            if (idx === -1) {
-                for (let i = 0; i < processedLyrics.length; i++) {
-                    if (adjustedTime >= processedLyrics[i].time && 
-                       (i === processedLyrics.length - 1 || adjustedTime < processedLyrics[i+1].time)) {
-                        idx = i;
-                        break;
-                    }
-                }
-            }
-            
-            if (idx !== -1 && idx !== activeIdx) setActiveIdx(idx);
-        }
-    }, [result.karaokeUrl, processedLyrics, activeIdx]);
-
+    // Scroll Logic
     useEffect(() => {
         if (showLyrics && scrollRef.current && !showPlaylist && activeIdx !== -1) {
             const activeEl = scrollRef.current.children[activeIdx];
@@ -441,29 +467,31 @@ const Card = () => {
     const handlePrev = () => setCurrentIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
     const selectSong = (idx) => { if (idx === currentIndex) { setShowPlaylist(false); return; } setCurrentIndex(idx); setShowPlaylist(false); };
 
-    // LAYOUT RESPONSIVE:
-    // Mobile Closed: 190px
-    // Desktop Closed: 260px
+    // LAYOUT RESPONSIVE (160px Mobile / 260px Desktop)
     const getCardHeight = () => {
         if (showLyrics || showPlaylist) return isDesktop ? 680 : 580; 
-        return isDesktop ? 260 : 160; 
+        return isDesktop ? 260 : 190; 
     };
 
     return (
         <div className="mt-6 w-full max-w-md mx-auto font-jost select-none relative z-10">
-            <audio ref={audioRef} preload="auto" onTimeUpdate={handleTimeUpdate} onEnded={handleNext} className="hidden" />
+            <audio ref={audioRef} preload="auto" onEnded={handleNext} className="hidden" />
             <audio ref={instruRef} preload="auto" className="hidden" />
 
-            <div className="relative w-full rounded-[40px] overflow-hidden shadow-2xl bg-[#0a0a0a] transition-all duration-500 cubic-bezier(0.32, 0.72, 0, 1)" style={{ height: getCardHeight() }}>
+            {/* PERFORMANCE: transition-[height] ONLY (Don't animate everything) */}
+            {/* PERFORMANCE: will-change-height (Hint browser to prepare optimization) */}
+            <div 
+                className="relative w-full rounded-[40px] overflow-hidden shadow-2xl bg-[#0a0a0a] transition-[height] duration-500 cubic-bezier(0.32, 0.72, 0, 1) will-change-height" 
+                style={{ height: getCardHeight() }}
+            >
                 
-                {/* 3-LAYER ALIVE BACKGROUND (OPTIMIZED - Uses microCover) */}
+                {/* 3-LAYER ALIVE BACKGROUND (OPTIMIZED) */}
                 <AliveBackground cover={result.microCover || result.cover} />
 
                 <div className="relative z-10 w-full h-full p-6 flex flex-col border border-white/5">
                     {/* Header */}
                     <div className="flex items-center space-x-5 shrink-0 mb-4 relative z-50">
                         <div className="w-14 h-14 rounded-lg overflow-hidden shadow-lg relative shrink-0 border border-white/10 bg-white/5">
-                            {/* Main Cover must be HD (300px) */}
                             {result.cover ? <img src={result.cover} alt="Cover" className="w-full h-full object-cover" loading="eager" decoding="async" /> : <div className="w-full h-full flex items-center justify-center"><FontAwesomeIcon icon={faApple} className="text-white/30 text-xl" /></div>}
                         </div>
                         <div className="min-w-0 flex flex-col justify-center flex-1">
@@ -543,7 +571,7 @@ const Card = () => {
             <style jsx global>{`
                 .no-scrollbar::-webkit-scrollbar { display: none; }
                 
-                /* DEEP MASK FIX */
+                /* DEEP MASK FIX (25%) */
                 .mask-scroller-y { 
                     mask-image: linear-gradient(to bottom, 
                         transparent 0%, 
@@ -567,29 +595,9 @@ const Card = () => {
                     );
                 }
                 
-                /* 1-LAYER SMOOTH GLOW (MOBILE OPTIMIZED) */
-                /* Menggunakan radius 5px (tajam) + 15px (bloom) di 1 layer shadow */
+                /* 1-LAYER SMOOTH GLOW (ALL DEVICES) - MOBILE OPTIMIZED STYLE */
                 .active-lyric-glow-text { 
                     text-shadow: 0 0 5px rgba(255,255,255,0.4), 0 0 15px rgba(255,255,255,0.1);
                 }
 
-                /* ANIMATIONS (Optimized) */
-                @keyframes spin-slow { from { transform: rotate(0deg) scale(3.5); } to { transform: rotate(360deg) scale(3.5); } }
-                @keyframes spin-reverse-slower { from { transform: rotate(360deg) scale(3.0); } to { transform: rotate(0deg) scale(3.0); } }
-                @keyframes pulse-spin { 
-                    0% { transform: rotate(0deg) scale(3.2); opacity: 0.3; } 
-                    50% { transform: rotate(180deg) scale(3.8); opacity: 0.5; }
-                    100% { transform: rotate(360deg) scale(3.2); opacity: 0.3; }
-                }
-                
-                .animate-spin-slow { animation: spin-slow 90s linear infinite; }
-                .animate-spin-reverse-slower { animation: spin-reverse-slower 120s linear infinite; }
-                .animate-pulse-spin { animation: pulse-spin 60s ease-in-out infinite; }
-                
-                .contain-strict { contain: strict; }
-            `}</style>
-        </div>
-    );
-};
-
-export default Card;
+                @keyframes spin-slow { from { transform: rotate(0deg) scale(1.5); } to { transform: rotate(360deg) scale(1.5); }
