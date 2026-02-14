@@ -465,7 +465,7 @@ const Card = () => {
                 className="relative w-full rounded-[40px] overflow-hidden shadow-2xl bg-[#0a0a0a] transition-all duration-500 cubic-bezier(0.32, 0.72, 0, 1)" 
                 style={{ height: getCardHeight() }}
             >
-                {/* --- ALIVE BACKGROUND (3 LAYERS - DESYNCHRONIZED) --- */}
+                {/* --- ALIVE BAOUND (3 LAYERS - DESYNCHRONIZED) --- */}
                 <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#0a0a0a]">
                      {result.cover && (
                         <>
@@ -476,7 +476,7 @@ const Card = () => {
                                 style={{ 
                                     backgroundImage: `url(${result.cover})`,
                                     filter: 'blur(50px) saturate(150%) brightness(0.9)', 
-                                    opacity: 0.6,
+                                    opacity: 0.4,
                                     animationDelay: '-12s' // Mulai di detik ke-12 (acak)
                                 }}
                             ></div>
