@@ -1,7 +1,7 @@
 // components/about/components/about/spotify/fetch.js
 
 // --- CONFIG ---
-const LYRIC_OFFSET = 0; // Delay lirik (negatif = lebih cepat)
+const LYRIC_OFFSET = 0; // KEMBALIKAN KE 0 AGAR AUDIO TIDAK RUSAK
 
 // Helper: Fetch dengan Timeout
 const fetchWithTimeout = async (resource, options = {}) => {
@@ -59,7 +59,6 @@ const parseTTML = (xmlString) => {
 };
 
 // --- FUNGSI MEMBERSIHKAN JUDUL ---
-// Mengubah "1-21 Alexandra" -> "Alexandra", "01 Judul" -> "Judul"
 const cleanTitle = (rawTitle) => {
     return rawTitle.replace(/^(\d+[-.]\d+|\d+)\s+/, "").trim();
 };
@@ -68,21 +67,18 @@ const cleanTitle = (rawTitle) => {
 export default async function getLocalMetadata(item) {
     const { original, karaoke, ttml } = item;
     
-    // 1. Cek Cache
     if (typeof window !== "undefined") {
-        const cached = localStorage.getItem(`hybrid_meta_v3_${original}`); // Versi cache dinaikkan ke v3
+        const cached = localStorage.getItem(`hybrid_meta_v3_${original}`);
         if (cached) return JSON.parse(cached);
     }
 
     try {
-        let finalTitle = cleanTitle(item.title); // Default ke judul bersih dari list
+        let finalTitle = cleanTitle(item.title);
         let finalArtist = item.artist;
         let finalAlbum = item.album;
         let coverUrl = null;
 
-        // 2. Fetch Metadata dari iTunes (Solusi Cover Art & Judul Bersih)
         try {
-            // Cari menggunakan judul yang sudah dibersihkan agar akurat
             const query = `${finalArtist} ${finalTitle}`;
             const itunesRes = await fetchWithTimeout(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&media=music&entity=song&limit=1`);
             
@@ -90,10 +86,9 @@ export default async function getLocalMetadata(item) {
                 const data = await itunesRes.json();
                 if (data.resultCount > 0) {
                     const track = data.results[0];
-                    finalTitle = track.trackName; // Gunakan judul resmi iTunes
+                    finalTitle = track.trackName;
                     finalArtist = track.artistName;
-                    finalAlbum = track.collectionName; // Gunakan album resmi iTunes
-                    // Ambil Cover HD (600x600)
+                    finalAlbum = track.collectionName;
                     coverUrl = track.artworkUrl100.replace("100x100", "600x600");
                 }
             }
@@ -101,7 +96,6 @@ export default async function getLocalMetadata(item) {
             console.warn("iTunes fetch failed, using local fallback");
         }
 
-        // 3. Fetch Lirik Lokal (TTML)
         let lyrics = [];
         if (ttml) {
             try {
@@ -123,7 +117,6 @@ export default async function getLocalMetadata(item) {
             karaokeUrl: karaoke
         };
 
-        // Simpan Cache
         if (typeof window !== "undefined") {
             try { localStorage.setItem(`hybrid_meta_v3_${original}`, JSON.stringify(finalData)); } catch(e) {}
         }
@@ -135,7 +128,6 @@ export default async function getLocalMetadata(item) {
     }
 }
 
-// Helper Ringan
 export async function getSimpleMetadata(item) {
     return {
         title: cleanTitle(item.title),

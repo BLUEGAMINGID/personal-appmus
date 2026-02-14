@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import React, { useEffect, useState, useRef, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import getLocalMetadata, { getSimpleMetadata } from "./fetch";
 import { playlist } from "./list";
@@ -11,7 +11,7 @@ import {
     faMicrophone, faMusic, faSpinner, faBars, faTimes
 } from "@fortawesome/free-solid-svg-icons";
 
-// --- HOOK: DETEKSI MOBILE/DESKTOP ---
+// --- HOOKS ---
 const useMediaQuery = (query) => {
     const [matches, setMatches] = useState(false);
     useEffect(() => {
@@ -24,147 +24,70 @@ const useMediaQuery = (query) => {
     return matches;
 };
 
-// --- KOMPONEN: DYNAMIC INTERLUDE DOTS ---
-const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
+// --- MEMOIZED SUB-COMPONENTS (PERFORMANCE BOOSTER) ---
+
+const LiveInterlude = React.memo(({ isActive, audioRef, startTime, duration }) => {
     const fillRef = useRef(null);
 
     useEffect(() => {
         let rafId;
         const update = () => {
             if (!audioRef.current || !fillRef.current) return;
-            
             const currentTime = audioRef.current.currentTime;
             let progress = (currentTime - startTime) / duration;
             progress = Math.max(0, Math.min(1, progress));
-
             fillRef.current.style.width = `${progress * 100}%`;
-
-            if (isActive) {
-                rafId = requestAnimationFrame(update);
-            }
+            if (isActive) rafId = requestAnimationFrame(update);
         };
-
-        if (isActive) {
-            rafId = requestAnimationFrame(update);
-        } else {
-            if (audioRef.current && fillRef.current) {
-                if (audioRef.current.currentTime > startTime + duration) {
-                    fillRef.current.style.width = '100%';
-                } else {
-                    fillRef.current.style.width = '0%';
-                }
-            }
-        }
+        if (isActive) rafId = requestAnimationFrame(update);
+        else if (fillRef.current) fillRef.current.style.width = audioRef.current?.currentTime > startTime + duration ? '100%' : '0%';
+        
         return () => cancelAnimationFrame(rafId);
     }, [isActive, startTime, duration, audioRef]);
 
     return (
         <div className="py-3 w-full flex flex-col items-start justify-center opacity-100 transition-opacity duration-700 will-change-transform transform-gpu">
             <div className="relative inline-block w-fit">
-                {/* Layer 1: Background */}
-                <div className="text-[28px] tracking-[4px] text-white/20 leading-tight select-none font-bold mix-blend-screen pl-1">
-                    ● ● ●
-                </div>
-
-                {/* Layer 2: Filling */}
-                <div 
-                    ref={fillRef} 
-                    className="absolute top-0 left-0 h-full overflow-hidden whitespace-nowrap text-[28px] tracking-[4px] text-white leading-tight select-none font-bold will-change-[width] pl-1"
-                    style={{ width: '0%' }}
-                >
-                    <span className={isActive ? "active-lyric-glow-text" : ""}>
-                        ● ● ●
-                    </span>
+                <div className="text-[28px] tracking-[4px] text-white/20 leading-tight select-none font-bold mix-blend-screen pl-1">● ● ●</div>
+                <div ref={fillRef} className="absolute top-0 left-0 h-full overflow-hidden whitespace-nowrap text-[28px] tracking-[4px] text-white leading-tight select-none font-bold will-change-[width] pl-1" style={{ width: '0%' }}>
+                    <span className={isActive ? "active-lyric-glow-text" : ""}>● ● ●</span>
                 </div>
             </div>
         </div>
     );
-};
+});
+LiveInterlude.displayName = "LiveInterlude";
 
-// --- KOMPONEN: APPLE VOCAL SLIDER ---
-const AppleVocalSlider = ({ value, onChange, onClose }) => {
+const AppleVocalSlider = React.memo(({ value, onChange, onClose }) => {
     const sliderRef = useRef(null);
     const [isDragging, setIsDragging] = useState(false);
 
     const handleMove = (clientY) => {
         if (!sliderRef.current) return;
         const rect = sliderRef.current.getBoundingClientRect();
-        const height = rect.height;
-        const bottom = rect.bottom;
-        let percentage = (bottom - clientY) / height;
-        percentage = Math.max(0, Math.min(1, percentage));
-        onChange(percentage);
+        let percentage = (rect.bottom - clientY) / rect.height;
+        onChange(Math.max(0, Math.min(1, percentage)));
     };
-
-    const handlePointerDown = (e) => {
-        setIsDragging(true);
-        handleMove(e.clientY);
-        e.target.setPointerCapture(e.pointerId);
-    };
-
-    const handlePointerMove = (e) => { if (isDragging) handleMove(e.clientY); };
-    const handlePointerUp = (e) => { setIsDragging(false); e.target.releasePointerCapture(e.pointerId); };
 
     return (
         <>
             <div className="fixed inset-0 z-40" onClick={onClose} onTouchStart={onClose} />
-            <motion.div 
-                initial={{ opacity: 0, scale: 0.5, y: 20 }}
-                animate={{ opacity: 1, scale: isDragging ? 1.15 : 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.5, y: 20 }}
-                transition={{ type: "spring", damping: 20, stiffness: 350 }}
-                className="absolute bottom-20 right-0 z-50 flex flex-col items-center origin-bottom"
-            >
-                <div 
-                    ref={sliderRef}
-                    className="relative w-[42px] h-[140px] rounded-[21px] overflow-hidden cursor-pointer touch-none select-none border border-white/20"
-                    style={{
-                        background: "rgba(60, 60, 60, 0.4)",
-                        backdropFilter: "blur(40px) saturate(200%)",
-                        boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.2)"
-                    }}
-                    onPointerDown={handlePointerDown}
-                    onPointerMove={handlePointerMove}
-                    onPointerUp={handlePointerUp}
-                    onClick={(e) => e.stopPropagation()}
-                    onTouchStart={(e) => e.stopPropagation()}
-                >
-                    <motion.div 
-                        className="absolute bottom-0 w-full bg-white/90"
-                        style={{ height: `${value * 100}%` }}
-                        transition={{ duration: isDragging ? 0 : 0.3 }}
-                    >
-                        <motion.div 
-                            animate={{ opacity: isDragging ? 1 : 0.5 }}
-                            className="absolute top-0 left-0 right-0 h-[20px] bg-white blur-[10px]"
-                        />
-                    </motion.div>
-                    
-                    <div className="absolute inset-0 flex flex-col justify-end items-center pb-5 pointer-events-none mix-blend-difference">
-                        <FontAwesomeIcon icon={faMicrophone} className="text-white text-sm opacity-80" />
-                    </div>
-                    
-                    <div className="absolute inset-0 rounded-[21px] pointer-events-none border border-white/10 shadow-[inset_0_0_15px_rgba(255,255,255,0.1)]">
-                        <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[70%] h-[2px] bg-white/40 rounded-full blur-[0.5px]" />
-                    </div>
+            <motion.div initial={{ opacity: 0, scale: 0.5, y: 20 }} animate={{ opacity: 1, scale: isDragging ? 1.15 : 1, y: 0 }} exit={{ opacity: 0, scale: 0.5, y: 20 }} transition={{ type: "spring", damping: 20, stiffness: 350 }} className="absolute bottom-20 right-0 z-50 flex flex-col items-center origin-bottom">
+                <div ref={sliderRef} className="relative w-[42px] h-[140px] rounded-[21px] overflow-hidden cursor-pointer touch-none select-none border border-white/20" style={{ background: "rgba(60, 60, 60, 0.4)", backdropFilter: "blur(40px) saturate(200%)", boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.2)" }} onPointerDown={(e) => { setIsDragging(true); handleMove(e.clientY); e.target.setPointerCapture(e.pointerId); }} onPointerMove={(e) => { if (isDragging) handleMove(e.clientY); }} onPointerUp={(e) => { setIsDragging(false); e.target.releasePointerCapture(e.pointerId); }} onClick={(e) => e.stopPropagation()} onTouchStart={(e) => e.stopPropagation()}>
+                    <motion.div className="absolute bottom-0 w-full bg-white/90" style={{ height: `${value * 100}%` }} transition={{ duration: isDragging ? 0 : 0.3 }}><motion.div animate={{ opacity: isDragging ? 1 : 0.5 }} className="absolute top-0 left-0 right-0 h-[20px] bg-white blur-[10px]" /></motion.div>
+                    <div className="absolute inset-0 flex flex-col justify-end items-center pb-5 pointer-events-none mix-blend-difference"><FontAwesomeIcon icon={faMicrophone} className="text-white text-sm opacity-80" /></div>
+                    <div className="absolute inset-0 rounded-[21px] pointer-events-none border border-white/10 shadow-[inset_0_0_15px_rgba(255,255,255,0.1)]"><div className="absolute top-2 left-1/2 -translate-x-1/2 w-[70%] h-[2px] bg-white/40 rounded-full blur-[0.5px]" /></div>
                 </div>
             </motion.div>
         </>
     );
-};
+});
+AppleVocalSlider.displayName = "AppleVocalSlider";
 
-// --- TIME SLIDER ---
-const AppleMusicTimeSlider = ({ audioRef, duration, isPaused, onSeekStart, onSeekEnd }) => {
+const AppleMusicTimeSlider = React.memo(({ audioRef, duration, isPaused, onSeekStart, onSeekEnd }) => {
     const progressRef = useRef(null);
     const timeRef = useRef(null);
     const [isDragging, setIsDragging] = useState(false);
-
-    const format = (s) => {
-        if (!s || isNaN(s)) return "0:00";
-        const m = Math.floor(s / 60);
-        const sec = Math.floor(s % 60).toString().padStart(2, '0');
-        return `${m}:${sec}`;
-    };
 
     useEffect(() => {
         let rafId;
@@ -181,12 +104,11 @@ const AppleMusicTimeSlider = ({ audioRef, duration, isPaused, onSeekStart, onSee
         return () => cancelAnimationFrame(rafId);
     }, [isPaused, duration, isDragging, audioRef]);
 
-    const handleChange = (e) => {
-        const val = parseFloat(e.target.value);
-        const time = val * duration;
-        if (progressRef.current) progressRef.current.style.width = `${val * 100}%`;
-        if (timeRef.current) timeRef.current.innerText = format(time);
-        onSeekStart(time);
+    const format = (s) => {
+        if (!s || isNaN(s)) return "0:00";
+        const m = Math.floor(s / 60);
+        const sec = Math.floor(s % 60).toString().padStart(2, '0');
+        return `${m}:${sec}`;
     };
 
     return (
@@ -196,34 +118,62 @@ const AppleMusicTimeSlider = ({ audioRef, duration, isPaused, onSeekStart, onSee
                 <div className="absolute inset-x-0 h-[4px] bg-white/20 rounded-full overflow-hidden transition-all duration-300 ease-out group-hover:h-[6px]">
                     <div ref={progressRef} className="h-full bg-white/90 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.5)]" style={{ width: '0%' }} />
                 </div>
-                <input type="range" min={0} max={1} step="0.001"
-                    onMouseDown={() => setIsDragging(true)} onTouchStart={() => setIsDragging(true)}
-                    onChange={handleChange}
-                    onMouseUp={(e) => { setIsDragging(false); onSeekEnd(parseFloat(e.target.value) * duration); }}
-                    onTouchEnd={(e) => { setIsDragging(false); onSeekEnd(parseFloat(e.target.value) * duration); }}
-                    className="absolute inset-0 w-full h-full opacity-0 z-50 cursor-pointer"
-                />
+                <input type="range" min={0} max={1} step="0.001" onMouseDown={() => setIsDragging(true)} onTouchStart={() => setIsDragging(true)} onChange={(e) => { const val = parseFloat(e.target.value); if(progressRef.current) progressRef.current.style.width = `${val*100}%`; if(timeRef.current) timeRef.current.innerText = format(val*duration); onSeekStart(val*duration); }} onMouseUp={(e) => { setIsDragging(false); onSeekEnd(parseFloat(e.target.value) * duration); }} onTouchEnd={(e) => { setIsDragging(false); onSeekEnd(parseFloat(e.target.value) * duration); }} className="absolute inset-0 w-full h-full opacity-0 z-50 cursor-pointer" />
             </div>
             <span className="w-8">{format(duration)}</span>
         </div>
     );
-};
+});
+AppleMusicTimeSlider.displayName = "AppleMusicTimeSlider";
+
+// --- MEMOIZED LYRIC LINE (CRUCIAL FOR SCROLL PERFORMANCE) ---
+const LyricLine = React.memo(({ line, isActive, onClick, audioRef }) => {
+    if (line.isInterlude) {
+        return <LiveInterlude audioRef={audioRef} startTime={line.time} duration={line.duration} isActive={isActive} />;
+    }
+    return (
+        <div 
+            onClick={() => onClick(line.time)} 
+            className={`cursor-pointer py-3 text-left transition-all duration-700 ease-out origin-left will-change-transform transform-gpu ${
+                isActive 
+                ? "opacity-100 scale-100 active-lyric-glow blur-0" 
+                : "opacity-40 scale-[0.98] blur-[1.5px] hover:opacity-60 hover:blur-[0.5px]" 
+            }`}
+        >
+            <p className={`font-bold text-[28px] leading-tight text-white tracking-tight ${isActive ? "active-lyric-glow-text" : ""}`}>{line.text}</p>
+        </div>
+    );
+}, (prev, next) => prev.isActive === next.isActive && prev.line === next.line);
+LyricLine.displayName = "LyricLine";
+
+// --- MEMOIZED BACKGROUND ---
+const AliveBackground = React.memo(({ cover }) => (
+    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#101010]">
+        {cover && (
+            <>
+                {/* Layer 1: Deep Base (Slow, Clockwise, Big Blur) - Inset -50% agar tidak ada sudut kosong */}
+                <div className="absolute inset-[-50%] bg-cover bg-center animate-spin-slow will-change-transform transform-gpu" style={{ backgroundImage: `url(${cover})`, filter: 'blur(50px) saturate(250%) brightness(0.9)', opacity: 0.6, animationDelay: '-12s' }} />
+                
+                {/* Layer 2: Mid Tones (Reverse, Slower, Color Dodge) */}
+                <div className="absolute inset-[-50%] bg-cover bg-center animate-spin-reverse-slower will-change-transform transform-gpu" style={{ backgroundImage: `url(${cover})`, mixBlendMode: 'screen', filter: 'blur(35px) saturate(300%) contrast(110%)', opacity: 0.5, animationDelay: '-45s' }} />
+
+                {/* Layer 3: Highlights (Fastest, Breathing) */}
+                <div className="absolute inset-[-50%] bg-cover bg-center animate-pulse-spin will-change-transform transform-gpu" style={{ backgroundImage: `url(${cover})`, mixBlendMode: 'overlay', filter: 'blur(30px) saturate(200%) brightness(1.2)', opacity: 0.3, animationDelay: '-23s' }} />
+                
+                {/* Dark Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/90" />
+            </>
+        )}
+        <div className="absolute inset-0 opacity-[0.07] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay" />
+    </div>
+));
+AliveBackground.displayName = "AliveBackground";
 
 // --- MAIN CARD ---
 const Card = () => {
-    // Responsive Logic
     const isDesktop = useMediaQuery("(min-width: 768px)");
-    
-    // Logic Random Index
     const [currentIndex, setCurrentIndex] = useState(0); 
     const [isMounted, setIsMounted] = useState(false);
-
-    useEffect(() => {
-        setIsMounted(true);
-        const randomIdx = Math.floor(Math.random() * playlist.length);
-        setCurrentIndex(randomIdx);
-    }, []);
-
     const [result, setResult] = useState({ lyrics: [], title: "Loading...", artist: "Music", cover: null, audioUrl: "", karaokeUrl: null });
     const [isPaused, setIsPaused] = useState(true);
     const [duration, setDuration] = useState(0);
@@ -240,6 +190,13 @@ const Card = () => {
     const scrollRef = useRef(null);
     const playlistContainerRef = useRef(null);
 
+    // Initial Random Shuffle
+    useEffect(() => {
+        setIsMounted(true);
+        setCurrentIndex(Math.floor(Math.random() * playlist.length));
+    }, []);
+
+    // Playlist Grouping
     const groupedPlaylist = useMemo(() => {
         const groups = [];
         let currentGroup = null;
@@ -254,6 +211,7 @@ const Card = () => {
         return groups;
     }, [playlistMeta]);
 
+    // Lyric Processing
     const processedLyrics = useMemo(() => {
         if (!result.lyrics || result.lyrics.length === 0) return [];
         const newLyrics = [];
@@ -271,6 +229,7 @@ const Card = () => {
         return newLyrics;
     }, [result.lyrics]);
 
+    // Load Playlist Metadata
     useEffect(() => {
         if (showPlaylist && playlistMeta.length === 0) {
             const fetchData = async () => {
@@ -284,137 +243,96 @@ const Card = () => {
             };
             fetchData();
         }
-
         if (showPlaylist && playlistContainerRef.current) {
             setTimeout(() => {
                 const activeEl = playlistContainerRef.current.querySelector('.active-playlist-song');
-                if (activeEl) {
-                    activeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
+                if (activeEl) activeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }, 100);
         }
-    }, [showPlaylist, playlistMeta.length, currentIndex]);
+    }, [showPlaylist, playlistMeta.length]);
 
+    // Load Song Logic
     useEffect(() => {
         if (!isMounted) return;
-
         setIsLoading(true);
         setActiveIdx(-1);
         if (scrollRef.current) scrollRef.current.scrollTop = 0;
         
         const currentTrack = playlist[currentIndex];
-        
         if(audioRef.current) { audioRef.current.pause(); audioRef.current.currentTime = 0; }
         if(instruRef.current) { instruRef.current.pause(); instruRef.current.currentTime = 0; }
 
         getLocalMetadata(currentTrack).then((data) => {
             setResult(data);
-            
-            if (audioRef.current) { 
-                audioRef.current.src = data.audioUrl; 
-                audioRef.current.load(); 
-            }
-            
+            if (audioRef.current) { audioRef.current.src = data.audioUrl; audioRef.current.load(); }
             if (instruRef.current) {
-                if (data.karaokeUrl) { 
-                    instruRef.current.src = data.karaokeUrl; 
-                    instruRef.current.load();
-                } else {
-                    instruRef.current.removeAttribute("src"); 
-                }
+                if (data.karaokeUrl) { instruRef.current.src = data.karaokeUrl; instruRef.current.load(); } 
+                else { instruRef.current.removeAttribute("src"); }
             }
-
             const onLoadedMetadata = () => {
                 if(audioRef.current) {
                     setDuration(audioRef.current.duration);
-                    
-                    const playPromise = audioRef.current.play();
-                    if (playPromise !== undefined) {
-                        playPromise.then(() => {
-                             if (instruRef.current && data.karaokeUrl) {
-                                 instruRef.current.currentTime = audioRef.current.currentTime;
-                                 instruRef.current.play().catch(e => {});
-                             }
-                             setIsPaused(false);
-                             setIsLoading(false);
-                        }).catch(e => { 
-                            setIsPaused(true); 
-                            setIsLoading(false); 
-                        });
-                    }
+                    audioRef.current.play().then(() => {
+                         if (instruRef.current && data.karaokeUrl) {
+                             instruRef.current.currentTime = audioRef.current.currentTime;
+                             instruRef.current.play().catch(e => {});
+                         }
+                         setIsPaused(false);
+                         setIsLoading(false);
+                    }).catch(e => { setIsPaused(true); setIsLoading(false); });
                 }
             };
-            
-            if(audioRef.current) {
-                audioRef.current.addEventListener('loadedmetadata', onLoadedMetadata, {once: true});
-            }
+            if(audioRef.current) audioRef.current.addEventListener('loadedmetadata', onLoadedMetadata, {once: true});
         });
     }, [currentIndex, isMounted]);
 
+    // Volume Mix
     useEffect(() => {
         if (!audioRef.current) return;
         audioRef.current.volume = Math.max(0, Math.min(1, vocalMix));
-        if (instruRef.current && result.karaokeUrl) {
-            instruRef.current.volume = 1.0; 
-        }
+        if (instruRef.current && result.karaokeUrl) instruRef.current.volume = 1.0; 
     }, [vocalMix, result.karaokeUrl]);
 
-    const handleTimeUpdate = () => {
-    if (!audioRef.current) return;
-    
-    // Waktu asli dari file vokal (Gunakan ini untuk sinkronisasi antar audio)
-    const mainTime = audioRef.current.currentTime;
+    // Optimized Time Update (Separated Audio Sync & Lyric Scroll)
+    const handleTimeUpdate = useCallback(() => {
+        if (!audioRef.current) return;
+        const mainTime = audioRef.current.currentTime;
 
-    // --- 1. SINKRONISASI AUDIO (Vokal ke Instrumen) ---
-    // Hanya sinkronkan audio dengan audio. Jangan libatkan lirik di sini.
-    if (instruRef.current && result.karaokeUrl && !instruRef.current.paused && !audioRef.current.paused) {
-        const diff = Math.abs(instruRef.current.currentTime - mainTime);
-        
-        // Gunakan threshold 0.2 detik (toleransi kecil)
-        // Jika lari lebih dari 0.2 detik, instrumen disamakan dengan vokal
-        if (diff > 0.2) {
-            instruRef.current.currentTime = mainTime;
+        // 1. Audio Sync
+        if (instruRef.current && result.karaokeUrl && !instruRef.current.paused && !audioRef.current.paused) {
+            const diff = Math.abs(instruRef.current.currentTime - mainTime);
+            if (diff > 0.2) instruRef.current.currentTime = mainTime;
         }
-    }
 
-    // --- 2. LOGIKA LIRIK (Independen) ---
-    if (processedLyrics.length > 0) {
-        let idx = -1;
-        
-        // GUNAKAN OFFSET ANIMASI DI SINI SAJA
-        // Misal animasi kamu butuh 0.5 detik, kita kurangi mainTime di sini 
-        // sehingga sistem "mengira" lagu baru berjalan lebih lambat untuk liriknya.
-        const lyricAnimationDelay = 0.5; // Sesuaikan dengan durasi animasi kamu
-        const adjustedLyricTime = mainTime - lyricAnimationDelay;
+        // 2. Lyric Sync with Animation Delay
+        if (processedLyrics.length > 0) {
+            const lyricAnimationDelay = 0.5; // Offset visual untuk animasi
+            const adjustedTime = mainTime - lyricAnimationDelay;
+            let idx = -1;
+            
+            // Search Optimization
+            if (activeIdx !== -1 && activeIdx < processedLyrics.length) {
+                const current = processedLyrics[activeIdx];
+                const next = processedLyrics[activeIdx + 1];
+                if (adjustedTime >= current.time && (!next || adjustedTime < next.time)) idx = activeIdx;
+            }
 
-        const startSearch = activeIdx > -1 ? activeIdx : 0;
-        
-        // Cari baris lirik berdasarkan waktu yang sudah di-adjust untuk animasi
-        for (let i = startSearch; i < processedLyrics.length; i++) {
-            if (adjustedLyricTime >= processedLyrics[i].time) {
-                if (i === processedLyrics.length - 1 || adjustedLyricTime < processedLyrics[i + 1].time) {
-                    idx = i;
-                    break;
+            if (idx === -1) {
+                // Linear search is fine for <100 items, binary search would be overkill complexity here
+                for (let i = 0; i < processedLyrics.length; i++) {
+                    if (adjustedTime >= processedLyrics[i].time && 
+                       (i === processedLyrics.length - 1 || adjustedTime < processedLyrics[i+1].time)) {
+                        idx = i;
+                        break;
+                    }
                 }
             }
+            
+            if (idx !== -1 && idx !== activeIdx) setActiveIdx(idx);
         }
+    }, [result.karaokeUrl, processedLyrics, activeIdx]);
 
-        // Fallback pencarian dari awal jika user melakukan 'seek' ke belakang
-        if (idx === -1) {
-            for (let i = 0; i < processedLyrics.length; i++) {
-                if (adjustedLyricTime >= processedLyrics[i].time && (i === processedLyrics.length - 1 || adjustedLyricTime < processedLyrics[i + 1].time)) {
-                    idx = i;
-                    break;
-                }
-            }
-        }
-
-        if (idx !== -1 && idx !== activeIdx) setActiveIdx(idx);
-    }
-};
-
-
-    // --- AUTO SCROLL LOGIC ---
+    // Scroll Logic (Optimized)
     useEffect(() => {
         if (showLyrics && scrollRef.current && !showPlaylist && activeIdx !== -1) {
             const activeEl = scrollRef.current.children[activeIdx];
@@ -423,19 +341,15 @@ const Card = () => {
                 const containerH = container.clientHeight;
                 const elTop = activeEl.offsetTop;
                 const elH = activeEl.clientHeight;
-                
-                // ADJUSTMENT: 22% Top Bias
-                let targetScroll = elTop - (containerH * 0.22); 
-                if (elH > containerH * 0.4) {
-                    targetScroll = elTop - (containerH * 0.15);
-                }
-
+                let targetScroll = elTop - (containerH * 0.22); // Sweet spot
+                if (elH > containerH * 0.4) targetScroll = elTop - (containerH * 0.15);
                 container.scrollTo({ top: targetScroll, behavior: 'smooth' });
             }
         }
     }, [activeIdx, showLyrics, showPlaylist]);
 
-    const togglePlay = () => {
+    // Controls
+    const togglePlay = useCallback(() => {
         if(audioRef.current) {
             if(isPaused) {
                 audioRef.current.play();
@@ -447,23 +361,21 @@ const Card = () => {
                 setIsPaused(true);
             }
         }
-    };
+    }, [isPaused, result.karaokeUrl]);
 
-    const handleSeekEnd = (newTime) => {
-        if (audioRef.current) { audioRef.current.currentTime = newTime; }
-        if (instruRef.current && result.karaokeUrl) { instruRef.current.currentTime = newTime; }
-    };
+    const handleSeekEnd = useCallback((newTime) => {
+        if (audioRef.current) audioRef.current.currentTime = newTime;
+        if (instruRef.current && result.karaokeUrl) instruRef.current.currentTime = newTime;
+    }, [result.karaokeUrl]);
 
     const handleNext = () => setCurrentIndex((prev) => (prev + 1) % playlist.length);
     const handlePrev = () => setCurrentIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
     const selectSong = (idx) => { if (idx === currentIndex) { setShowPlaylist(false); return; } setCurrentIndex(idx); setShowPlaylist(false); };
 
-    // --- HEIGHT CALCULATION ---
+    // Layout (Reverted closed state height to 260px)
     const getCardHeight = () => {
-        if (showLyrics || showPlaylist) {
-            return isDesktop ? 680 : 580; 
-        }
-        return isDesktop ? 260 : 190; 
+        if (showLyrics || showPlaylist) return isDesktop ? 680 : 580; 
+        return 260; // Tinggi sama untuk mobile dan desktop (seperti sebelumnya)
     };
 
     return (
@@ -471,69 +383,15 @@ const Card = () => {
             <audio ref={audioRef} preload="auto" onTimeUpdate={handleTimeUpdate} onEnded={handleNext} className="hidden" />
             <audio ref={instruRef} preload="auto" className="hidden" />
 
-            <div 
-                className="relative w-full rounded-[40px] overflow-hidden shadow-2xl bg-[#0a0a0a] transition-all duration-500 cubic-bezier(0.32, 0.72, 0, 1)" 
-                style={{ height: getCardHeight() }}
-            >
-                {/* --- ALIVE BACKGROUND (3 LAYERS - DESYNCHRONIZED) --- */}
-                <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#0a0a0a]">
-                     {result.cover && (
-                        <>
-                            {/* Layer 1: Deep Base (Slow, Clockwise, Big Blur) */}
-                            {/* Inset -50% agar gambar "tumpah" keluar dan tidak ada sudut kosong saat diputar */}
-                            <div 
-                                className="absolute inset-[-50%] bg-cover bg-center animate-spin-slow will-change-transform transform-gpu" 
-                                style={{ 
-                                    backgroundImage: `url(${result.cover})`,
-                                    filter: 'blur(50px) saturate(150%) brightness(0.9)', 
-                                    opacity: 0.4,
-                                    animationDelay: '-12s' // Mulai di detik ke-12 (acak)
-                                }}
-                            ></div>
-                            
-                            {/* Layer 2: Mid Tones (Reverse, Slower, Color Dodge) */}
-                            <div 
-                                className="absolute inset-[-50%] bg-cover bg-center animate-spin-reverse-slower will-change-transform transform-gpu" 
-                                style={{ 
-                                    backgroundImage: `url(${result.cover})`,
-                                    mixBlendMode: 'screen', // Extract warna dari hitam
-                                    filter: 'blur(35px) saturate(200%) contrast(110%)',
-                                    opacity: 0.5,
-                                    animationDelay: '-45s' // Mulai beda posisi
-                                }}
-                            ></div>
+            <div className="relative w-full rounded-[40px] overflow-hidden shadow-2xl bg-[#0a0a0a] transition-all duration-500 cubic-bezier(0.32, 0.72, 0, 1)" style={{ height: getCardHeight() }}>
+                
+                <AliveBackground cover={result.cover} />
 
-                            {/* Layer 3: Highlights (Fastest, Breathing) */}
-                            <div 
-                                className="absolute inset-[-50%] bg-cover bg-center animate-pulse-spin will-change-transform transform-gpu" 
-                                style={{ 
-                                    backgroundImage: `url(${result.cover})`,
-                                    mixBlendMode: 'overlay', // Texture
-                                    filter: 'blur(30px) saturate(125%) brightness(1.2)',
-                                    opacity: 0.3,
-                                    animationDelay: '-23s'
-                                }}
-                            ></div>
-                            
-                            {/* Dark Gradient Overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/90"></div>
-                        </>
-                     )}
-                     <div className="absolute inset-0 opacity-[0.07] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay"></div>
-                </div>
-
-                {/* Content */}
                 <div className="relative z-10 w-full h-full p-6 flex flex-col border border-white/5">
                     {/* Header */}
                     <div className="flex items-center space-x-5 shrink-0 mb-4 relative z-50">
                         <div className="w-14 h-14 rounded-lg overflow-hidden shadow-lg relative shrink-0 border border-white/10 bg-white/5">
-                            {result.cover ? (
-                                <img src={result.cover} alt="Cover" className="w-full h-full object-cover" />
-                            ) : (
-                                <div className="w-full h-full flex items-center justify-center">
-                                    <FontAwesomeIcon icon={faApple} className="text-white/30 text-xl" />
-                                </div>
-                            )}
+                            {result.cover ? <img src={result.cover} alt="Cover" className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center"><FontAwesomeIcon icon={faApple} className="text-white/30 text-xl" /></div>}
                         </div>
                         <div className="min-w-0 flex flex-col justify-center flex-1">
                             <h3 className="font-bold text-white truncate text-[18px]">{result.title}</h3>
@@ -547,28 +405,17 @@ const Card = () => {
                     {/* Expandable Area */}
                     <div className={`relative flex-1 overflow-hidden transition-all duration-500 ease-out ${showLyrics || showPlaylist ? "opacity-100 mb-4" : "opacity-0 h-0 mb-0 pointer-events-none"}`}>
                         
-                        {/* Playlist Overlay */}
                         {showPlaylist && (
                             <div className="absolute inset-0 z-30 bg-[#111]/80 backdrop-blur-xl rounded-3xl overflow-hidden flex flex-col border border-white/10 animate-slide-up">
-                                <div className="p-4 border-b border-white/5 flex justify-between items-center bg-white/5">
-                                    <span className="text-[11px] font-bold text-white/70 uppercase tracking-widest pl-1">Up Next</span>
-                                </div>
+                                <div className="p-4 border-b border-white/5 flex justify-between items-center bg-white/5"><span className="text-[11px] font-bold text-white/70 uppercase tracking-widest pl-1">Up Next</span></div>
                                 <div ref={playlistContainerRef} className="flex-1 overflow-y-auto no-scrollbar p-3 space-y-4">
                                     {groupedPlaylist.map((group, gIdx) => (
                                         <div key={gIdx} className="mb-2">
-                                            <div className="sticky top-0 bg-[#111]/90 backdrop-blur-md p-2 rounded-lg mb-2 z-10 border border-white/5 shadow-sm">
-                                                <h4 className="text-white font-bold text-sm truncate ml-1">{group.album}</h4>
-                                            </div>
+                                            <div className="sticky top-0 bg-[#111]/90 backdrop-blur-md p-2 rounded-lg mb-2 z-10 border border-white/5 shadow-sm"><h4 className="text-white font-bold text-sm truncate ml-1">{group.album}</h4></div>
                                             <div className="space-y-1">
                                                 {group.tracks.map((track, i) => (
-                                                    <div 
-                                                        key={track.idx} 
-                                                        onClick={() => selectSong(track.idx)} 
-                                                        className={`flex items-center p-2 rounded-xl gap-3 cursor-pointer ${currentIndex === track.idx ? "bg-white/20 active-playlist-song border border-white/10" : "hover:bg-white/5"}`}
-                                                    >
-                                                        <div className="w-6 text-center shrink-0">
-                                                            {currentIndex === track.idx ? <FontAwesomeIcon icon={faPlay} className="text-green-400 text-[10px]"/> : <span className="text-white/30 text-[12px] font-medium">{i + 1}</span>}
-                                                        </div>
+                                                    <div key={track.idx} onClick={() => selectSong(track.idx)} className={`flex items-center p-2 rounded-xl gap-3 cursor-pointer ${currentIndex === track.idx ? "bg-white/20 active-playlist-song border border-white/10" : "hover:bg-white/5"}`}>
+                                                        <div className="w-6 text-center shrink-0">{currentIndex === track.idx ? <FontAwesomeIcon icon={faPlay} className="text-green-400 text-[10px]"/> : <span className="text-white/30 text-[12px] font-medium">{i + 1}</span>}</div>
                                                         <span className={`text-[13px] font-bold truncate ${currentIndex === track.idx ? "text-green-400" : "text-white"}`}>{track.title}</span>
                                                     </div>
                                                 ))}
@@ -582,61 +429,27 @@ const Card = () => {
                         {/* Lyrics Area */}
                         <div ref={scrollRef} className="w-full h-full overflow-y-auto no-scrollbar pt-20 pb-32 px-4 mask-scroller-y">
                             {processedLyrics.length === 0 ? (
-                                <div className="flex flex-col items-center justify-center h-full text-white/30 gap-2">
-                                    <FontAwesomeIcon icon={faMusic} className="text-2xl" />
-                                    <p className="text-sm">No Lyrics</p>
-                                </div>
+                                <div className="flex flex-col items-center justify-center h-full text-white/30 gap-2"><FontAwesomeIcon icon={faMusic} className="text-2xl" /><p className="text-sm">No Lyrics</p></div>
                             ) : (
-                                processedLyrics.map((line, i) => {
-                                    const isActive = activeIdx === i;
-
-                                    if (line.isInterlude) {
-                                        return (
-                                            <LiveInterlude 
-                                                key={i}
-                                                audioRef={audioRef}
-                                                startTime={line.time}
-                                                duration={line.duration}
-                                                isActive={isActive}
-                                            />
-                                        );
-                                    }
-
-                                    return (
-                                        <div 
-                                            key={i} 
-                                            onClick={() => handleSeekEnd(line.time)} 
-                                            className={`cursor-pointer py-3 text-left transition-all duration-700 ease-out origin-left will-change-transform transform-gpu ${
-                                                isActive 
-                                                ? "opacity-100 scale-100 active-lyric-glow blur-0" 
-                                                : "opacity-40 scale-[0.98] blur-[1.5px] hover:opacity-60 hover:blur-[0.5px]" 
-                                            }`}
-                                        >
-                                            <p className={`font-bold text-[28px] leading-tight text-white tracking-tight ${isActive ? "active-lyric-glow-text" : ""}`}>{line.text}</p>
-                                        </div>
-                                    );
-                                })
+                                processedLyrics.map((line, i) => (
+                                    <LyricLine 
+                                        key={i} 
+                                        line={line} 
+                                        isActive={activeIdx === i} 
+                                        onClick={handleSeekEnd} 
+                                        audioRef={audioRef}
+                                    />
+                                ))
                             )}
                         </div>
 
                         {/* Bottom Actions */}
                         <div className="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end z-40">
                              <button onClick={(e) => { e.stopPropagation(); setShowPlaylist(!showPlaylist); }} className={`w-9 h-9 rounded-full flex items-center justify-center bg-black/20 backdrop-blur-md border border-white/10 transition-all active:scale-90 ${showPlaylist ? "bg-white text-black" : "text-white hover:bg-white/10"}`}><FontAwesomeIcon icon={showPlaylist ? faTimes : faBars} className="text-xs" /></button>
-                            
                              {result.karaokeUrl && !showPlaylist && (
                                 <div className="relative pointer-events-auto font-jost">
-                                    <AnimatePresence>
-                                        {showVocalControls && (
-                                            <AppleVocalSlider 
-                                                value={vocalMix} 
-                                                onChange={setVocalMix} 
-                                                onClose={() => setShowVocalControls(false)} 
-                                            />
-                                        )}
-                                    </AnimatePresence>
-                                    <button onClick={() => setShowVocalControls(!showVocalControls)} className={`w-9 h-9 rounded-full flex items-center justify-center bg-black/20 backdrop-blur-md border border-white/10 transition-all active:scale-90 ${showVocalControls || vocalMix < 0.95 ? "bg-white text-black" : "text-white hover:bg-white/10"}`}>
-                                        <FontAwesomeIcon icon={faMicrophone} className="text-xs" />
-                                    </button>
+                                    <AnimatePresence>{showVocalControls && (<AppleVocalSlider value={vocalMix} onChange={setVocalMix} onClose={() => setShowVocalControls(false)} />)}</AnimatePresence>
+                                    <button onClick={() => setShowVocalControls(!showVocalControls)} className={`w-9 h-9 rounded-full flex items-center justify-center bg-black/20 backdrop-blur-md border border-white/10 transition-all active:scale-90 ${showVocalControls || vocalMix < 0.95 ? "bg-white text-black" : "text-white hover:bg-white/10"}`}><FontAwesomeIcon icon={faMicrophone} className="text-xs" /></button>
                                 </div>
                             )}
                         </div>
@@ -657,7 +470,7 @@ const Card = () => {
             <style jsx global>{`
                 .no-scrollbar::-webkit-scrollbar { display: none; }
                 
-                /* ULTRA SMOOTH FADE MASK (25% Top/Bottom) */
+                /* DEEP MASK FIX (25%) */
                 .mask-scroller-y { 
                     mask-image: linear-gradient(to bottom, 
                         transparent 0%, 
@@ -681,11 +494,14 @@ const Card = () => {
                     );
                 }
                 
+                /* 5-LAYER ULTRA SOFT GLOW */
                 .active-lyric-glow-text { 
                     text-shadow: 
                         0 0 5px rgba(255,255,255,0.30),   
                         0 0 10px rgba(255,255,255,0.25),  
-                        0 0 30px rgba(255,255,255,0.15);
+                        0 0 20px rgba(255,255,255,0.15),
+                        0 0 40px rgba(255,255,255,0.08),
+                        0 0 80px rgba(255,255,255,0.05);
                 }
 
                 @keyframes spin-slow { from { transform: rotate(0deg) scale(1.5); } to { transform: rotate(360deg) scale(1.5); } }
