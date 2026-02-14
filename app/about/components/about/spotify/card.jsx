@@ -608,9 +608,9 @@ const Card = () => {
                     100% { transform: rotate(360deg) scale(1.4); opacity: 0.3; }
                 }
                 
-                .animate-spin-slow { animation: spin-slow 90s linear infinite; }
-                .animate-spin-reverse-slower { animation: spin-reverse-slower 120s linear infinite; }
-                .animate-pulse-spin { animation: pulse-spin 60s ease-in-out infinite; }
+                .animate-spin-slow { animation: spin-slow 60s linear infinite; }
+                .animate-spin-reverse-slower { animation: spin-reverse-slower 90s linear infinite; }
+                .animate-pulse-spin { animation: pulse-spin 30s ease-in-out infinite; }
                 
                 .contain-strict { contain: strict; }
                 .will-change-height { will-change: height; }
