@@ -182,7 +182,7 @@ const AliveBackground = React.memo(({ cover }) => (
                         style={{ 
                             backgroundImage: `url(${cover})`, 
                             filter: 'blur(15px) saturate(200%) brightness(0.8)', 
-                            opacity: 0.6,
+                            opacity: 0.4,
                             transform: 'scale(3.5)', 
                             animationDelay: '-12s'
                         }} 
@@ -193,7 +193,7 @@ const AliveBackground = React.memo(({ cover }) => (
                         style={{ 
                             backgroundImage: `url(${cover})`, 
                             filter: 'blur(20px) saturate(250%)', 
-                            opacity: 0.4, 
+                            opacity: 0.5, 
                             transform: 'scale(3.0)', 
                             animationDelay: '-45s' 
                         }} 
@@ -544,7 +544,7 @@ const Card = () => {
                             )}
                         </div>
 
-                        {/* Bottom Actions */}
+                        {/* Bottom  hojojo Actions */}
                         <div className="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end z-40">
                              <button onClick={(e) => { e.stopPropagation(); setShowPlaylist(!showPlaylist); }} className={`w-9 h-9 rounded-full flex items-center justify-center bg-black/20 backdrop-blur-md border border-white/10 transition-all active:scale-90 ${showPlaylist ? "bg-white text-black" : "text-white hover:bg-white/10"}`}><FontAwesomeIcon icon={showPlaylist ? faTimes : faBars} className="text-xs" /></button>
                              {result.karaokeUrl && !showPlaylist && (
@@ -608,9 +608,9 @@ const Card = () => {
                     100% { transform: rotate(360deg) scale(1.4); opacity: 0.3; }
                 }
                 
-                .animate-spin-slow { animation: spin-slow 60s linear infinite; }
+                .animate-spin-slow { animation: spin-slow 90s linear infinite; }
                 .animate-spin-reverse-slower { animation: spin-reverse-slower 90s linear infinite; }
-                .animate-pulse-spin { animation: pulse-spin 30s ease-in-out infinite; }
+                .animate-pulse-spin { animation: pulse-spin 60s ease-in-out infinite; }
                 
                 .contain-strict { contain: strict; }
                 .will-change-height { will-change: height; }
