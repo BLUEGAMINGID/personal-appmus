@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef, useMemo, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image"; // Opsional: Jika ingin pakai next/image untuk optimasi lebih lanjut
 import getLocalMetadata, { getSimpleMetadata } from "./fetch";
 import { playlist } from "./list";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -11,21 +12,25 @@ import {
     faMicrophone, faMusic, faSpinner, faBars, faTimes
 } from "@fortawesome/free-solid-svg-icons";
 
-// --- HOOKS ---
+// --- HOOK: DETEKSI MOBILE (Performant) ---
 const useMediaQuery = (query) => {
     const [matches, setMatches] = useState(false);
     useEffect(() => {
         const media = window.matchMedia(query);
         if (media.matches !== matches) setMatches(media.matches);
         const listener = () => setMatches(media.matches);
-        media.addListener(listener);
-        return () => media.removeListener(listener);
+        // Modern browser support
+        if (media.addEventListener) media.addEventListener("change", listener);
+        else media.addListener(listener); 
+        return () => {
+            if (media.removeEventListener) media.removeEventListener("change", listener);
+            else media.removeListener(listener);
+        };
     }, [matches, query]);
     return matches;
 };
 
-// --- MEMOIZED SUB-COMPONENTS (PERFORMANCE CORE) ---
-
+// --- KOMPONEN: INTERLUDE DOTS ---
 const LiveInterlude = React.memo(({ isActive, audioRef, startTime, duration }) => {
     const fillRef = useRef(null);
 
@@ -36,6 +41,8 @@ const LiveInterlude = React.memo(({ isActive, audioRef, startTime, duration }) =
             const currentTime = audioRef.current.currentTime;
             let progress = (currentTime - startTime) / duration;
             progress = Math.max(0, Math.min(1, progress));
+            
+            // Direct DOM manipulation is fastest
             fillRef.current.style.width = `${progress * 100}%`;
             
             if (isActive) rafId = requestAnimationFrame(update);
@@ -44,7 +51,6 @@ const LiveInterlude = React.memo(({ isActive, audioRef, startTime, duration }) =
         if (isActive) {
             rafId = requestAnimationFrame(update);
         } else if (fillRef.current && audioRef.current) {
-            // Set state akhir/awal tanpa animasi loop jika tidak aktif
             fillRef.current.style.width = audioRef.current.currentTime > startTime + duration ? '100%' : '0%';
         }
         
@@ -64,6 +70,7 @@ const LiveInterlude = React.memo(({ isActive, audioRef, startTime, duration }) =
 });
 LiveInterlude.displayName = "LiveInterlude";
 
+// --- KOMPONEN: VOCAL SLIDER ---
 const AppleVocalSlider = React.memo(({ value, onChange, onClose }) => {
     const sliderRef = useRef(null);
     const [isDragging, setIsDragging] = useState(false);
@@ -95,15 +102,15 @@ const AppleVocalSlider = React.memo(({ value, onChange, onClose }) => {
 });
 AppleVocalSlider.displayName = "AppleVocalSlider";
 
+// --- KOMPONEN: TIME SLIDER ---
 const AppleMusicTimeSlider = React.memo(({ audioRef, duration, isPaused, onSeekStart, onSeekEnd }) => {
     const progressRef = useRef(null);
     const timeRef = useRef(null);
-    // Removed local isDragging state to prevent double re-renders, relying on ref updates directly
 
     useEffect(() => {
         let rafId;
         const updateLoop = () => {
-            if (audioRef.current) { // Removed !isDragging check for smoother updates
+            if (audioRef.current) {
                 const curr = audioRef.current.currentTime;
                 const pct = duration > 0 ? (curr / duration) * 100 : 0;
                 if (progressRef.current) progressRef.current.style.width = `${pct}%`;
@@ -149,6 +156,7 @@ const AppleMusicTimeSlider = React.memo(({ audioRef, duration, isPaused, onSeekS
 });
 AppleMusicTimeSlider.displayName = "AppleMusicTimeSlider";
 
+// --- KOMPONEN: LYRIC LINE ---
 const LyricLine = React.memo(({ line, isActive, onClick, audioRef }) => {
     if (line.isInterlude) {
         return <LiveInterlude audioRef={audioRef} startTime={line.time} duration={line.duration} isActive={isActive} />;
@@ -168,14 +176,48 @@ const LyricLine = React.memo(({ line, isActive, onClick, audioRef }) => {
 }, (prev, next) => prev.isActive === next.isActive && prev.line === next.line);
 LyricLine.displayName = "LyricLine";
 
-const AliveBackground = React.memo(({ cover }) => (
+// --- KOMPONEN: ALIVE BACKGROUND (ADAPTIVE PERFORMANCE) ---
+// Hanya me-render 1 layer di mobile, tapi 3 layer di desktop
+const AliveBackground = React.memo(({ cover, isDesktop }) => (
     <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#101010]">
         {cover && (
             <>
-                {/* Desynchronized Animation Layers for Organic Look */}
-                <div className="absolute inset-[-50%] bg-cover bg-center animate-spin-slow will-change-transform transform-gpu" style={{ backgroundImage: `url(${cover})`, filter: 'blur(40px) saturate(300%) contrast(120%) brightness(1.1)', opacity: 0.6, animationDelay: '-12s' }} />
-                <div className="absolute inset-[-50%] bg-cover bg-center animate-spin-reverse-slower will-change-transform transform-gpu" style={{ backgroundImage: `url(${cover})`, mixBlendMode: 'screen', filter: 'blur(25px) saturate(400%) contrast(140%) brightness(1.3)', opacity: 0.5, animationDelay: '-45s' }} />
-                <div className="absolute inset-[-50%] bg-cover bg-center animate-pulse-spin will-change-transform transform-gpu" style={{ backgroundImage: `url(${cover})`, mixBlendMode: 'overlay', filter: 'blur(30px) saturate(200%) brightness(1.2)', opacity: 0.3, animationDelay: '-23s' }} />
+                {/* Layer 1: Base (Always On) */}
+                <div 
+                    className="absolute inset-[-50%] bg-cover bg-center animate-spin-slow will-change-transform transform-gpu" 
+                    style={{ 
+                        backgroundImage: `url(${cover})`, 
+                        filter: 'blur(40px) saturate(300%) contrast(120%) brightness(1.1)', 
+                        opacity: 0.6, 
+                        animationDelay: '-12s' 
+                    }} 
+                />
+                
+                {/* Layer 2 & 3: Desktop Only (Heavy Computation) */}
+                {isDesktop && (
+                    <>
+                        <div 
+                            className="absolute inset-[-50%] bg-cover bg-center animate-spin-reverse-slower will-change-transform transform-gpu" 
+                            style={{ 
+                                backgroundImage: `url(${cover})`, 
+                                mixBlendMode: 'screen', 
+                                filter: 'blur(30px) saturate(400%) contrast(140%) brightness(1.3)', 
+                                opacity: 0.5, 
+                                animationDelay: '-45s' 
+                            }} 
+                        />
+                        <div 
+                            className="absolute inset-[-50%] bg-cover bg-center animate-pulse-spin will-change-transform transform-gpu" 
+                            style={{ 
+                                backgroundImage: `url(${cover})`, 
+                                mixBlendMode: 'overlay', 
+                                filter: 'blur(30px) saturate(200%) brightness(1.2)', 
+                                opacity: 0.3, 
+                                animationDelay: '-23s' 
+                            }} 
+                        />
+                    </>
+                )}
                 <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/90" />
             </>
         )}
@@ -186,18 +228,11 @@ AliveBackground.displayName = "AliveBackground";
 
 // --- MAIN CARD ---
 const Card = () => {
+    // Detect Desktop for Performance Switch
     const isDesktop = useMediaQuery("(min-width: 768px)");
     
-    // Initial State Combined
     const [currentIndex, setCurrentIndex] = useState(0); 
     const [isMounted, setIsMounted] = useState(false);
-
-    // Initial Load & Random Shuffle
-    useEffect(() => {
-        setIsMounted(true);
-        setCurrentIndex(Math.floor(Math.random() * playlist.length));
-    }, []);
-
     const [result, setResult] = useState({ lyrics: [], title: "Loading...", artist: "Music", cover: null, audioUrl: "", karaokeUrl: null });
     const [isPaused, setIsPaused] = useState(true);
     const [duration, setDuration] = useState(0);
@@ -214,7 +249,13 @@ const Card = () => {
     const scrollRef = useRef(null);
     const playlistContainerRef = useRef(null);
 
-    // Playlist Grouping (Memoized)
+    // Initial Random Shuffle
+    useEffect(() => {
+        setIsMounted(true);
+        setCurrentIndex(Math.floor(Math.random() * playlist.length));
+    }, []);
+
+    // Memoized Playlist
     const groupedPlaylist = useMemo(() => {
         const groups = [];
         let currentGroup = null;
@@ -229,7 +270,7 @@ const Card = () => {
         return groups;
     }, [playlistMeta]);
 
-    // Lyric Processing (Memoized)
+    // Memoized Lyrics
     const processedLyrics = useMemo(() => {
         if (!result.lyrics || result.lyrics.length === 0) return [];
         const newLyrics = [];
@@ -247,7 +288,7 @@ const Card = () => {
         return newLyrics;
     }, [result.lyrics]);
 
-    // Load Playlist Metadata
+    // Load Playlist Meta
     useEffect(() => {
         if (showPlaylist && playlistMeta.length === 0) {
             const fetchData = async () => {
@@ -269,7 +310,7 @@ const Card = () => {
         }
     }, [showPlaylist, playlistMeta.length]);
 
-    // Main Song Loader
+    // Song Loader & Cleanup
     useEffect(() => {
         if (!isMounted) return;
 
@@ -294,29 +335,21 @@ const Card = () => {
             const onLoadedMetadata = () => {
                 if(audioRef.current) {
                     setDuration(audioRef.current.duration);
-                    const playPromise = audioRef.current.play();
-                    if (playPromise !== undefined) {
-                        playPromise.then(() => {
-                             if (instruRef.current && data.karaokeUrl) {
-                                 instruRef.current.currentTime = audioRef.current.currentTime;
-                                 instruRef.current.play().catch(() => {});
-                             }
-                             setIsPaused(false);
-                             setIsLoading(false);
-                        }).catch(() => { 
-                            setIsPaused(true); 
-                            setIsLoading(false); 
-                        });
-                    }
+                    audioRef.current.play().then(() => {
+                         if (instruRef.current && data.karaokeUrl) {
+                             instruRef.current.currentTime = audioRef.current.currentTime;
+                             instruRef.current.play().catch(() => {});
+                         }
+                         setIsPaused(false);
+                         setIsLoading(false);
+                    }).catch(() => { setIsPaused(true); setIsLoading(false); });
                 }
             };
             
-            // Clean & Safe Event Listener
             const audioEl = audioRef.current;
             if(audioEl) {
                 audioEl.addEventListener('loadedmetadata', onLoadedMetadata, {once: true});
             }
-            // Cleanup function to prevent leaks if song changes fast
             return () => {
                 if(audioEl) audioEl.removeEventListener('loadedmetadata', onLoadedMetadata);
             };
@@ -330,31 +363,29 @@ const Card = () => {
         if (instruRef.current && result.karaokeUrl) instruRef.current.volume = 1.0; 
     }, [vocalMix, result.karaokeUrl]);
 
-    // Ultimate Time Update Handler
+    // Time Update Handler (Throttled & Optimized)
     const handleTimeUpdate = useCallback(() => {
         if (!audioRef.current) return;
         const mainTime = audioRef.current.currentTime;
 
-        // 1. Audio Sync (Throttled Check)
+        // Sync Audio (Throttled)
         if (instruRef.current && result.karaokeUrl && !instruRef.current.paused && !audioRef.current.paused) {
             const diff = Math.abs(instruRef.current.currentTime - mainTime);
             if (diff > 0.2) instruRef.current.currentTime = mainTime;
         }
 
-        // 2. Lyric Sync
+        // Sync Lyrics
         if (processedLyrics.length > 0) {
-            const lyricAnimationDelay = 0.5; // Visual delay
+            const lyricAnimationDelay = 0.5;
             const adjustedTime = mainTime - lyricAnimationDelay;
             let idx = -1;
             
-            // Optimized Search: Check current index first
             if (activeIdx !== -1 && activeIdx < processedLyrics.length) {
                 const current = processedLyrics[activeIdx];
                 const next = processedLyrics[activeIdx + 1];
                 if (adjustedTime >= current.time && (!next || adjustedTime < next.time)) idx = activeIdx;
             }
 
-            // Fallback Search
             if (idx === -1) {
                 for (let i = 0; i < processedLyrics.length; i++) {
                     if (adjustedTime >= processedLyrics[i].time && 
@@ -369,7 +400,7 @@ const Card = () => {
         }
     }, [result.karaokeUrl, processedLyrics, activeIdx]);
 
-    // Scroll Logic (Smooth)
+    // Auto Scroll
     useEffect(() => {
         if (showLyrics && scrollRef.current && !showPlaylist && activeIdx !== -1) {
             const activeEl = scrollRef.current.children[activeIdx];
@@ -378,8 +409,6 @@ const Card = () => {
                 const containerH = container.clientHeight;
                 const elTop = activeEl.offsetTop;
                 const elH = activeEl.clientHeight;
-                
-                // Top-biased scroll position
                 let targetScroll = elTop - (containerH * 0.22); 
                 if (elH > containerH * 0.4) targetScroll = elTop - (containerH * 0.15);
                 container.scrollTo({ top: targetScroll, behavior: 'smooth' });
@@ -414,7 +443,7 @@ const Card = () => {
     // Layout
     const getCardHeight = () => {
         if (showLyrics || showPlaylist) return isDesktop ? 680 : 580; 
-        return 260; // Fixed Height for all devices in closed state
+        return 260; // KEEP 260px for consistency
     };
 
     return (
@@ -424,7 +453,8 @@ const Card = () => {
 
             <div className="relative w-full rounded-[40px] overflow-hidden shadow-2xl bg-[#0a0a0a] transition-all duration-500 cubic-bezier(0.32, 0.72, 0, 1)" style={{ height: getCardHeight() }}>
                 
-                <AliveBackground cover={result.cover} />
+                {/* --- ALIVE BACKGROUND (ADAPTIVE) --- */}
+                <AliveBackground cover={result.cover} isDesktop={isDesktop} />
 
                 <div className="relative z-10 w-full h-full p-6 flex flex-col border border-white/5">
                     {/* Header */}
@@ -509,38 +539,24 @@ const Card = () => {
             <style jsx global>{`
                 .no-scrollbar::-webkit-scrollbar { display: none; }
                 
-                /* DEEP MASK FIX (25%) */
                 .mask-scroller-y { 
-                    mask-image: linear-gradient(to bottom, 
-                        transparent 0%, 
-                        rgba(0,0,0,0.2) 10%, 
-                        rgba(0,0,0,0.6) 20%, 
-                        black 30%, 
-                        black 70%, 
-                        rgba(0,0,0,0.6) 80%, 
-                        rgba(0,0,0,0.2) 90%, 
-                        transparent 100%
-                    );
-                    -webkit-mask-image: linear-gradient(to bottom, 
-                        transparent 0%, 
-                        rgba(0,0,0,0.2) 10%, 
-                        rgba(0,0,0,0.6) 20%, 
-                        black 30%, 
-                        black 70%, 
-                        rgba(0,0,0,0.6) 80%, 
-                        rgba(0,0,0,0.2) 90%, 
-                        transparent 100%
-                    );
+                    mask-image: linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%);
+                    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%);
                 }
                 
-                /* 5-LAYER ULTRA SOFT GLOW */
+                /* RESPONSIVE GLOW: LIGHTER ON MOBILE */
                 .active-lyric-glow-text { 
-                    text-shadow: 
-                        0 0 5px rgba(255,255,255,0.30),   
-                        0 0 10px rgba(255,255,255,0.25),  
-                        0 0 20px rgba(255,255,255,0.15),
-                        0 0 40px rgba(255,255,255,0.08),
-                        0 0 80px rgba(255,255,255,0.05);
+                    text-shadow: 0 0 5px rgba(255,255,255,0.4), 0 0 15px rgba(255,255,255,0.1);
+                }
+                @media (min-width: 768px) {
+                    .active-lyric-glow-text { 
+                        text-shadow: 
+                            0 0 5px rgba(255,255,255,0.30),   
+                            0 0 10px rgba(255,255,255,0.25),  
+                            0 0 20px rgba(255,255,255,0.15),
+                            0 0 40px rgba(255,255,255,0.08),
+                            0 0 80px rgba(255,255,255,0.05);
+                    }
                 }
 
                 @keyframes spin-slow { from { transform: rotate(0deg) scale(1.5); } to { transform: rotate(360deg) scale(1.5); } }
