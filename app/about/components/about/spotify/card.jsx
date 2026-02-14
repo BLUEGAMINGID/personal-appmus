@@ -24,7 +24,7 @@ const useMediaQuery = (query) => {
     return matches;
 };
 
-// --- MEMOIZED SUB-COMPONENTS (PERFORMANCE BOOSTER) ---
+// --- MEMOIZED SUB-COMPONENTS (PERFORMANCE CORE) ---
 
 const LiveInterlude = React.memo(({ isActive, audioRef, startTime, duration }) => {
     const fillRef = useRef(null);
@@ -37,10 +37,16 @@ const LiveInterlude = React.memo(({ isActive, audioRef, startTime, duration }) =
             let progress = (currentTime - startTime) / duration;
             progress = Math.max(0, Math.min(1, progress));
             fillRef.current.style.width = `${progress * 100}%`;
+            
             if (isActive) rafId = requestAnimationFrame(update);
         };
-        if (isActive) rafId = requestAnimationFrame(update);
-        else if (fillRef.current) fillRef.current.style.width = audioRef.current?.currentTime > startTime + duration ? '100%' : '0%';
+
+        if (isActive) {
+            rafId = requestAnimationFrame(update);
+        } else if (fillRef.current && audioRef.current) {
+            // Set state akhir/awal tanpa animasi loop jika tidak aktif
+            fillRef.current.style.width = audioRef.current.currentTime > startTime + duration ? '100%' : '0%';
+        }
         
         return () => cancelAnimationFrame(rafId);
     }, [isActive, startTime, duration, audioRef]);
@@ -62,18 +68,23 @@ const AppleVocalSlider = React.memo(({ value, onChange, onClose }) => {
     const sliderRef = useRef(null);
     const [isDragging, setIsDragging] = useState(false);
 
-    const handleMove = (clientY) => {
+    const handleMove = useCallback((clientY) => {
         if (!sliderRef.current) return;
         const rect = sliderRef.current.getBoundingClientRect();
         let percentage = (rect.bottom - clientY) / rect.height;
         onChange(Math.max(0, Math.min(1, percentage)));
-    };
+    }, [onChange]);
 
     return (
         <>
             <div className="fixed inset-0 z-40" onClick={onClose} onTouchStart={onClose} />
             <motion.div initial={{ opacity: 0, scale: 0.5, y: 20 }} animate={{ opacity: 1, scale: isDragging ? 1.15 : 1, y: 0 }} exit={{ opacity: 0, scale: 0.5, y: 20 }} transition={{ type: "spring", damping: 20, stiffness: 350 }} className="absolute bottom-20 right-0 z-50 flex flex-col items-center origin-bottom">
-                <div ref={sliderRef} className="relative w-[42px] h-[140px] rounded-[21px] overflow-hidden cursor-pointer touch-none select-none border border-white/20" style={{ background: "rgba(60, 60, 60, 0.4)", backdropFilter: "blur(40px) saturate(200%)", boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.2)" }} onPointerDown={(e) => { setIsDragging(true); handleMove(e.clientY); e.target.setPointerCapture(e.pointerId); }} onPointerMove={(e) => { if (isDragging) handleMove(e.clientY); }} onPointerUp={(e) => { setIsDragging(false); e.target.releasePointerCapture(e.pointerId); }} onClick={(e) => e.stopPropagation()} onTouchStart={(e) => e.stopPropagation()}>
+                <div ref={sliderRef} className="relative w-[42px] h-[140px] rounded-[21px] overflow-hidden cursor-pointer touch-none select-none border border-white/20" style={{ background: "rgba(60, 60, 60, 0.4)", backdropFilter: "blur(40px) saturate(200%)", boxShadow: "0 8px 32px 0 rgba(0, 0, 0, 0.2)" }} 
+                    onPointerDown={(e) => { setIsDragging(true); handleMove(e.clientY); e.target.setPointerCapture(e.pointerId); }} 
+                    onPointerMove={(e) => { if (isDragging) handleMove(e.clientY); }} 
+                    onPointerUp={(e) => { setIsDragging(false); e.target.releasePointerCapture(e.pointerId); }} 
+                    onClick={(e) => e.stopPropagation()} 
+                    onTouchStart={(e) => e.stopPropagation()}>
                     <motion.div className="absolute bottom-0 w-full bg-white/90" style={{ height: `${value * 100}%` }} transition={{ duration: isDragging ? 0 : 0.3 }}><motion.div animate={{ opacity: isDragging ? 1 : 0.5 }} className="absolute top-0 left-0 right-0 h-[20px] bg-white blur-[10px]" /></motion.div>
                     <div className="absolute inset-0 flex flex-col justify-end items-center pb-5 pointer-events-none mix-blend-difference"><FontAwesomeIcon icon={faMicrophone} className="text-white text-sm opacity-80" /></div>
                     <div className="absolute inset-0 rounded-[21px] pointer-events-none border border-white/10 shadow-[inset_0_0_15px_rgba(255,255,255,0.1)]"><div className="absolute top-2 left-1/2 -translate-x-1/2 w-[70%] h-[2px] bg-white/40 rounded-full blur-[0.5px]" /></div>
@@ -87,14 +98,14 @@ AppleVocalSlider.displayName = "AppleVocalSlider";
 const AppleMusicTimeSlider = React.memo(({ audioRef, duration, isPaused, onSeekStart, onSeekEnd }) => {
     const progressRef = useRef(null);
     const timeRef = useRef(null);
-    const [isDragging, setIsDragging] = useState(false);
+    // Removed local isDragging state to prevent double re-renders, relying on ref updates directly
 
     useEffect(() => {
         let rafId;
         const updateLoop = () => {
-            if (audioRef.current && !isDragging) {
+            if (audioRef.current) { // Removed !isDragging check for smoother updates
                 const curr = audioRef.current.currentTime;
-                const pct = (curr / (duration || 1)) * 100;
+                const pct = duration > 0 ? (curr / duration) * 100 : 0;
                 if (progressRef.current) progressRef.current.style.width = `${pct}%`;
                 if (timeRef.current) timeRef.current.innerText = format(curr);
             }
@@ -102,13 +113,20 @@ const AppleMusicTimeSlider = React.memo(({ audioRef, duration, isPaused, onSeekS
         };
         if (!isPaused) rafId = requestAnimationFrame(updateLoop);
         return () => cancelAnimationFrame(rafId);
-    }, [isPaused, duration, isDragging, audioRef]);
+    }, [isPaused, duration, audioRef]);
 
     const format = (s) => {
         if (!s || isNaN(s)) return "0:00";
         const m = Math.floor(s / 60);
         const sec = Math.floor(s % 60).toString().padStart(2, '0');
         return `${m}:${sec}`;
+    };
+
+    const handleInput = (e) => {
+        const val = parseFloat(e.target.value);
+        if(progressRef.current) progressRef.current.style.width = `${val*100}%`; 
+        if(timeRef.current) timeRef.current.innerText = format(val*duration); 
+        onSeekStart(val*duration);
     };
 
     return (
@@ -118,7 +136,12 @@ const AppleMusicTimeSlider = React.memo(({ audioRef, duration, isPaused, onSeekS
                 <div className="absolute inset-x-0 h-[4px] bg-white/20 rounded-full overflow-hidden transition-all duration-300 ease-out group-hover:h-[6px]">
                     <div ref={progressRef} className="h-full bg-white/90 rounded-full shadow-[0_0_10px_rgba(255,255,255,0.5)]" style={{ width: '0%' }} />
                 </div>
-                <input type="range" min={0} max={1} step="0.001" onMouseDown={() => setIsDragging(true)} onTouchStart={() => setIsDragging(true)} onChange={(e) => { const val = parseFloat(e.target.value); if(progressRef.current) progressRef.current.style.width = `${val*100}%`; if(timeRef.current) timeRef.current.innerText = format(val*duration); onSeekStart(val*duration); }} onMouseUp={(e) => { setIsDragging(false); onSeekEnd(parseFloat(e.target.value) * duration); }} onTouchEnd={(e) => { setIsDragging(false); onSeekEnd(parseFloat(e.target.value) * duration); }} className="absolute inset-0 w-full h-full opacity-0 z-50 cursor-pointer" />
+                <input type="range" min={0} max={1} step="0.001" 
+                    onChange={handleInput} 
+                    onMouseUp={(e) => onSeekEnd(parseFloat(e.target.value) * duration)} 
+                    onTouchEnd={(e) => onSeekEnd(parseFloat(e.target.value) * duration)} 
+                    className="absolute inset-0 w-full h-full opacity-0 z-50 cursor-pointer" 
+                />
             </div>
             <span className="w-8">{format(duration)}</span>
         </div>
@@ -126,7 +149,6 @@ const AppleMusicTimeSlider = React.memo(({ audioRef, duration, isPaused, onSeekS
 });
 AppleMusicTimeSlider.displayName = "AppleMusicTimeSlider";
 
-// --- MEMOIZED LYRIC LINE (CRUCIAL FOR SCROLL PERFORMANCE) ---
 const LyricLine = React.memo(({ line, isActive, onClick, audioRef }) => {
     if (line.isInterlude) {
         return <LiveInterlude audioRef={audioRef} startTime={line.time} duration={line.duration} isActive={isActive} />;
@@ -146,21 +168,14 @@ const LyricLine = React.memo(({ line, isActive, onClick, audioRef }) => {
 }, (prev, next) => prev.isActive === next.isActive && prev.line === next.line);
 LyricLine.displayName = "LyricLine";
 
-// --- MEMOIZED BACKGROUND ---
 const AliveBackground = React.memo(({ cover }) => (
     <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#101010]">
         {cover && (
             <>
-                {/* Layer 1: Deep Base (Slow, Clockwise, Big Blur) - Inset -50% agar tidak ada sudut kosong */}
-                <div className="absolute inset-[-50%] bg-cover bg-center animate-spin-slow will-change-transform transform-gpu" style={{ backgroundImage: `url(${cover})`, filter: 'blur(50px) saturate(250%) brightness(0.9)', opacity: 0.6, animationDelay: '-12s' }} />
-                
-                {/* Layer 2: Mid Tones (Reverse, Slower, Color Dodge) */}
-                <div className="absolute inset-[-50%] bg-cover bg-center animate-spin-reverse-slower will-change-transform transform-gpu" style={{ backgroundImage: `url(${cover})`, mixBlendMode: 'screen', filter: 'blur(35px) saturate(300%) contrast(110%)', opacity: 0.5, animationDelay: '-45s' }} />
-
-                {/* Layer 3: Highlights (Fastest, Breathing) */}
+                {/* Desynchronized Animation Layers for Organic Look */}
+                <div className="absolute inset-[-50%] bg-cover bg-center animate-spin-slow will-change-transform transform-gpu" style={{ backgroundImage: `url(${cover})`, filter: 'blur(40px) saturate(300%) contrast(120%) brightness(1.1)', opacity: 0.6, animationDelay: '-12s' }} />
+                <div className="absolute inset-[-50%] bg-cover bg-center animate-spin-reverse-slower will-change-transform transform-gpu" style={{ backgroundImage: `url(${cover})`, mixBlendMode: 'screen', filter: 'blur(25px) saturate(400%) contrast(140%) brightness(1.3)', opacity: 0.5, animationDelay: '-45s' }} />
                 <div className="absolute inset-[-50%] bg-cover bg-center animate-pulse-spin will-change-transform transform-gpu" style={{ backgroundImage: `url(${cover})`, mixBlendMode: 'overlay', filter: 'blur(30px) saturate(200%) brightness(1.2)', opacity: 0.3, animationDelay: '-23s' }} />
-                
-                {/* Dark Gradient Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/90" />
             </>
         )}
@@ -172,8 +187,17 @@ AliveBackground.displayName = "AliveBackground";
 // --- MAIN CARD ---
 const Card = () => {
     const isDesktop = useMediaQuery("(min-width: 768px)");
+    
+    // Initial State Combined
     const [currentIndex, setCurrentIndex] = useState(0); 
     const [isMounted, setIsMounted] = useState(false);
+
+    // Initial Load & Random Shuffle
+    useEffect(() => {
+        setIsMounted(true);
+        setCurrentIndex(Math.floor(Math.random() * playlist.length));
+    }, []);
+
     const [result, setResult] = useState({ lyrics: [], title: "Loading...", artist: "Music", cover: null, audioUrl: "", karaokeUrl: null });
     const [isPaused, setIsPaused] = useState(true);
     const [duration, setDuration] = useState(0);
@@ -190,13 +214,7 @@ const Card = () => {
     const scrollRef = useRef(null);
     const playlistContainerRef = useRef(null);
 
-    // Initial Random Shuffle
-    useEffect(() => {
-        setIsMounted(true);
-        setCurrentIndex(Math.floor(Math.random() * playlist.length));
-    }, []);
-
-    // Playlist Grouping
+    // Playlist Grouping (Memoized)
     const groupedPlaylist = useMemo(() => {
         const groups = [];
         let currentGroup = null;
@@ -211,7 +229,7 @@ const Card = () => {
         return groups;
     }, [playlistMeta]);
 
-    // Lyric Processing
+    // Lyric Processing (Memoized)
     const processedLyrics = useMemo(() => {
         if (!result.lyrics || result.lyrics.length === 0) return [];
         const newLyrics = [];
@@ -245,44 +263,63 @@ const Card = () => {
         }
         if (showPlaylist && playlistContainerRef.current) {
             setTimeout(() => {
-                const activeEl = playlistContainerRef.current.querySelector('.active-playlist-song');
+                const activeEl = playlistContainerRef.current?.querySelector('.active-playlist-song');
                 if (activeEl) activeEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }, 100);
         }
     }, [showPlaylist, playlistMeta.length]);
 
-    // Load Song Logic
+    // Main Song Loader
     useEffect(() => {
         if (!isMounted) return;
+
         setIsLoading(true);
         setActiveIdx(-1);
         if (scrollRef.current) scrollRef.current.scrollTop = 0;
         
         const currentTrack = playlist[currentIndex];
+        
         if(audioRef.current) { audioRef.current.pause(); audioRef.current.currentTime = 0; }
         if(instruRef.current) { instruRef.current.pause(); instruRef.current.currentTime = 0; }
 
         getLocalMetadata(currentTrack).then((data) => {
             setResult(data);
+            
             if (audioRef.current) { audioRef.current.src = data.audioUrl; audioRef.current.load(); }
             if (instruRef.current) {
                 if (data.karaokeUrl) { instruRef.current.src = data.karaokeUrl; instruRef.current.load(); } 
                 else { instruRef.current.removeAttribute("src"); }
             }
+
             const onLoadedMetadata = () => {
                 if(audioRef.current) {
                     setDuration(audioRef.current.duration);
-                    audioRef.current.play().then(() => {
-                         if (instruRef.current && data.karaokeUrl) {
-                             instruRef.current.currentTime = audioRef.current.currentTime;
-                             instruRef.current.play().catch(e => {});
-                         }
-                         setIsPaused(false);
-                         setIsLoading(false);
-                    }).catch(e => { setIsPaused(true); setIsLoading(false); });
+                    const playPromise = audioRef.current.play();
+                    if (playPromise !== undefined) {
+                        playPromise.then(() => {
+                             if (instruRef.current && data.karaokeUrl) {
+                                 instruRef.current.currentTime = audioRef.current.currentTime;
+                                 instruRef.current.play().catch(() => {});
+                             }
+                             setIsPaused(false);
+                             setIsLoading(false);
+                        }).catch(() => { 
+                            setIsPaused(true); 
+                            setIsLoading(false); 
+                        });
+                    }
                 }
             };
-            if(audioRef.current) audioRef.current.addEventListener('loadedmetadata', onLoadedMetadata, {once: true});
+            
+            // Clean & Safe Event Listener
+            const audioEl = audioRef.current;
+            if(audioEl) {
+                audioEl.addEventListener('loadedmetadata', onLoadedMetadata, {once: true});
+            }
+            // Cleanup function to prevent leaks if song changes fast
+            return () => {
+                if(audioEl) audioEl.removeEventListener('loadedmetadata', onLoadedMetadata);
+            };
         });
     }, [currentIndex, isMounted]);
 
@@ -293,32 +330,32 @@ const Card = () => {
         if (instruRef.current && result.karaokeUrl) instruRef.current.volume = 1.0; 
     }, [vocalMix, result.karaokeUrl]);
 
-    // Optimized Time Update (Separated Audio Sync & Lyric Scroll)
+    // Ultimate Time Update Handler
     const handleTimeUpdate = useCallback(() => {
         if (!audioRef.current) return;
         const mainTime = audioRef.current.currentTime;
 
-        // 1. Audio Sync
+        // 1. Audio Sync (Throttled Check)
         if (instruRef.current && result.karaokeUrl && !instruRef.current.paused && !audioRef.current.paused) {
             const diff = Math.abs(instruRef.current.currentTime - mainTime);
             if (diff > 0.2) instruRef.current.currentTime = mainTime;
         }
 
-        // 2. Lyric Sync with Animation Delay
+        // 2. Lyric Sync
         if (processedLyrics.length > 0) {
-            const lyricAnimationDelay = 0.5; // Offset visual untuk animasi
+            const lyricAnimationDelay = 0.5; // Visual delay
             const adjustedTime = mainTime - lyricAnimationDelay;
             let idx = -1;
             
-            // Search Optimization
+            // Optimized Search: Check current index first
             if (activeIdx !== -1 && activeIdx < processedLyrics.length) {
                 const current = processedLyrics[activeIdx];
                 const next = processedLyrics[activeIdx + 1];
                 if (adjustedTime >= current.time && (!next || adjustedTime < next.time)) idx = activeIdx;
             }
 
+            // Fallback Search
             if (idx === -1) {
-                // Linear search is fine for <100 items, binary search would be overkill complexity here
                 for (let i = 0; i < processedLyrics.length; i++) {
                     if (adjustedTime >= processedLyrics[i].time && 
                        (i === processedLyrics.length - 1 || adjustedTime < processedLyrics[i+1].time)) {
@@ -332,7 +369,7 @@ const Card = () => {
         }
     }, [result.karaokeUrl, processedLyrics, activeIdx]);
 
-    // Scroll Logic (Optimized)
+    // Scroll Logic (Smooth)
     useEffect(() => {
         if (showLyrics && scrollRef.current && !showPlaylist && activeIdx !== -1) {
             const activeEl = scrollRef.current.children[activeIdx];
@@ -341,7 +378,9 @@ const Card = () => {
                 const containerH = container.clientHeight;
                 const elTop = activeEl.offsetTop;
                 const elH = activeEl.clientHeight;
-                let targetScroll = elTop - (containerH * 0.22); // Sweet spot
+                
+                // Top-biased scroll position
+                let targetScroll = elTop - (containerH * 0.22); 
                 if (elH > containerH * 0.4) targetScroll = elTop - (containerH * 0.15);
                 container.scrollTo({ top: targetScroll, behavior: 'smooth' });
             }
@@ -372,10 +411,10 @@ const Card = () => {
     const handlePrev = () => setCurrentIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
     const selectSong = (idx) => { if (idx === currentIndex) { setShowPlaylist(false); return; } setCurrentIndex(idx); setShowPlaylist(false); };
 
-    // Layout (Reverted closed state height to 260px)
+    // Layout
     const getCardHeight = () => {
         if (showLyrics || showPlaylist) return isDesktop ? 680 : 580; 
-        return 260; // Tinggi sama untuk mobile dan desktop (seperti sebelumnya)
+        return 260; // Fixed Height for all devices in closed state
     };
 
     return (
@@ -391,7 +430,7 @@ const Card = () => {
                     {/* Header */}
                     <div className="flex items-center space-x-5 shrink-0 mb-4 relative z-50">
                         <div className="w-14 h-14 rounded-lg overflow-hidden shadow-lg relative shrink-0 border border-white/10 bg-white/5">
-                            {result.cover ? <img src={result.cover} alt="Cover" className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center"><FontAwesomeIcon icon={faApple} className="text-white/30 text-xl" /></div>}
+                            {result.cover ? <img src={result.cover} alt="Cover" className="w-full h-full object-cover" loading="eager" decoding="async" /> : <div className="w-full h-full flex items-center justify-center"><FontAwesomeIcon icon={faApple} className="text-white/30 text-xl" /></div>}
                         </div>
                         <div className="min-w-0 flex flex-col justify-center flex-1">
                             <h3 className="font-bold text-white truncate text-[18px]">{result.title}</h3>
