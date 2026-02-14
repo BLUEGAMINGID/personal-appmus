@@ -503,7 +503,7 @@ const Card = () => {
                                     opacity: 0.3,
                                     animationDelay: '-23s'
                                 }}
-                            ></div>//danish
+                            ></div>
                             
                             {/* Dark Gradient Overlay */}
                             <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/90"></div>
