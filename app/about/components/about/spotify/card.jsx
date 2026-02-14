@@ -360,53 +360,59 @@ const Card = () => {
     }, [vocalMix, result.karaokeUrl]);
 
     const handleTimeUpdate = () => {
-    if (!audioRef.current || !instruRef.current) return;
+    if (!audioRef.current) return;
+    
+    // Waktu asli dari file vokal (Gunakan ini untuk sinkronisasi antar audio)
     const mainTime = audioRef.current.currentTime;
 
-    // SYNC AUDIO: Hanya jalankan jika ada lagu karaoke
-    if (result.karaokeUrl && !instruRef.current.paused && !audioRef.current.paused) {
+    // --- 1. SINKRONISASI AUDIO (Vokal ke Instrumen) ---
+    // Hanya sinkronkan audio dengan audio. Jangan libatkan lirik di sini.
+    if (instruRef.current && result.karaokeUrl && !instruRef.current.paused && !audioRef.current.paused) {
         const diff = Math.abs(instruRef.current.currentTime - mainTime);
         
-        // Gunakan threshold yang lebih longgar (misal 0.3 detik)
-        // agar vokal tidak sering "melompat" yang bikin suara aneh
-        if (diff > 0.3) {
+        // Gunakan threshold 0.2 detik (toleransi kecil)
+        // Jika lari lebih dari 0.2 detik, instrumen disamakan dengan vokal
+        if (diff > 0.2) {
             instruRef.current.currentTime = mainTime;
         }
     }
 
-        if (processedLyrics.length > 0) {
-            let idx = -1;
-            
-            if (activeIdx !== -1 && activeIdx < processedLyrics.length) {
-                const currentLine = processedLyrics[activeIdx];
-                const nextLine = processedLyrics[activeIdx + 1];
-                if (currentLine && mainTime >= currentLine.time && (!nextLine || mainTime < nextLine.time)) {
-                    idx = activeIdx;
-                }
-            }
+    // --- 2. LOGIKA LIRIK (Independen) ---
+    if (processedLyrics.length > 0) {
+        let idx = -1;
+        
+        // GUNAKAN OFFSET ANIMASI DI SINI SAJA
+        // Misal animasi kamu butuh 0.5 detik, kita kurangi mainTime di sini 
+        // sehingga sistem "mengira" lagu baru berjalan lebih lambat untuk liriknya.
+        const lyricAnimationDelay = 0.5; // Sesuaikan dengan durasi animasi kamu
+        const adjustedLyricTime = mainTime - lyricAnimationDelay;
 
-            if (idx === -1) {
-                const startSearch = activeIdx > -1 ? activeIdx : 0;
-                for (let i = startSearch; i < processedLyrics.length; i++) {
-                    if (mainTime >= processedLyrics[i].time) {
-                        if (i === processedLyrics.length - 1 || mainTime < processedLyrics[i + 1].time) {
-                            idx = i;
-                            break;
-                        }
-                    }
-                }
-                if (idx === -1) {
-                    for (let i = 0; i < processedLyrics.length; i++) {
-                        if (mainTime >= processedLyrics[i].time && (i === processedLyrics.length - 1 || mainTime < processedLyrics[i + 1].time)) {
-                            idx = i;
-                            break;
-                        }
-                    }
+        const startSearch = activeIdx > -1 ? activeIdx : 0;
+        
+        // Cari baris lirik berdasarkan waktu yang sudah di-adjust untuk animasi
+        for (let i = startSearch; i < processedLyrics.length; i++) {
+            if (adjustedLyricTime >= processedLyrics[i].time) {
+                if (i === processedLyrics.length - 1 || adjustedLyricTime < processedLyrics[i + 1].time) {
+                    idx = i;
+                    break;
                 }
             }
-            if (idx !== -1 && idx !== activeIdx) setActiveIdx(idx);
         }
-    };
+
+        // Fallback pencarian dari awal jika user melakukan 'seek' ke belakang
+        if (idx === -1) {
+            for (let i = 0; i < processedLyrics.length; i++) {
+                if (adjustedLyricTime >= processedLyrics[i].time && (i === processedLyrics.length - 1 || adjustedLyricTime < processedLyrics[i + 1].time)) {
+                    idx = i;
+                    break;
+                }
+            }
+        }
+
+        if (idx !== -1 && idx !== activeIdx) setActiveIdx(idx);
+    }
+};
+
 
     // --- AUTO SCROLL LOGIC ---
     useEffect(() => {
