@@ -59,7 +59,6 @@ const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
     }, [isActive, startTime, duration, audioRef]);
 
     return (
-        // Added 'py-6' for vertical breathing room (anti-collision)
         <div className="py-6 w-full flex flex-col items-start justify-center opacity-100 transition-opacity duration-700 will-change-transform transform-gpu">
             <div className="relative inline-block w-fit">
                 {/* Layer 1: Background */}
@@ -405,6 +404,7 @@ const Card = () => {
         }
     };
 
+    // --- AUTO SCROLL LOGIC (UPDATED POSITION) ---
     useEffect(() => {
         if (showLyrics && scrollRef.current && !showPlaylist && activeIdx !== -1) {
             const activeEl = scrollRef.current.children[activeIdx];
@@ -414,8 +414,16 @@ const Card = () => {
                 const elTop = activeEl.offsetTop;
                 const elH = activeEl.clientHeight;
                 
-                let targetScroll = elTop - (containerH * 0.35);
-                if (elH > containerH * 0.5) targetScroll = elTop - (containerH * 0.30);
+                // TARGET SCROLL BARU:
+                // Menempatkan lirik aktif di 22% dari atas container (High-Position / Top-Biased)
+                // Ini memberikan ruang "baca" yang luas di bawah lirik aktif.
+                let targetScroll = elTop - (containerH * 0.22); 
+
+                // Jika lirik sangat panjang (lebih dari 40% layar), dorong lebih ke atas (15%)
+                if (elH > containerH * 0.4) {
+                    targetScroll = elTop - (containerH * 0.15);
+                }
+
                 container.scrollTo({ top: targetScroll, behavior: 'smooth' });
             }
         }
@@ -447,9 +455,9 @@ const Card = () => {
     // --- HEIGHT CALCULATION ---
     const getCardHeight = () => {
         if (showLyrics || showPlaylist) {
-            return isDesktop ? 680 : 580; // Lebih tinggi di desktop saat buka lirik
+            return isDesktop ? 680 : 580; 
         }
-        return isDesktop ? 260 : 190; // Desktop luas, Mobile compact
+        return isDesktop ? 260 : 190; 
     };
 
     return (
@@ -465,7 +473,6 @@ const Card = () => {
                 <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#101010]">
                      {result.cover && (
                         <>
-                            {/* Layer 1: Base - High Saturation */}
                             <div 
                                 className="absolute -top-[50%] -left-[50%] w-[200%] h-[200%] bg-cover bg-center animate-spin-slow will-change-transform transform-gpu" 
                                 style={{ 
@@ -474,8 +481,6 @@ const Card = () => {
                                     opacity: 0.7
                                 }}
                             ></div>
-                            
-                            {/* Layer 2: Neon Pop - Color Dodge */}
                             <div 
                                 className="absolute -bottom-[50%] -right-[50%] w-[200%] h-[200%] bg-cover bg-center animate-spin-reverse will-change-transform transform-gpu" 
                                 style={{ 
@@ -485,8 +490,6 @@ const Card = () => {
                                     opacity: 0.6
                                 }}
                             ></div>
-                            
-                            {/* Overlay */}
                             <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/90"></div>
                         </>
                      )}
@@ -550,7 +553,7 @@ const Card = () => {
                             </div>
                         )}
 
-                        {/* Lyrics Area (GPU Optimized & Anti-Collision) */}
+                        {/* Lyrics Area */}
                         <div ref={scrollRef} className="w-full h-full overflow-y-auto no-scrollbar pt-20 pb-32 px-8 mask-scroller-y">
                             {processedLyrics.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center h-full text-white/30 gap-2">
@@ -577,8 +580,6 @@ const Card = () => {
                                         <div 
                                             key={i} 
                                             onClick={() => handleSeekEnd(line.time)} 
-                                            // LINE HEIGHT & PADDING ADJUSTED: leading-relaxed + py-4
-                                            // WILL-CHANGE-TRANSFORM: Force GPU Rendering
                                             className={`cursor-pointer py-4 text-left transition-all duration-700 ease-out origin-left will-change-transform transform-gpu ${
                                                 isActive 
                                                 ? "opacity-100 scale-100 active-lyric-glow blur-0" 
@@ -630,18 +631,16 @@ const Card = () => {
             <style jsx global>{`
                 .no-scrollbar::-webkit-scrollbar { display: none; }
                 
-                /* DEEP MASK FIX */
                 .mask-scroller-y { 
                     mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
                     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
                 }
                 
-                /* PERFORMANCE FIX: Reduced Shadow Radius */
                 .active-lyric-glow-text { 
                     text-shadow: 
                         0 0 5px rgba(255,255,255,0.30),   
                         0 0 10px rgba(255,255,255,0.25),  
-                        0 0 30px rgba(255,255,255,0.15); /* Capped at 30px to save GPU */
+                        0 0 30px rgba(255,255,255,0.15);
                 }
 
                 @keyframes spin-slow { from { transform: rotate(0deg) scale(1.5); } to { transform: rotate(360deg) scale(1.5); } }
