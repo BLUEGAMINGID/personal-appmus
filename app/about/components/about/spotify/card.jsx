@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image"; // Menggunakan Image Next.js untuk performa
+// HAPUS import Image from "next/image"; -> Kita pakai <img> biasa agar aman
 import getLocalMetadata, { getSimpleMetadata } from "./fetch";
 import { playlist } from "./list";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -15,15 +15,14 @@ import {
 // --- KOMPONEN: DYNAMIC INTERLUDE DOTS ---
 const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
     const fillRef = useRef(null);
-    const containerRef = useRef(null);
 
     useEffect(() => {
         let rafId;
-
         const update = () => {
             if (!audioRef.current || !fillRef.current) return;
             
             const currentTime = audioRef.current.currentTime;
+            // Hitung progress
             let progress = (currentTime - startTime) / duration;
             progress = Math.max(0, Math.min(1, progress));
 
@@ -37,18 +36,20 @@ const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
         if (isActive) {
             rafId = requestAnimationFrame(update);
         } else {
-            if (audioRef.current && audioRef.current.currentTime > startTime + duration) {
-                 if(fillRef.current) fillRef.current.style.width = '100%';
-            } else {
-                 if(fillRef.current) fillRef.current.style.width = '0%';
+            // Cleanup state jika tidak aktif
+            if (audioRef.current && fillRef.current) {
+                if (audioRef.current.currentTime > startTime + duration) {
+                    fillRef.current.style.width = '100%';
+                } else {
+                    fillRef.current.style.width = '0%';
+                }
             }
         }
-
         return () => cancelAnimationFrame(rafId);
     }, [isActive, startTime, duration, audioRef]);
 
     return (
-        <div ref={containerRef} className="py-8 pl-2 w-full flex flex-col justify-center gap-2 opacity-100 transition-opacity duration-500">
+        <div className="py-8 pl-2 w-full flex flex-col justify-center gap-2 opacity-100 transition-opacity duration-500">
             {isActive && (
                 <motion.div 
                     initial={{ opacity: 0, y: 5 }} 
@@ -60,15 +61,15 @@ const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
             )}
 
             <div className="relative inline-block w-fit">
-                {/* Layer 1: Background */}
+                {/* Layer 1: Background (Redup) */}
                 <div className="text-[30px] tracking-[12px] text-white/10 leading-none select-none font-bold">
                     ● ● ●
                 </div>
 
-                {/* Layer 2: Filling */}
+                {/* Layer 2: Filling (Terang) */}
                 <div 
                     ref={fillRef} 
-                    className="absolute top-0 left-0 h-full overflow-hidden whitespace-nowrap text-[30px] tracking-[12px] text-white leading-none select-none font-bold transition-all duration-75 ease-linear will-change-[width]"
+                    className="absolute top-0 left-0 h-full overflow-hidden whitespace-nowrap text-[30px] tracking-[12px] text-white leading-none select-none font-bold will-change-[width]"
                     style={{ width: '0%', textShadow: "0 0 15px rgba(255,255,255,0.8)" }}
                 >
                     ● ● ●
@@ -105,14 +106,9 @@ const AppleVocalSlider = ({ value, onChange, onClose }) => {
     return (
         <>
             <div className="fixed inset-0 z-40" onClick={onClose} onTouchStart={onClose} />
-            
             <motion.div 
                 initial={{ opacity: 0, scale: 0.5, y: 20 }}
-                animate={{ 
-                    opacity: 1, 
-                    scale: isDragging ? 1.15 : 1,
-                    y: 0 
-                }}
+                animate={{ opacity: 1, scale: isDragging ? 1.15 : 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.5, y: 20 }}
                 transition={{ type: "spring", damping: 20, stiffness: 350 }}
                 className="absolute bottom-20 right-0 z-50 flex flex-col items-center origin-bottom"
@@ -123,9 +119,7 @@ const AppleVocalSlider = ({ value, onChange, onClose }) => {
                     style={{
                         background: "rgba(30, 30, 30, 0.6)", 
                         backdropFilter: "blur(40px)",
-                        boxShadow: isDragging 
-                            ? "0 15px 40px rgba(255,255,255,0.15)" 
-                            : "0 8px 30px rgba(0,0,0,0.5)"
+                        boxShadow: isDragging ? "0 15px 40px rgba(255,255,255,0.15)" : "0 8px 30px rgba(0,0,0,0.5)"
                     }}
                     onPointerDown={handlePointerDown}
                     onPointerMove={handlePointerMove}
@@ -143,11 +137,9 @@ const AppleVocalSlider = ({ value, onChange, onClose }) => {
                             className="absolute top-0 left-0 right-0 h-[30px] bg-white blur-[15px]"
                         />
                     </motion.div>
-
                     <div className="absolute inset-0 flex flex-col justify-end items-center pb-5 pointer-events-none mix-blend-difference">
                         <FontAwesomeIcon icon={faMicrophone} className="text-white text-sm opacity-80" />
                     </div>
-
                     <div className="absolute inset-0 rounded-[21px] pointer-events-none border border-white/10 shadow-[inset_0_0_15px_rgba(255,255,255,0.1)]">
                         <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[70%] h-[2px] bg-white/30 rounded-full blur-[0.5px]" />
                     </div>
@@ -277,7 +269,6 @@ const Card = () => {
             };
             fetchData();
         }
-        // Fixed: Added playlistMeta.length to dependency array
     }, [showPlaylist, playlistMeta.length]);
 
     useEffect(() => {
@@ -342,10 +333,12 @@ const Card = () => {
         }
     }, [vocalMix, result.karaokeUrl]);
 
+    // --- FIX UTAMA: LOGIC UPDATE LIRIK ---
     const handleTimeUpdate = () => {
         if (!audioRef.current) return;
         const mainTime = audioRef.current.currentTime;
 
+        // Sync Instrumental (Tanpa Distorsi)
         if (instruRef.current && result.karaokeUrl && !instruRef.current.paused && !audioRef.current.paused) {
             const diff = Math.abs(instruRef.current.currentTime - mainTime);
             if (diff > 0.15) {
@@ -353,15 +346,25 @@ const Card = () => {
             }
         }
 
+        // Logic Lirik yang AMAN (Anti-Crash)
         if (processedLyrics.length > 0) {
             let idx = -1;
-            const startSearch = activeIdx > -1 ? Math.max(0, activeIdx) : 0;
             
-            if (activeIdx < processedLyrics.length - 1 && 
-                mainTime >= processedLyrics[activeIdx].time && 
-                mainTime < processedLyrics[activeIdx + 1].time) {
-                idx = activeIdx;
-            } else {
+            // 1. Cek index sekarang (Optimasi) - DENGAN GUARD CLAUSE
+            if (activeIdx !== -1 && activeIdx < processedLyrics.length) {
+                const currentLine = processedLyrics[activeIdx];
+                const nextLine = processedLyrics[activeIdx + 1];
+                
+                // Jika masih di rentang waktu baris ini
+                if (currentLine && mainTime >= currentLine.time && (!nextLine || mainTime < nextLine.time)) {
+                    idx = activeIdx;
+                }
+            }
+
+            // 2. Jika tidak valid/tidak ketemu, cari dari awal atau index sebelumnya
+            if (idx === -1) {
+                const startSearch = activeIdx > -1 ? activeIdx : 0;
+                // Cari ke depan
                 for (let i = startSearch; i < processedLyrics.length; i++) {
                     if (mainTime >= processedLyrics[i].time) {
                         if (i === processedLyrics.length - 1 || mainTime < processedLyrics[i + 1].time) {
@@ -370,14 +373,16 @@ const Card = () => {
                         }
                     }
                 }
-            }
-            
-            if (idx === -1 && mainTime < processedLyrics[startSearch]?.time) {
-                 for (let i = 0; i < processedLyrics.length; i++) {
-                    if (mainTime >= processedLyrics[i].time && (i === processedLyrics.length - 1 || mainTime < processedLyrics[i+1].time)) {
-                        idx = i; break;
+                
+                // Fallback: Jika seek ke belakang, cari dari 0
+                if (idx === -1) {
+                    for (let i = 0; i < processedLyrics.length; i++) {
+                        if (mainTime >= processedLyrics[i].time && (i === processedLyrics.length - 1 || mainTime < processedLyrics[i + 1].time)) {
+                            idx = i;
+                            break;
+                        }
                     }
-                 }
+                }
             }
 
             if (idx !== -1 && idx !== activeIdx) setActiveIdx(idx);
@@ -458,16 +463,13 @@ const Card = () => {
                     {/* Header */}
                     <div className="flex items-center space-x-5 shrink-0 mb-4 relative z-50">
                         <div className="w-14 h-14 rounded-lg overflow-hidden shadow-lg relative shrink-0 border border-white/10 bg-white/5">
+                            {/* FIX: KEMBALI KE IMG BIASA */}
                             {result.cover ? (
-                                <div className="relative w-full h-full">
-                                    <Image 
-                                        src={result.cover} 
-                                        alt="Cover" 
-                                        fill
-                                        sizes="56px"
-                                        className="object-cover" 
-                                    />
-                                </div>
+                                <img 
+                                    src={result.cover} 
+                                    alt="Cover" 
+                                    className="w-full h-full object-cover" 
+                                />
                             ) : (
                                 <div className="w-full h-full flex items-center justify-center">
                                     <FontAwesomeIcon icon={faApple} className="text-white/30 text-xl" />
