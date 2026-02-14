@@ -11,7 +11,7 @@ import {
     faMicrophone, faMusic, faSpinner, faBars, faTimes
 } from "@fortawesome/free-solid-svg-icons";
 
-// --- KOMPONEN: DYNAMIC INTERLUDE DOTS ---
+// --- KOMPONEN: DYNAMIC INTERLUDE DOTS (FIXED GLOW & REMOVED TEXT) ---
 const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
     const fillRef = useRef(null);
 
@@ -46,27 +46,25 @@ const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
     }, [isActive, startTime, duration, audioRef]);
 
     return (
-        <div className="py-8 pl-2 w-full flex flex-col justify-center gap-2 opacity-100 transition-opacity duration-500">
-            {isActive && (
-                <motion.div 
-                    initial={{ opacity: 0, y: 5 }} 
-                    animate={{ opacity: 1, y: 0 }} 
-                    className="text-[10px] font-bold tracking-[0.2em] text-green-400 uppercase mb-1"
-                >
-                    Instrumental Break
-                </motion.div>
-            )}
-
-            <div className="relative inline-block w-fit">
-                <div className="text-[30px] tracking-[12px] text-white/10 leading-none select-none font-bold">
+        <div className="py-12 pl-2 w-full flex flex-col justify-center gap-2 opacity-100 transition-opacity duration-500">
+            {/* Teks "Music Break" DIHAPUS sesuai request */}
+            
+            <div className="relative inline-block w-fit mx-auto">
+                {/* Layer 1: Background (Redup) */}
+                <div className="text-[40px] tracking-[16px] text-white/20 leading-none select-none font-bold">
                     ● ● ●
                 </div>
+
+                {/* Layer 2: Filling (Tanpa Shadow di sini agar tidak kotak) */}
                 <div 
                     ref={fillRef} 
-                    className="absolute top-0 left-0 h-full overflow-hidden whitespace-nowrap text-[30px] tracking-[12px] text-white leading-none select-none font-bold will-change-[width]"
-                    style={{ width: '0%', textShadow: "0 0 15px rgba(255,255,255,0.8)" }}
+                    className="absolute top-0 left-0 h-full overflow-hidden whitespace-nowrap text-[40px] tracking-[16px] text-white leading-none select-none font-bold will-change-[width]"
+                    style={{ width: '0%' }}
                 >
-                    ● ● ●
+                    {/* Shadow dipindah ke teks dalam agar tidak terpotong container */}
+                    <span className="drop-shadow-[0_0_15px_rgba(255,255,255,0.8)]">
+                        ● ● ●
+                    </span>
                 </div>
             </div>
         </div>
@@ -216,7 +214,7 @@ const Card = () => {
     const audioRef = useRef(null);
     const instruRef = useRef(null);
     const scrollRef = useRef(null);
-    const playlistContainerRef = useRef(null); // Ref untuk auto scroll playlist
+    const playlistContainerRef = useRef(null);
 
     const groupedPlaylist = useMemo(() => {
         const groups = [];
@@ -251,7 +249,6 @@ const Card = () => {
 
     useEffect(() => { setCurrentIndex(0); }, []);
 
-    // --- PLAYLIST DATA & AUTO SCROLL ---
     useEffect(() => {
         if (showPlaylist && playlistMeta.length === 0) {
             const fetchData = async () => {
@@ -266,9 +263,7 @@ const Card = () => {
             fetchData();
         }
 
-        // Logic Auto-Scroll Playlist
         if (showPlaylist && playlistContainerRef.current) {
-            // Beri sedikit delay agar layout render sempurna
             setTimeout(() => {
                 const activeEl = playlistContainerRef.current.querySelector('.active-playlist-song');
                 if (activeEl) {
@@ -424,31 +419,40 @@ const Card = () => {
     const selectSong = (idx) => { if (idx === currentIndex) { setShowPlaylist(false); return; } setCurrentIndex(idx); setShowPlaylist(false); };
 
     return (
-        // LAYOUT FIX: mx-auto untuk center desktop
         <div className="mt-6 w-full max-w-md mx-auto font-jost select-none relative z-10">
             <audio ref={audioRef} preload="auto" onTimeUpdate={handleTimeUpdate} onEnded={handleNext} className="hidden" />
             <audio ref={instruRef} preload="auto" className="hidden" />
 
             <div className="relative w-full rounded-[40px] overflow-hidden shadow-2xl bg-[#0a0a0a]" style={{ height: showLyrics || showPlaylist ? 580 : 200, transition: 'height 0.5s cubic-bezier(0.32, 0.72, 0, 1)' }}>
-                {/* Background (Enhanced Quality) */}
-                <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#0a0a0a]">
+                {/* --- ALIVE BACKGROUND --- */}
+                <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#121212]">
                      {result.cover && (
-                        <div className="absolute inset-0 w-full h-full animate-fade-in">
-                            {/* FIX GLOW: translate3d untuk Hardware Acceleration & blur lebih halus */}
+                        <>
+                            {/* Layer 1: Base Slow Rotation */}
                             <div 
-                                className="absolute -top-[50%] -left-[50%] w-[200%] h-[200%] bg-cover bg-center opacity-40 blur-[90px] animate-slow-spin will-change-transform" 
+                                className="absolute -top-[50%] -left-[50%] w-[200%] h-[200%] bg-cover bg-center animate-spin-slow will-change-transform" 
                                 style={{ 
                                     backgroundImage: `url(${result.cover})`,
-                                    transform: 'translate3d(0,0,0)' 
+                                    filter: 'blur(80px) saturate(180%) contrast(120%) brightness(0.8)',
                                 }}
                             ></div>
-                            <div className="absolute inset-0 bg-black/30"></div>
-                            {/* Gradasi halus untuk anti-banding */}
-                            <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/90"></div>
-                        </div>
+                            
+                            {/* Layer 2: Counter Rotation & Offset (Membuat efek "Breathing" & Mesh) */}
+                            <div 
+                                className="absolute -bottom-[50%] -right-[50%] w-[200%] h-[200%] bg-cover bg-center animate-spin-reverse will-change-transform mix-blend-hard-light" 
+                                style={{ 
+                                    backgroundImage: `url(${result.cover})`,
+                                    filter: 'blur(90px) saturate(200%) contrast(110%) brightness(1.1)',
+                                    opacity: 0.6
+                                }}
+                            ></div>
+                            
+                            {/* Dark Gradient Overlay untuk Readability */}
+                            <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/80"></div>
+                        </>
                      )}
-                     {/* Noise Dithering lebih kuat untuk mencegah 6-bit look */}
-                     <div className="absolute inset-0 opacity-[0.05] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay"></div>
+                     {/* Noise Dithering */}
+                     <div className="absolute inset-0 opacity-[0.07] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay"></div>
                 </div>
 
                 {/* Content */}
@@ -478,14 +482,14 @@ const Card = () => {
                         
                         {/* Playlist Overlay */}
                         {showPlaylist && (
-                            <div className="absolute inset-0 z-30 bg-[#111] rounded-3xl overflow-hidden flex flex-col border border-white/10 animate-slide-up">
+                            <div className="absolute inset-0 z-30 bg-[#111]/80 backdrop-blur-xl rounded-3xl overflow-hidden flex flex-col border border-white/10 animate-slide-up">
                                 <div className="p-4 border-b border-white/5 flex justify-between items-center bg-white/5">
                                     <span className="text-[11px] font-bold text-white/70 uppercase tracking-widest pl-1">Up Next</span>
                                 </div>
                                 <div ref={playlistContainerRef} className="flex-1 overflow-y-auto no-scrollbar p-3 space-y-4">
                                     {groupedPlaylist.map((group, gIdx) => (
                                         <div key={gIdx} className="mb-2">
-                                            <div className="sticky top-0 bg-[#111] p-2 rounded-lg mb-2 z-10 border border-white/5">
+                                            <div className="sticky top-0 bg-[#111]/90 backdrop-blur-md p-2 rounded-lg mb-2 z-10 border border-white/5 shadow-sm">
                                                 <h4 className="text-white font-bold text-sm truncate ml-1">{group.album}</h4>
                                             </div>
                                             <div className="space-y-1">
@@ -493,8 +497,7 @@ const Card = () => {
                                                     <div 
                                                         key={track.idx} 
                                                         onClick={() => selectSong(track.idx)} 
-                                                        // CLASS 'active-playlist-song' untuk target auto-scroll
-                                                        className={`flex items-center p-2 rounded-xl gap-3 cursor-pointer ${currentIndex === track.idx ? "bg-white/10 active-playlist-song" : "hover:bg-white/5"}`}
+                                                        className={`flex items-center p-2 rounded-xl gap-3 cursor-pointer ${currentIndex === track.idx ? "bg-white/20 active-playlist-song border border-white/10" : "hover:bg-white/5"}`}
                                                     >
                                                         <div className="w-6 text-center shrink-0">
                                                             {currentIndex === track.idx ? <FontAwesomeIcon icon={faPlay} className="text-green-400 text-[10px]"/> : <span className="text-white/30 text-[12px] font-medium">{i + 1}</span>}
@@ -509,7 +512,7 @@ const Card = () => {
                             </div>
                         )}
 
-                        {/* Lyrics Area (FIX: Mask Image Proper) */}
+                        {/* Lyrics Area */}
                         <div ref={scrollRef} className="w-full h-full overflow-y-auto no-scrollbar py-[180px] px-2 mask-scroller-y">
                             {processedLyrics.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center h-full text-white/30 gap-2">
@@ -536,13 +539,13 @@ const Card = () => {
                                         <div 
                                             key={i} 
                                             onClick={() => handleSeekEnd(line.time)} 
-                                            className={`cursor-pointer py-3 text-left transition-all duration-300 ease-out origin-left ${
+                                            className={`cursor-pointer py-3 text-left transition-all duration-500 ease-out origin-left ${
                                                 isActive 
                                                 ? "opacity-100 scale-100 active-lyric-glow blur-0" 
                                                 : "opacity-40 scale-[0.98] blur-[1.5px] hover:opacity-60 hover:blur-[0.5px]" 
                                             }`}
                                         >
-                                            <p className="font-bold text-[26px] leading-tight text-white tracking-tight">{line.text}</p>
+                                            <p className="font-bold text-[28px] leading-tight text-white tracking-tight">{line.text}</p>
                                         </div>
                                     );
                                 })
@@ -551,7 +554,7 @@ const Card = () => {
 
                         {/* Bottom Actions */}
                         <div className="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end z-40">
-                             <button onClick={(e) => { e.stopPropagation(); setShowPlaylist(!showPlaylist); }} className={`w-9 h-9 rounded-full flex items-center justify-center bg-black/40 backdrop-blur-md border border-white/10 transition-all active:scale-90 ${showPlaylist ? "bg-white text-black" : "text-white"}`}><FontAwesomeIcon icon={showPlaylist ? faTimes : faBars} className="text-xs" /></button>
+                             <button onClick={(e) => { e.stopPropagation(); setShowPlaylist(!showPlaylist); }} className={`w-9 h-9 rounded-full flex items-center justify-center bg-black/20 backdrop-blur-md border border-white/10 transition-all active:scale-90 ${showPlaylist ? "bg-white text-black" : "text-white hover:bg-white/10"}`}><FontAwesomeIcon icon={showPlaylist ? faTimes : faBars} className="text-xs" /></button>
                             
                              {result.karaokeUrl && !showPlaylist && (
                                 <div className="relative pointer-events-auto font-jost">
@@ -564,7 +567,7 @@ const Card = () => {
                                             />
                                         )}
                                     </AnimatePresence>
-                                    <button onClick={() => setShowVocalControls(!showVocalControls)} className={`w-9 h-9 rounded-full flex items-center justify-center bg-black/40 backdrop-blur-md border border-white/10 transition-all active:scale-90 ${showVocalControls || vocalMix < 0.95 ? "bg-white text-black" : "text-white"}`}>
+                                    <button onClick={() => setShowVocalControls(!showVocalControls)} className={`w-9 h-9 rounded-full flex items-center justify-center bg-black/20 backdrop-blur-md border border-white/10 transition-all active:scale-90 ${showVocalControls || vocalMix < 0.95 ? "bg-white text-black" : "text-white hover:bg-white/10"}`}>
                                         <FontAwesomeIcon icon={faMicrophone} className="text-xs" />
                                     </button>
                                 </div>
@@ -586,14 +589,23 @@ const Card = () => {
 
             <style jsx global>{`
                 .no-scrollbar::-webkit-scrollbar { display: none; }
-                /* Mask Image yang lebih smooth untuk atas dan bawah */
                 .mask-scroller-y { 
                     mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
                     -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
                 }
-                .active-lyric-glow p { text-shadow: 0 0 15px rgba(255,255,255,0.6); }
-                @keyframes slow-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-                .animate-slow-spin { animation: slow-spin 80s linear infinite; }
+                /* Smooth Soft Glow (3 Layer Shadow) */
+                .active-lyric-glow p { 
+                    text-shadow: 
+                        0 0 10px rgba(255,255,255,0.4),
+                        0 0 20px rgba(255,255,255,0.2),
+                        0 0 30px rgba(255,255,255,0.1);
+                }
+                @keyframes spin-slow { from { transform: rotate(0deg) scale(1.5); } to { transform: rotate(360deg) scale(1.5); } }
+                @keyframes spin-reverse { from { transform: rotate(360deg) scale(1.8) translate(10px, 10px); } to { transform: rotate(0deg) scale(1.8) translate(0px, 0px); } }
+                
+                .animate-spin-slow { animation: spin-slow 90s linear infinite; }
+                .animate-spin-reverse { animation: spin-reverse 120s linear infinite; }
+                
                 .animate-fade-in { animation: fadeIn 1s ease-out; }
                 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
             `}</style>
