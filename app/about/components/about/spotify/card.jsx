@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image"; // Menggunakan Image Next.js untuk performa
 import getLocalMetadata, { getSimpleMetadata } from "./fetch";
 import { playlist } from "./list";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -23,15 +24,9 @@ const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
             if (!audioRef.current || !fillRef.current) return;
             
             const currentTime = audioRef.current.currentTime;
-            
-            // Hitung progress (0.0 sampai 1.0) berdasarkan waktu lagu saat ini
-            // Rumus: (Waktu Sekarang - Waktu Mulai Interlude) / Durasi Interlude
             let progress = (currentTime - startTime) / duration;
-            
-            // Clamp progress agar tidak bocor (0% - 100%)
             progress = Math.max(0, Math.min(1, progress));
 
-            // Update lebar div "Filling" secara langsung (Tanpa Re-render React)
             fillRef.current.style.width = `${progress * 100}%`;
 
             if (isActive) {
@@ -42,7 +37,6 @@ const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
         if (isActive) {
             rafId = requestAnimationFrame(update);
         } else {
-            // Jika tidak aktif (sudah lewat), set penuh atau kosong tergantung posisi
             if (audioRef.current && audioRef.current.currentTime > startTime + duration) {
                  if(fillRef.current) fillRef.current.style.width = '100%';
             } else {
@@ -55,7 +49,6 @@ const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
 
     return (
         <div ref={containerRef} className="py-8 pl-2 w-full flex flex-col justify-center gap-2 opacity-100 transition-opacity duration-500">
-            {/* Label Instrumental */}
             {isActive && (
                 <motion.div 
                     initial={{ opacity: 0, y: 5 }} 
@@ -66,15 +59,13 @@ const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
                 </motion.div>
             )}
 
-            {/* Container Titik */}
             <div className="relative inline-block w-fit">
-                {/* Layer 1: Titik Redup (Background) */}
+                {/* Layer 1: Background */}
                 <div className="text-[30px] tracking-[12px] text-white/10 leading-none select-none font-bold">
                     ● ● ●
                 </div>
 
-                {/* Layer 2: Titik Terang (Filling/Masking) */}
-                {/* Div ini akan melebar dari 0% ke 100% menutupi layer 1 */}
+                {/* Layer 2: Filling */}
                 <div 
                     ref={fillRef} 
                     className="absolute top-0 left-0 h-full overflow-hidden whitespace-nowrap text-[30px] tracking-[12px] text-white leading-none select-none font-bold transition-all duration-75 ease-linear will-change-[width]"
@@ -87,13 +78,11 @@ const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
     );
 };
 
-
-// --- KOMPONEN: APPLE VOCAL SLIDER (Mini Capsule Edition) ---
+// --- KOMPONEN: APPLE VOCAL SLIDER ---
 const AppleVocalSlider = ({ value, onChange, onClose }) => {
     const sliderRef = useRef(null);
     const [isDragging, setIsDragging] = useState(false);
 
-    // Logic Touch/Drag
     const handleMove = (clientY) => {
         if (!sliderRef.current) return;
         const rect = sliderRef.current.getBoundingClientRect();
@@ -168,7 +157,7 @@ const AppleVocalSlider = ({ value, onChange, onClose }) => {
     );
 };
 
-// --- TIME SLIDER ---
+// --- KOMPONEN: TIME SLIDER ---
 const AppleMusicTimeSlider = ({ audioRef, duration, isPaused, onSeekStart, onSeekEnd }) => {
     const progressRef = useRef(null);
     const timeRef = useRef(null);
@@ -242,7 +231,6 @@ const Card = () => {
     const instruRef = useRef(null);
     const scrollRef = useRef(null);
 
-    // --- LOGIC 1: PENGELOMPOKAN PLAYLIST ---
     const groupedPlaylist = useMemo(() => {
         const groups = [];
         let currentGroup = null;
@@ -257,7 +245,6 @@ const Card = () => {
         return groups;
     }, [playlistMeta]);
 
-    // --- LOGIC 2: PROSES LIRIK ---
     const processedLyrics = useMemo(() => {
         if (!result.lyrics || result.lyrics.length === 0) return [];
         const newLyrics = [];
@@ -277,7 +264,6 @@ const Card = () => {
 
     useEffect(() => { setCurrentIndex(0); }, []);
 
-    // --- LOGIC 3: LOAD PLAYLIST METADATA ---
     useEffect(() => {
         if (showPlaylist && playlistMeta.length === 0) {
             const fetchData = async () => {
@@ -291,9 +277,9 @@ const Card = () => {
             };
             fetchData();
         }
-    }, [showPlaylist]);
+        // Fixed: Added playlistMeta.length to dependency array
+    }, [showPlaylist, playlistMeta.length]);
 
-    // --- LOGIC 4: LOAD SONG & AUDIO ---
     useEffect(() => {
         setIsLoading(true);
         setActiveIdx(-1);
@@ -301,20 +287,17 @@ const Card = () => {
         
         const currentTrack = playlist[currentIndex];
         
-        // STOP SEBELUM GANTI
         if(audioRef.current) { audioRef.current.pause(); audioRef.current.currentTime = 0; }
         if(instruRef.current) { instruRef.current.pause(); instruRef.current.currentTime = 0; }
 
         getLocalMetadata(currentTrack).then((data) => {
             setResult(data);
             
-            // SETUP AUDIO MAIN
             if (audioRef.current) { 
                 audioRef.current.src = data.audioUrl; 
                 audioRef.current.load(); 
             }
             
-            // SETUP AUDIO KARAOKE
             if (instruRef.current) {
                 if (data.karaokeUrl) { 
                     instruRef.current.src = data.karaokeUrl; 
@@ -328,12 +311,10 @@ const Card = () => {
                 if(audioRef.current) {
                     setDuration(audioRef.current.duration);
                     
-                    // PLAY DENGAN PROMISE UNTUK MENGHINDARI ERROR
                     const playPromise = audioRef.current.play();
                     if (playPromise !== undefined) {
                         playPromise.then(() => {
                              if (instruRef.current && data.karaokeUrl) {
-                                 // SYNC AWAL YANG KERAS
                                  instruRef.current.currentTime = audioRef.current.currentTime;
                                  instruRef.current.play().catch(e => {});
                              }
@@ -353,7 +334,6 @@ const Card = () => {
         });
     }, [currentIndex]);
 
-    // --- LOGIC 5: VOLUME MIXING ---
     useEffect(() => {
         if (!audioRef.current) return;
         audioRef.current.volume = Math.max(0, Math.min(1, vocalMix));
@@ -362,40 +342,28 @@ const Card = () => {
         }
     }, [vocalMix, result.karaokeUrl]);
 
-    // --- LOGIC 6: TIME UPDATE & SYNC & LYRIC SCROLL (CORE IMPROVEMENT) ---
     const handleTimeUpdate = () => {
         if (!audioRef.current) return;
         const mainTime = audioRef.current.currentTime;
 
-        // A. IMPROVED AUDIO SYNC (NO DISTORTION)
         if (instruRef.current && result.karaokeUrl && !instruRef.current.paused && !audioRef.current.paused) {
             const diff = Math.abs(instruRef.current.currentTime - mainTime);
-            
-            // Threshold Logic:
-            // Hapus logic playbackRate (pitch shift) yang bikin suara distorsi/radio.
-            // Gunakan "Hard Sync" hanya jika drift > 0.15 detik (cukup terdengar).
-            // Jika drift < 0.15 detik, biarkan saja (telinga manusia toleransi delay kecil).
             if (diff > 0.15) {
                 instruRef.current.currentTime = mainTime;
             }
         }
 
-        // B. OPTIMIZED LYRIC SEARCH (LIGHTWEIGHT)
         if (processedLyrics.length > 0) {
             let idx = -1;
-            // Optimasi: Cari mulai dari index aktif terakhir, jangan dari 0 terus (hemat CPU)
             const startSearch = activeIdx > -1 ? Math.max(0, activeIdx) : 0;
             
-            // Cek index saat ini dulu (paling sering terjadi)
             if (activeIdx < processedLyrics.length - 1 && 
                 mainTime >= processedLyrics[activeIdx].time && 
                 mainTime < processedLyrics[activeIdx + 1].time) {
                 idx = activeIdx;
             } else {
-                // Jika tidak match, baru loop ke depan
                 for (let i = startSearch; i < processedLyrics.length; i++) {
                     if (mainTime >= processedLyrics[i].time) {
-                        // Cek apakah ini lirik terakhir atau belum waktu lirik berikutnya
                         if (i === processedLyrics.length - 1 || mainTime < processedLyrics[i + 1].time) {
                             idx = i;
                             break;
@@ -404,7 +372,6 @@ const Card = () => {
                 }
             }
             
-            // Jika user seek ke belakang, reset pencarian dari 0
             if (idx === -1 && mainTime < processedLyrics[startSearch]?.time) {
                  for (let i = 0; i < processedLyrics.length; i++) {
                     if (mainTime >= processedLyrics[i].time && (i === processedLyrics.length - 1 || mainTime < processedLyrics[i+1].time)) {
@@ -417,7 +384,6 @@ const Card = () => {
         }
     };
 
-    // --- LOGIC 7: CUSTOM SCROLL (FIX TERTUTUP HEADER) ---
     useEffect(() => {
         if (showLyrics && scrollRef.current && !showPlaylist && activeIdx !== -1) {
             const activeEl = scrollRef.current.children[activeIdx];
@@ -428,13 +394,8 @@ const Card = () => {
                 const elTop = activeEl.offsetTop;
                 const elH = activeEl.clientHeight;
 
-                // Hitung posisi scroll agar lirik ada di posisi 35% dari atas (bukan 50%)
-                // Ini memberi ruang "aman" di atas agar tidak tertutup header
-                // Dan memberi ruang "baca" di bawah.
                 let targetScroll = elTop - (containerH * 0.35);
 
-                // Jika lirik sangat panjang (lebih tinggi dari setengah layar),
-                // pastikan bagian atas lirik yang sejajar dengan 'mata' (35% screen)
                 if (elH > containerH * 0.5) {
                     targetScroll = elTop - (containerH * 0.30);
                 }
@@ -497,7 +458,21 @@ const Card = () => {
                     {/* Header */}
                     <div className="flex items-center space-x-5 shrink-0 mb-4 relative z-50">
                         <div className="w-14 h-14 rounded-lg overflow-hidden shadow-lg relative shrink-0 border border-white/10 bg-white/5">
-                            {result.cover ? <img src={result.cover} alt="Cover" className="w-full h-full object-cover" /> : <div className="w-full h-full flex items-center justify-center"><FontAwesomeIcon icon={faApple} className="text-white/30 text-xl" /></div>}
+                            {result.cover ? (
+                                <div className="relative w-full h-full">
+                                    <Image 
+                                        src={result.cover} 
+                                        alt="Cover" 
+                                        fill
+                                        sizes="56px"
+                                        className="object-cover" 
+                                    />
+                                </div>
+                            ) : (
+                                <div className="w-full h-full flex items-center justify-center">
+                                    <FontAwesomeIcon icon={faApple} className="text-white/30 text-xl" />
+                                </div>
+                            )}
                         </div>
                         <div className="min-w-0 flex flex-col justify-center flex-1">
                             <h3 className="font-bold text-white truncate text-[18px]">{result.title}</h3>
@@ -539,48 +514,45 @@ const Card = () => {
                             </div>
                         )}
 
-{/* Lyrics Area */}
-<div ref={scrollRef} className="w-full h-full overflow-y-auto no-scrollbar py-[180px] px-2 mask-scroller-y">
-    {processedLyrics.length === 0 ? (
-        <div className="flex flex-col items-center justify-center h-full text-white/30 gap-2">
-            <FontAwesomeIcon icon={faMusic} className="text-2xl" />
-            <p className="text-sm">No Lyrics</p>
-        </div>
-    ) : (
-        processedLyrics.map((line, i) => {
-            const isActive = activeIdx === i;
+                        {/* Lyrics Area */}
+                        <div ref={scrollRef} className="w-full h-full overflow-y-auto no-scrollbar py-[180px] px-2 mask-scroller-y">
+                            {processedLyrics.length === 0 ? (
+                                <div className="flex flex-col items-center justify-center h-full text-white/30 gap-2">
+                                    <FontAwesomeIcon icon={faMusic} className="text-2xl" />
+                                    <p className="text-sm">No Lyrics</p>
+                                </div>
+                            ) : (
+                                processedLyrics.map((line, i) => {
+                                    const isActive = activeIdx === i;
 
-            // --- LOGIC BARU: Jika ini adalah Interlude ---
-            if (line.isInterlude) {
-                return (
-                    <LiveInterlude 
-                        key={i}
-                        audioRef={audioRef}
-                        startTime={line.time}
-                        duration={line.duration}
-                        isActive={isActive}
-                    />
-                );
-            }
-            // ---------------------------------------------
+                                    if (line.isInterlude) {
+                                        return (
+                                            <LiveInterlude 
+                                                key={i}
+                                                audioRef={audioRef}
+                                                startTime={line.time}
+                                                duration={line.duration}
+                                                isActive={isActive}
+                                            />
+                                        );
+                                    }
 
-            return (
-                <div 
-                    key={i} 
-                    onClick={() => handleSeekEnd(line.time)} 
-                    className={`cursor-pointer py-3 text-left transition-all duration-300 ease-out origin-left ${
-                        isActive 
-                        ? "opacity-100 scale-100 active-lyric-glow blur-0" 
-                        : "opacity-40 scale-[0.98] blur-[1.5px] hover:opacity-60 hover:blur-[0.5px]" 
-                    }`}
-                >
-                    <p className="font-bold text-[26px] leading-tight text-white tracking-tight">{line.text}</p>
-                </div>
-            );
-        })
-    )}
-</div>
-// hai
+                                    return (
+                                        <div 
+                                            key={i} 
+                                            onClick={() => handleSeekEnd(line.time)} 
+                                            className={`cursor-pointer py-3 text-left transition-all duration-300 ease-out origin-left ${
+                                                isActive 
+                                                ? "opacity-100 scale-100 active-lyric-glow blur-0" 
+                                                : "opacity-40 scale-[0.98] blur-[1.5px] hover:opacity-60 hover:blur-[0.5px]" 
+                                            }`}
+                                        >
+                                            <p className="font-bold text-[26px] leading-tight text-white tracking-tight">{line.text}</p>
+                                        </div>
+                                    );
+                                })
+                            )}
+                        </div>
 
                         {/* Bottom Actions */}
                         <div className="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end z-40">
