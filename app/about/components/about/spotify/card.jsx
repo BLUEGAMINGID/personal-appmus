@@ -364,7 +364,7 @@ const Card = () => {
         }
 
         if (processedLyrics.length > 0) {
-            const lyricAnimationDelay = 0.5;
+            const lyricAnimationDelay = -0.6;
             const adjustedTime = mainTime - lyricAnimationDelay;
             let idx = -1;
             
@@ -429,7 +429,7 @@ const Card = () => {
     // Layout: 160px Mobile (Compact), 260px Desktop
     const getCardHeight = () => {
         if (showLyrics || showPlaylist) return isDesktop ? 680 : 580; 
-        return isDesktop ? 260 : 160; 
+        return isDesktop ? 260 : 190; 
     };
 
     return (
