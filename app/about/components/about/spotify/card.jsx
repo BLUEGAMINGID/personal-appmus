@@ -46,7 +46,6 @@ const LiveInterlude = ({ audioRef, startTime, duration, isActive }) => {
     }, [isActive, startTime, duration, audioRef]);
 
     return (
-        // TRANSISI: duration-1000 agar perubahan opacity halus
         <div className="py-4 w-full flex flex-col items-start justify-center opacity-100 transition-opacity duration-1000">
             <div className="relative inline-block w-fit">
                 {/* Layer 1: Background */}
@@ -199,7 +198,18 @@ const AppleMusicTimeSlider = ({ audioRef, duration, isPaused, onSeekStart, onSee
 
 // --- MAIN CARD ---
 const Card = () => {
-    const [currentIndex, setCurrentIndex] = useState(0);
+    // START: Logic Random Index (Hydration Safe)
+    const [currentIndex, setCurrentIndex] = useState(0); 
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+        // Putar lagu random HANYA saat client-side load pertama kali
+        const randomIdx = Math.floor(Math.random() * playlist.length);
+        setCurrentIndex(randomIdx);
+    }, []);
+    // END: Logic Random
+
     const [result, setResult] = useState({ lyrics: [], title: "Loading...", artist: "Music", cover: null, audioUrl: "", karaokeUrl: null });
     const [isPaused, setIsPaused] = useState(true);
     const [duration, setDuration] = useState(0);
@@ -247,8 +257,6 @@ const Card = () => {
         return newLyrics;
     }, [result.lyrics]);
 
-    useEffect(() => { setCurrentIndex(0); }, []);
-
     useEffect(() => {
         if (showPlaylist && playlistMeta.length === 0) {
             const fetchData = async () => {
@@ -273,7 +281,10 @@ const Card = () => {
         }
     }, [showPlaylist, playlistMeta.length, currentIndex]);
 
+    // LOAD LAGU (Triggered by currentIndex change)
     useEffect(() => {
+        if (!isMounted) return; // Tunggu mount selesai
+
         setIsLoading(true);
         setActiveIdx(-1);
         if (scrollRef.current) scrollRef.current.scrollTop = 0;
@@ -304,6 +315,9 @@ const Card = () => {
                 if(audioRef.current) {
                     setDuration(audioRef.current.duration);
                     
+                    // Auto play hanya jika bukan load awal (opsional), 
+                    // tapi biasanya user ingin langsung play setelah klik. 
+                    // Di sini kita biarkan logic play berjalan.
                     const playPromise = audioRef.current.play();
                     if (playPromise !== undefined) {
                         playPromise.then(() => {
@@ -325,7 +339,7 @@ const Card = () => {
                 audioRef.current.addEventListener('loadedmetadata', onLoadedMetadata, {once: true});
             }
         });
-    }, [currentIndex]);
+    }, [currentIndex, isMounted]);
 
     useEffect(() => {
         if (!audioRef.current) return;
@@ -533,7 +547,6 @@ const Card = () => {
                                         <div 
                                             key={i} 
                                             onClick={() => handleSeekEnd(line.time)} 
-                                            // DURATION-1000 agar smooth saat pindah lirik
                                             className={`cursor-pointer py-3 text-left transition-all duration-1000 ease-out origin-left ${
                                                 isActive 
                                                 ? "opacity-100 scale-100 active-lyric-glow blur-0" 
@@ -585,18 +598,20 @@ const Card = () => {
             <style jsx global>{`
                 .no-scrollbar::-webkit-scrollbar { display: none; }
                 
-                /* MASK FIX: Gradient pudar yang lebar di atas dan bawah */
+                /* MASK FIX: Gradient pudar yang SANGAT LEBAR (25%) di atas dan bawah */
                 .mask-scroller-y { 
-                    mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
-                    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 20%, black 80%, transparent 100%);
+                    mask-image: linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%);
+                    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%);
                 }
                 
-                /* SOFT CINEMATIC GLOW (3 Layers, Low Opacity) */
+                /* 5-LAYER ULTRA SOFT GLOW (Low Opacity) */
                 .active-lyric-glow-text { 
                     text-shadow: 
-                        0 0 10px rgba(255,255,255,0.45),   /* Core - Soft */
-                        0 0 25px rgba(255,255,255,0.30),  /* Bloom - Mid */
-                        0 0 50px rgba(255,255,255,0.15);  /* Ambient - Wide */
+                        0 0 5px rgba(255,255,255,0.30),   /* Core */
+                        0 0 10px rgba(255,255,255,0.25),  /* Inner Glow */
+                        0 0 20px rgba(255,255,255,0.20),  /* Mid Bloom */
+                        0 0 40px rgba(255,255,255,0.10),  /* Wide Glow */
+                        0 0 80px rgba(255,255,255,0.05);  /* Atmospheric */
                 }
 
                 @keyframes spin-slow { from { transform: rotate(0deg) scale(1.5); } to { transform: rotate(360deg) scale(1.5); } }
