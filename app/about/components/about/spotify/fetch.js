@@ -3,23 +3,30 @@
 // --- CONFIG ---
 const LYRIC_OFFSET = 0; 
 
-// --- 1. INTELLIGENT STRING CLEANER ---
-// Membersihkan judul dari 'sampah' agar query ke iTunes akurat
+// --- 1. INTELLIGENT CLEANER (Pembersih Judul Super Agresif) ---
+// Tujuannya membuat query sesimpel mungkin agar iTunes PASTI menemukan hasil.
 const cleanQuery = (str) => {
     if (!str) return "";
     return str
-        // Hapus angka track di depan (misal: "1-01 ", "01 ", "15.")
-        .replace(/^[\d\s\-\.]+\s+/, "")
-        // Hapus ekstensi file jika terbawa
+        // Hapus angka track di depan (misal: "1-01 ", "01 ", "15.", "1-10")
+        .replace(/^[\d\-\.]+\s+/, "")
+        // Hapus konten dalam kurung siku [...] (Biasanya info OST/Album tambahan)
+        .replace(/\[.*?\]/g, "")
+        // Hapus konten dalam kurung biasa (...) TAPI sisakan jika judulnya pendek
+        // Strategi: Hapus (feat...), (Bonus...), (Vocal Only) tapi hati-hati dengan judul asli yg pakai kurung
+        .replace(/\(feat.*?\)/yi, "") 
+        .replace(/\(with.*?\)/yi, "")
+        .replace(/\(Original.*?\)/yi, "")
+        // Hapus ekstensi file
         .replace(/\.(mp3|m4a|wav|flac)$/i, "")
-        // Hapus konten dalam kurung siku [...] (Biasanya info tambahan yang ganggu search)
-        .replace(/\s*\[.*?\]\s*/g, "")
-        // Hapus tanda baca berat
+        // Hapus tanda baca berat yang membingungkan search engine
         .replace(/["']/g, "")
+        // Hapus spasi berlebih
         .trim();
 };
 
-// Normalizer untuk pencocokan Album (Hapus spasi & simbol agar "Doves, '25" match dengan "Doves 25")
+// Normalizer untuk membandingkan Nama Album (Hapus spasi & simbol)
+// Contoh: "Doves, '25" menjadi "doves25" agar cocok dengan "Doves 2025" atau variasi lain
 const normalizeForMatch = (str) => {
     if (!str) return "";
     return str.toLowerCase().replace(/[^a-z0-9]/g, ""); 
@@ -27,7 +34,7 @@ const normalizeForMatch = (str) => {
 
 // --- HELPER FETCH ---
 const fetchWithTimeout = async (resource, options = {}) => {
-    const { timeout = 6000 } = options; // Timeout agak panjang buat iTunes
+    const { timeout = 8000 } = options; // Timeout 8 detik (koneksi lambat)
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), timeout);
     try {
@@ -82,21 +89,20 @@ const parseTTML = (xmlString) => {
 export default async function getLocalMetadata(item) {
     const { original, karaoke, ttml } = item;
     
-    // Gunakan versi cache baru (V9) agar data lama ter-refresh
+    // GANTI KEY CACHE: Kita pakai 'v10' agar semua cache lama yang kosong/salah terhapus
     if (typeof window !== "undefined") {
-        const cached = localStorage.getItem(`hybrid_meta_v9_${original}`);
+        const cached = localStorage.getItem(`hybrid_meta_v10_${original}`);
         if (cached) return JSON.parse(cached);
     }
 
-    // Siapkan data bersih untuk query
-    // Contoh: "1-01 Malaikat..." -> "Malaikat..."
+    // 1. SIAPKAN DATA BERSIH
     const cleanTitle = cleanQuery(item.title);
     const cleanArtist = item.artist;
     const targetAlbum = item.album; 
 
-    // Default Fallback Data (Penting agar UI tidak blank jika internet mati)
+    // Data Default (Fallback jika internet mati)
+    // Kita gunakan cleanTitle agar tampilan di Player rapi (tidak ada "1-01")
     let finalData = {
-        // Kita gunakan cleanTitle untuk tampilan UI agar rapi (tanpa 1-01)
         title: cleanTitle, 
         artist: cleanArtist,
         album: targetAlbum,
@@ -108,51 +114,54 @@ export default async function getLocalMetadata(item) {
     };
 
     try {
-        // --- 2. CARI KE ITUNES ---
+        // 2. QUERY KE ITUNES
+        // Kita cari dengan judul yang SUDAH DIBERSIHKAN
         const query = `${cleanArtist} ${cleanTitle}`;
-        // Limit 10 untuk memperbesar peluang ketemu album yang tepat
-        const itunesRes = await fetchWithTimeout(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&media=music&entity=song&limit=10`);
+        const itunesRes = await fetchWithTimeout(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&media=music&entity=song&limit=15`);
         
         if (itunesRes && itunesRes.ok) {
             const data = await itunesRes.json();
             
             if (data.resultCount > 0) {
-                let bestMatch = data.results[0]; // Default ambil yang pertama
+                // Default: Ambil hasil pertama (paling relevan menurut iTunes)
+                let bestMatch = data.results[0]; 
 
-                // --- 3. STRICT ALBUM MATCHING ---
-                // Ini logika "Mahal"-nya. Kita cari yang albumnya benar-benar sama.
+                // 3. LOGIKA FILTER ALBUM (Smart Matching)
+                // Kita cari hasil yang nama albumnya COCOK dengan list.js
                 if (targetAlbum) {
                     const normTarget = normalizeForMatch(targetAlbum); 
                     
                     const albumMatch = data.results.find(track => {
                         const normCollection = normalizeForMatch(track.collectionName);
-                        // Cek kemiripan string album
+                        // Cek apakah string album ada kemiripan (substring match)
                         return normCollection.includes(normTarget) || normTarget.includes(normCollection);
                     });
 
                     if (albumMatch) {
-                        bestMatch = albumMatch; // HORE! Ketemu album yang spesifik
+                        bestMatch = albumMatch; // HORE! Ketemu album spesifik
                     }
                 }
 
-                // Update data dari hasil terbaik iTunes
+                // 4. UPDATE DATA DARI HASIL TERBAIK
                 finalData.title = bestMatch.trackName;
                 finalData.artist = bestMatch.artistName;
                 finalData.album = bestMatch.collectionName;
                 
-                // Image Logic (300px untuk Header, 60px untuk Background)
+                // Ambil Gambar (HD & Micro)
                 const rawUrl = bestMatch.artworkUrl100;
                 if (rawUrl) {
-                    finalData.cover = rawUrl.replace("100x100", "300x300"); 
-                    finalData.microCover = rawUrl.replace("100x100", "60x60"); 
+                    finalData.cover = rawUrl.replace("100x100", "300x300"); // HD untuk Card
+                    finalData.microCover = rawUrl.replace("100x100", "300x300"); // Blur BG
                 }
+            } else {
+                console.warn(`No results for: ${query}`);
             }
         }
     } catch (e) { 
-        console.warn("Metadata fetch error, using fallback");
+        console.warn("Metadata fetch error, using fallback data");
     }
 
-    // --- 4. FETCH LYRICS ---
+    // 5. FETCH LYRICS
     if (ttml) {
         try {
             const ttmlRes = await fetch(ttml);
@@ -163,16 +172,15 @@ export default async function getLocalMetadata(item) {
         } catch (e) {}
     }
 
-    // Simpan Cache
+    // SIMPAN CACHE
     if (typeof window !== "undefined") {
-        try { localStorage.setItem(`hybrid_meta_v9_${original}`, JSON.stringify(finalData)); } catch(e) {}
+        try { localStorage.setItem(`hybrid_meta_v10_${original}`, JSON.stringify(finalData)); } catch(e) {}
     }
     
     return finalData;
 }
 
 export async function getSimpleMetadata(item) {
-    // Fungsi simple ini juga kita bersihkan judulnya
     return {
         title: cleanQuery(item.title), 
         artist: item.artist,
