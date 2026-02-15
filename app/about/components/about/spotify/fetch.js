@@ -144,7 +144,7 @@ export default async function getLocalMetadata(item) {
                 const rawUrl = bestMatch.artworkUrl100;
                 if (rawUrl) {
                     finalData.cover = rawUrl.replace("100x100", "300x300"); 
-                    finalData.microCover = rawUrl.replace("100x100", "60x60"); 
+                    finalData.microCover = rawUrl.replace("100x100", "120x120"); 
                 }
             }
         }
