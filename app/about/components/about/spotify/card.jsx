@@ -181,8 +181,8 @@ const AliveBackground = React.memo(({ cover }) => (
                         className="absolute inset-0 bg-cover bg-center animate-spin-slow will-change-transform transform-gpu" 
                         style={{ 
                             backgroundImage: `url(${cover})`, 
-                            filter: 'blur(15px) saturate(200%) brightness(0.8)', 
-                            opacity: 0.4,
+                            filter: 'blur(15px) saturate(225%) brightness(0.8)', 
+                            opacity: 0.6,
                             transform: 'scale(3.5)', 
                             animationDelay: '-12s'
                         }} 
@@ -192,7 +192,7 @@ const AliveBackground = React.memo(({ cover }) => (
                         className="absolute inset-0 bg-cover bg-center animate-spin-reverse-slower will-change-transform transform-gpu" 
                         style={{ 
                             backgroundImage: `url(${cover})`, 
-                            filter: 'blur(20px) saturate(250%)', 
+                            filter: 'blur(20px) saturate(3000%)', 
                             opacity: 0.5, 
                             transform: 'scale(3.0)', 
                             animationDelay: '-45s' 
@@ -203,7 +203,7 @@ const AliveBackground = React.memo(({ cover }) => (
                         className="absolute inset-0 bg-cover bg-center animate-pulse-spin will-change-transform transform-gpu" 
                         style={{ 
                             backgroundImage: `url(${cover})`, 
-                            filter: 'blur(10px) saturate(150%)', 
+                            filter: 'blur(10px) saturate(250%)', 
                             opacity: 0.3,
                             animationDelay: '-23s' 
                         }} 
