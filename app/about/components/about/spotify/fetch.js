@@ -151,7 +151,7 @@ export default async function getLocalMetadata(item) {
                 const rawUrl = bestMatch.artworkUrl100;
                 if (rawUrl) {
                     finalData.cover = rawUrl.replace("100x100", "300x300"); // HD untuk Card
-                    finalData.microCover = rawUrl.replace("100x100", "300x300"); // Blur BG
+                    finalData.microCover = rawUrl.replace("100x100", "60x60"); // Blur BG
                 }
             } else {
                 console.warn(`No results for: ${query}`);
