@@ -1,4 +1,4 @@
-// components/about/components/about/spotify/fetch.js
+// components/music-player/fetch.js
 
 // --- CONFIG ---
 const LYRIC_OFFSET = 0;

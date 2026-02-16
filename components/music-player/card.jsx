@@ -5,11 +5,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import getLocalMetadata, { getSimpleMetadata, fetchAudioBlob } from "./fetch";
 import { playlist } from "./list";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faApple } from "@fortawesome/free-brands-svg-icons";
+import { faApple, faM } from "@fortawesome/free-brands-svg-icons";
 import {
     faPlay, faPause, faQuoteRight, faForward, faBackward,
-    faMicrophone, faMusic, faSpinner, faBars, faTimes
+    faMicrophone, faMusic, faSpinner, faBars, faTimes, faCommentDots, faList, faEllipsisH, faInfinity, faShuffle, faRepeat
 } from "@fortawesome/free-solid-svg-icons";
+import Chat from "../Chat";
 
 // --- HOOKS ---
 const useMediaQuery = (query) => {
@@ -238,6 +239,7 @@ const Card = ({ fullScreen = false }) => {
     const [playlistMeta, setPlaylistMeta] = useState([]);
     const [showVocalControls, setShowVocalControls] = useState(false);
     const [vocalMix, setVocalMix] = useState(1);
+    const [isChatOpen, setIsChatOpen] = useState(false);
 
     // Blob URLs State (to revoke later)
     const [audioBlobUrl, setAudioBlobUrl] = useState(null);
@@ -544,11 +546,12 @@ const Card = ({ fullScreen = false }) => {
     const handlePrev = () => setCurrentIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
     const selectSong = (idx) => { if (idx === currentIndex) { setShowPlaylist(false); return; } setCurrentIndex(idx); setShowPlaylist(false); };
 
-    // LAYOUT RESPONSIVE (160px Mobile / 260px Desktop)
+    // LAYOUT RESPONSIVE
     const getCardHeight = () => {
-      if (fullScreen) return "100vh"; // Full screen height
-      if (showLyrics || showPlaylist) return isDesktop ? 680 : 580; 
-      return isDesktop ? 260 : 190; 
+      if (fullScreen) return "100vh"; 
+      if (!isDesktop) return "100%"; // Mobile always fills container or defined height
+      if (showLyrics || showPlaylist) return 680; 
+      return 260; 
     };
 
     // Calculate colored shadow
@@ -574,8 +577,31 @@ const Card = ({ fullScreen = false }) => {
                 <AliveBackground cover={result.microCover || result.cover} />
 
                 <div className="relative z-10 w-full h-full p-6 flex flex-col border border-white/5">
-                    {/* Header - Conditionally Hidden in FullScreen Idle Mode */}
-                    {(!fullScreen || (showLyrics && !isDesktop) || showPlaylist) && (
+                    {/* --- MOBILE HEADER (Lyrics View Style) --- */}
+                    {!isDesktop && (
+                        <div className="flex items-center justify-between mb-2 opacity-100 transition-opacity duration-300">
+                             <div className="flex items-center gap-3 min-w-0">
+                                <div className="w-12 h-12 rounded-md overflow-hidden shadow-md relative shrink-0 border border-white/10">
+                                    {result.cover ? <img src={result.cover} alt="Cover" className="w-full h-full object-cover" /> : <div className="bg-white/10 w-full h-full" />}
+                                </div>
+                                <div className="flex flex-col min-w-0">
+                                    <h3 className="font-bold text-white text-[16px] leading-tight truncate">{result.title}</h3>
+                                    <p className="text-white/60 font-medium text-[12px] truncate">{result.artist}</p>
+                                </div>
+                             </div>
+                             <div className="flex items-center gap-4">
+                                <button className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/20 transition-all">
+                                    <FontAwesomeIcon icon={faInfinity} className="text-xs" />
+                                </button>
+                                <button className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/20 transition-all">
+                                    <FontAwesomeIcon icon={faEllipsisH} className="text-sm" />
+                                </button>
+                             </div>
+                        </div>
+                    )}
+
+                    {/* --- DESKTOP HEADER (Existing Logic) --- */}
+                    {isDesktop && (!fullScreen || showLyrics || showPlaylist) && (
                         <div className="flex items-center space-x-5 shrink-0 mb-4 relative z-50 animate-fade-in">
                             <div className="w-14 h-14 rounded-lg overflow-hidden shadow-lg relative shrink-0 border border-white/10 bg-white/5">
                                 {result.cover ? <img src={result.cover} alt="Cover" className="w-full h-full object-cover" loading="eager" decoding="async" /> : <div className="w-full h-full flex items-center justify-center"><FontAwesomeIcon icon={faApple} className="text-white/30 text-xl" /></div>}
@@ -612,13 +638,13 @@ const Card = ({ fullScreen = false }) => {
                             </motion.button>
                         )}
 
-                        {/* ===== LARGE ART VIEW ===== */}
-                        {fullScreen && (
+                        {/* ===== LARGE ART VIEW (Desktop Only) ===== */}
+                        {fullScreen && isDesktop && (
                              <div className={`${fullScreen && showLyrics && isDesktop 
                                  ? "w-[45%] relative flex flex-col items-center justify-center px-6 shrink-0" 
                                  : `absolute inset-0 z-20 flex flex-col items-center justify-center px-6 pt-4 pb-14 ${
                                      showLyrics || showPlaylist 
-                                         ? (isDesktop ? "" : "opacity-0 scale-95 blur-md pointer-events-none")
+                                         ? ""
                                          : "opacity-100 scale-100 blur-0 pointer-events-auto"
                                  }`
                              }`}
@@ -710,7 +736,7 @@ const Card = ({ fullScreen = false }) => {
 
                         {/* ===== LYRICS AREA (Spring animated) ===== */}
                         <AnimatePresence>
-                        {(showLyrics || showPlaylist || !fullScreen) && (
+                        {(showLyrics || showPlaylist || !fullScreen || !isDesktop) && (
                             <motion.div 
                                 ref={scrollRef} 
                                 initial={{ opacity: 0, y: 40 }}
@@ -757,17 +783,78 @@ const Card = ({ fullScreen = false }) => {
                         </div>
                     </div>
 
-                    {/* Controls */}
-                    <div className="mt-auto flex flex-col gap-3 shrink-0 z-20 pt-2">
-                        <AppleMusicTimeSlider audioRef={audioRef} duration={duration} isPaused={isPaused} onSeekStart={() => {}} onSeekEnd={handleSeekEnd} />
-                        <div className="flex justify-center items-center gap-6">
-                            <button onClick={handlePrev} className="text-white/60 hover:text-white p-3 active:scale-90 transition-all duration-200"><FontAwesomeIcon icon={faBackward} size="lg" /></button>
-                            <button onClick={togglePlay} className={`bg-white text-black w-16 h-16 rounded-full flex items-center justify-center shadow-lg active:scale-90 transition-all duration-200 ${isLoading ? 'opacity-80' : ''}`}>{isLoading ? <FontAwesomeIcon icon={faSpinner} spin size="lg" className="text-black/50" /> : <FontAwesomeIcon icon={isPaused ? faPlay : faPause} size="2xl" className={isPaused ? "ml-2" : ""} />}</button>
-                            <button onClick={handleNext} className="text-white/60 hover:text-white p-3 active:scale-90 transition-all duration-200"><FontAwesomeIcon icon={faForward} size="lg" /></button>
-                        </div>
+                    {/* --- CONTROLS SECTION --- */}
+                    <div className="mt-auto shrink-0 z-50 pt-2 w-full">
+                        
+                        {/* MOBILE CONTROLS */}
+                        {!isDesktop && (
+                            <div className="flex flex-col w-full">
+                                {/* Scrubber */}
+                                <div className="mb-6 w-full px-2">
+                                     <AppleMusicTimeSlider audioRef={audioRef} duration={duration} isPaused={isPaused} onSeekStart={() => {}} onSeekEnd={handleSeekEnd} />
+                                </div>
+
+                                {/* Main Playback */}
+                                <div className="flex justify-center items-center gap-12 mb-10">
+                                    <button onClick={handlePrev} className="text-white/70 hover:text-white transition-all active:scale-90"><FontAwesomeIcon icon={faBackward} className="text-3xl" /></button>
+                                    <button onClick={togglePlay} className="text-white hover:scale-105 transition-all active:scale-90">
+                                        {isLoading 
+                                            ? <FontAwesomeIcon icon={faSpinner} spin className="text-5xl text-white/50" />
+                                            : <FontAwesomeIcon icon={isPaused ? faPlay : faPause} className="text-6xl" />
+                                        }
+                                    </button>
+                                    <button onClick={handleNext} className="text-white/70 hover:text-white transition-all active:scale-90"><FontAwesomeIcon icon={faForward} className="text-3xl" /></button>
+                                </div>
+
+                                {/* Bottom Row (Lyrics, Chat, List) */}
+                                <div className="flex justify-between items-center px-4 pb-4">
+                                    <button className="w-10 h-10 flex items-center justify-center text-white bg-white/20 rounded-full backdrop-blur-md">
+                                        <FontAwesomeIcon icon={faQuoteRight} className="text-sm" />
+                                    </button>
+                                    
+                                    <div className="flex gap-6">
+                                        {/* CHAT BUTTON INTEGRATION */}
+                                        <button 
+                                            onClick={() => setIsChatOpen(!isChatOpen)} 
+                                            className={`w-10 h-10 flex items-center justify-center rounded-full transition-all active:scale-90 border border-white/5 ${isChatOpen ? "bg-[#0a84ff] text-white shadow-lg shadow-blue-500/20" : "bg-white/10 text-white/60 hover:text-white hover:bg-white/20"}`}
+                                        >
+                                            <FontAwesomeIcon icon={faCommentDots} className="text-sm" />
+                                        </button>
+                                        
+                                        <button onClick={() => setShowPlaylist(!showPlaylist)} className="w-10 h-10 flex items-center justify-center text-white/60 hover:text-white bg-white/10 hover:bg-white/20 rounded-full transition-all active:scale-90 border border-white/5">
+                                            <FontAwesomeIcon icon={faList} className="text-sm" />
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* DESKTOP CONTROLS */}
+                        {isDesktop && (
+                            <div className="flex flex-col gap-3">
+                                <AppleMusicTimeSlider audioRef={audioRef} duration={duration} isPaused={isPaused} onSeekStart={() => {}} onSeekEnd={handleSeekEnd} />
+                                <div className="flex justify-center items-center gap-6 relative">
+                                    <button onClick={handlePrev} className="text-white/60 hover:text-white p-3 active:scale-90 transition-all duration-200"><FontAwesomeIcon icon={faBackward} size="lg" /></button>
+                                    <button onClick={togglePlay} className={`bg-white text-black w-16 h-16 rounded-full flex items-center justify-center shadow-lg active:scale-90 transition-all duration-200 ${isLoading ? 'opacity-80' : ''}`}>{isLoading ? <FontAwesomeIcon icon={faSpinner} spin size="lg" className="text-black/50" /> : <FontAwesomeIcon icon={isPaused ? faPlay : faPause} size="2xl" className={isPaused ? "ml-2" : ""} />}</button>
+                                    <button onClick={handleNext} className="text-white/60 hover:text-white p-3 active:scale-90 transition-all duration-200"><FontAwesomeIcon icon={faForward} size="lg" /></button>
+                                    
+                                    {/* Desktop Chat Button (Absolute Right or Inline) */}
+                                    <button 
+                                        onClick={() => setIsChatOpen(!isChatOpen)}
+                                        className={`absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center transition-all active:scale-90 ${isChatOpen ? "bg-[#0a84ff] text-white" : "text-white/40 hover:text-white hover:bg-white/10"}`}
+                                        title="Chat with AI"
+                                    >
+                                        <FontAwesomeIcon icon={faCommentDots} />
+                                    </button>
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>
+
+            {/* CHAT COMPONENT (Controlled) */}
+            <Chat isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
 
             <style jsx global>{`
                 .no-scrollbar::-webkit-scrollbar { display: none; }
