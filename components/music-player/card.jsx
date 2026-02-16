@@ -8,8 +8,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faApple } from "@fortawesome/free-brands-svg-icons";
 import {
     faPlay, faPause, faQuoteRight, faForward, faBackward,
-    faMicrophone, faMusic, faSpinner, faBars, faTimes, faCommentDots
+    faMicrophone, faMusic, faSpinner, faBars, faTimes, faCommentDots,
+    faEllipsisVertical, faStar as faStarSolid, faShuffle, faRepeat,
+    faVolumeOff
 } from "@fortawesome/free-solid-svg-icons";
+import { faStar } from "@fortawesome/free-regular-svg-icons";
 
 // --- HOOKS ---
 const useMediaQuery = (query) => {
@@ -565,7 +568,7 @@ const Card = ({ fullScreen = false, onOpenChat }) => {
     };
 
     return (
-        <div className={`${fullScreen ? "w-full h-full" : "mt-6 w-full max-w-md mx-auto"} font-jost select-none relative z-10`}>
+        <div className={`${fullScreen ? "w-full h-full overflow-hidden" : "mt-6 w-full max-w-md mx-auto"} font-jost select-none relative z-10`}>
             <audio ref={audioRef} preload="auto" onEnded={handleNext} className="hidden" />
             <audio ref={instruRef} preload="auto" className="hidden" />
 
@@ -579,6 +582,206 @@ const Card = ({ fullScreen = false, onOpenChat }) => {
                 {/* 3-LAYER ALIVE BACKGROUND (OPTIMIZED) */}
                 <AliveBackground cover={result.microCover || result.cover} />
 
+                {/* ===== DESKTOP TWO-COLUMN LYRICS VIEW ===== */}
+                {fullScreen && showLyrics && isDesktop ? (
+                    <div className="relative z-10 w-full h-full flex flex-row overflow-hidden">
+                        {/* Close button */}
+                        <button 
+                            onClick={() => setShowLyrics(false)} 
+                            className="absolute top-5 left-5 z-50 w-9 h-9 rounded-full flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-all active:scale-90"
+                        >
+                            <FontAwesomeIcon icon={faTimes} className="text-lg" />
+                        </button>
+
+                        {/* LEFT COLUMN: Art + Info + Controls */}
+                        <div className="w-[42%] flex flex-col items-center justify-center px-10 py-8 shrink-0">
+                            {/* Album Art */}
+                            <div className="relative w-full max-w-[320px] aspect-square rounded-xl overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.5)] border border-white/10 bg-[#111]">
+                                {result.cover 
+                                    ? <img src={result.cover} alt="Cover" className="w-full h-full object-cover" /> 
+                                    : <div className="w-full h-full flex items-center justify-center"><FontAwesomeIcon icon={faApple} className="text-white/20 text-5xl" /></div>
+                                }
+                            </div>
+                            
+                            {/* Title + Artist + Star + Menu */}
+                            <div className="mt-5 flex items-start justify-between w-full max-w-[320px]">
+                                <div className="min-w-0 flex-1">
+                                    <h2 className="text-lg font-bold text-white truncate tracking-tight leading-tight">{result.title}</h2>
+                                    <p className="text-sm text-white/55 font-medium truncate">{result.artist}</p>
+                                </div>
+                                <div className="flex items-center gap-0 shrink-0 ml-2">
+                                    <button className="w-8 h-8 flex items-center justify-center text-white/35 hover:text-white/70 transition-all active:scale-90">
+                                        <FontAwesomeIcon icon={faStar} className="text-sm" />
+                                    </button>
+                                    <button className="w-8 h-8 flex items-center justify-center text-white/35 hover:text-white/70 transition-all active:scale-90">
+                                        <FontAwesomeIcon icon={faEllipsisVertical} className="text-sm" />
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            {/* Progress */}
+                            <div className="mt-3 w-full max-w-[320px]">
+                                <AppleMusicTimeSlider audioRef={audioRef} duration={duration} isPaused={isPaused} onSeekStart={() => {}} onSeekEnd={handleSeekEnd} />
+                            </div>
+                            
+                            {/* Transport: Shuffle + Prev + Play + Next + Repeat */}
+                            <div className="flex justify-center items-center gap-5 mt-1 w-full max-w-[320px]">
+                                <button className="text-white/35 hover:text-white/60 p-2 transition-all active:scale-90">
+                                    <FontAwesomeIcon icon={faShuffle} className="text-xs" />
+                                </button>
+                                <button onClick={handlePrev} className="text-white p-2 active:scale-90 transition-all">
+                                    <FontAwesomeIcon icon={faBackward} size="lg" />
+                                </button>
+                                <button onClick={togglePlay} className="text-white w-12 h-12 flex items-center justify-center active:scale-90 transition-all">
+                                    {isLoading 
+                                        ? <FontAwesomeIcon icon={faSpinner} spin size="xl" className="text-white/50" /> 
+                                        : <FontAwesomeIcon icon={isPaused ? faPlay : faPause} size="2x" className={isPaused ? "ml-1" : ""} />
+                                    }
+                                </button>
+                                <button onClick={handleNext} className="text-white p-2 active:scale-90 transition-all">
+                                    <FontAwesomeIcon icon={faForward} size="lg" />
+                                </button>
+                                <button className="text-white/35 hover:text-white/60 p-2 transition-all active:scale-90">
+                                    <FontAwesomeIcon icon={faRepeat} className="text-xs" />
+                                </button>
+                            </div>
+                            
+                            {/* Volume Slider */}
+                            <div className="flex items-center gap-3 mt-2 w-full max-w-[320px]">
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" className="text-white/25 shrink-0">
+                                    <path d="M3 9v6h4l5 5V4L7 9H3z"/>
+                                </svg>
+                                <input 
+                                    type="range" min="0" max="1" step="0.01" 
+                                    defaultValue="1"
+                                    onChange={(e) => { if(audioRef.current) audioRef.current.volume = parseFloat(e.target.value); }}
+                                    className="desktop-volume-slider flex-1" 
+                                />
+                                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" className="text-white/25 shrink-0">
+                                    <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+                                </svg>
+                            </div>
+
+                            {/* Karaoke Toggle */}
+                            {result.karaokeUrl && (
+                                <div className="mt-3 w-full max-w-[320px] relative">
+                                    <AnimatePresence>{showVocalControls && (<AppleVocalSlider value={vocalMix} onChange={setVocalMix} onClose={() => setShowVocalControls(false)} />)}</AnimatePresence>
+                                    <button 
+                                        onClick={() => setShowVocalControls(!showVocalControls)} 
+                                        className={`flex items-center gap-2 text-xs font-medium px-3 py-1.5 rounded-full transition-all active:scale-95 ${
+                                            showVocalControls || vocalMix < 0.95 
+                                                ? "text-[#ff375f] bg-[#ff375f]/10" 
+                                                : "text-white/35 hover:text-white/55"
+                                        }`}
+                                    >
+                                        <FontAwesomeIcon icon={faMicrophone} className="text-[10px]" />
+                                        <span>Karaoke</span>
+                                    </button>
+                                </div>
+                            )}
+                        </div>
+
+                        {/* RIGHT COLUMN: Lyrics */}
+                        <div className="w-[58%] flex flex-col relative h-full">
+                            {/* Playlist overlay */}
+                            <AnimatePresence>
+                            {showPlaylist && (
+                                <motion.div
+                                    initial={{ y: '100%' }}
+                                    animate={{ y: 0 }}
+                                    exit={{ y: '100%' }}
+                                    transition={{ type: "spring", stiffness: 300, damping: 32, mass: 0.8 }}
+                                    className="absolute inset-0 z-30 bg-[#1c1c1e]/95 backdrop-blur-2xl rounded-2xl overflow-hidden flex flex-col"
+                                >
+                                    <div className="pt-3 pb-2 px-5 flex flex-col items-center">
+                                        <div className="w-9 h-1 rounded-full bg-white/20 mb-3"></div>
+                                        <div className="w-full flex justify-between items-center">
+                                            <span className="text-[13px] font-bold text-white/90 tracking-tight">Up Next</span>
+                                            <button onClick={(e) => { e.stopPropagation(); setShowPlaylist(false); }} className="text-[13px] font-semibold text-[#ff375f] active:opacity-60 transition-opacity">Done</button>
+                                        </div>
+                                    </div>
+                                    <div className="h-[0.5px] bg-white/8"></div>
+                                    <div ref={playlistContainerRef} className="flex-1 overflow-y-auto no-scrollbar px-4 pt-2 pb-4">
+                                        {groupedPlaylist.map((group, gIdx) => (
+                                            <div key={gIdx} className="mb-4">
+                                                <div className="sticky top-0 z-10 bg-[#1c1c1e]/90 backdrop-blur-xl py-2 px-1">
+                                                    <h4 className="text-[11px] font-bold text-white/40 uppercase tracking-widest">{group.album}</h4>
+                                                </div>
+                                                <div>
+                                                    {group.tracks.map((track, i) => (
+                                                        <motion.div 
+                                                            key={track.idx} 
+                                                            onClick={() => selectSong(track.idx)} 
+                                                            whileTap={{ scale: 0.97, opacity: 0.7 }}
+                                                            transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                                                            className={`flex items-center py-2.5 px-1 gap-3.5 cursor-pointer border-b border-white/[0.04] last:border-b-0 ${currentIndex === track.idx ? "active-playlist-song" : ""}`}
+                                                        >
+                                                            <div className="w-5 text-right shrink-0">
+                                                                {currentIndex === track.idx 
+                                                                    ? <FontAwesomeIcon icon={faPlay} className="text-[#ff375f] text-[9px] animate-pulse"/> 
+                                                                    : <span className="text-white/25 text-[12px] font-medium tabular-nums">{i + 1}</span>
+                                                                }
+                                                            </div>
+                                                            <div className="flex-1 min-w-0">
+                                                                <p className={`text-[14px] font-semibold truncate leading-tight ${currentIndex === track.idx ? "text-[#ff375f]" : "text-white/90"}`}>{track.title}</p>
+                                                            </div>
+                                                        </motion.div>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </motion.div>
+                            )}
+                            </AnimatePresence>
+
+                            {/* Lyrics scroll */}
+                            <div 
+                                ref={scrollRef} 
+                                className="w-full h-full overflow-y-auto no-scrollbar pt-16 pb-24 px-6 mask-scroller-y"
+                            >
+                                {processedLyrics.length === 0 ? (
+                                    <div className="flex flex-col items-center justify-center h-full text-white/30 gap-2">
+                                        <FontAwesomeIcon icon={faMusic} className="text-2xl" /><p className="text-sm">No Lyrics</p>
+                                    </div>
+                                ) : (
+                                    <>
+                                        {processedLyrics.map((line, i) => (
+                                            <LyricLine key={i} line={line} isActive={activeIdx === i} onClick={handleSeekEnd} audioRef={audioRef} />
+                                        ))}
+                                        {result.songwriters && result.songwriters.length > 0 && (
+                                            <div className="mt-10 mb-6 text-center">
+                                                <p className="text-[10px] uppercase tracking-[0.2em] text-white/30 font-bold mb-1">Written by</p>
+                                                <p className="text-xs text-white/50 leading-relaxed">{result.songwriters.join(', ')}</p>
+                                            </div>
+                                        )}
+                                    </>
+                                )}
+                            </div>
+                            
+                            {/* Bottom right: Playlist + Chat icons */}
+                            <div className="absolute bottom-4 right-4 flex items-center gap-2 z-40">
+                                <button 
+                                    onClick={() => { setShowPlaylist(!showPlaylist); }} 
+                                    className={`w-8 h-8 rounded-full flex items-center justify-center transition-all active:scale-90 ${showPlaylist ? "text-[#ff375f]" : "text-white/35 hover:text-white/55"}`}
+                                >
+                                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                                        <line x1="3" y1="6" x2="17" y2="6"/><line x1="3" y1="12" x2="17" y2="12"/><line x1="3" y1="18" x2="13" y2="18"/>
+                                    </svg>
+                                </button>
+                                <button 
+                                    onClick={onOpenChat} 
+                                    className="w-8 h-8 rounded-full flex items-center justify-center text-white/35 hover:text-white/55 transition-all active:scale-90"
+                                >
+                                    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                )
+                : (
                 <div className="relative z-10 w-full h-full p-6 flex flex-col border border-white/5">
                     {/* Header - Conditionally Hidden in FullScreen Idle Mode */}
                     {(!fullScreen || (showLyrics && !isDesktop) || showPlaylist) && (
@@ -599,8 +802,8 @@ const Card = ({ fullScreen = false, onOpenChat }) => {
                     {/* Expandable Area / Large Art Area */}
                     <div className={`relative flex-1 overflow-hidden ${showLyrics || showPlaylist ? "opacity-100 mb-4" : (fullScreen ? "opacity-100 mb-4" : "opacity-0 h-0 mb-0 pointer-events-none")} ${fullScreen && showLyrics && isDesktop ? "flex flex-row gap-6" : ""}`}>
                         
-                        {/* Lyrics Toggle Button — top right (spring animated) */}
-                        {fullScreen && isDesktop && (
+                        {/* Lyrics Toggle Button — top right (spring animated, visible on all devices) */}
+                        {fullScreen && (
                             <motion.button 
                                 onClick={() => setShowLyrics(!showLyrics)} 
                                 initial={{ opacity: 0, scale: 0.5 }}
@@ -653,10 +856,20 @@ const Card = ({ fullScreen = false, onOpenChat }) => {
                                      </div>
                                 </div>
                                 
-                                {/* Title & Artist */}
-                                <div className="mt-5 space-y-1 w-full flex flex-col items-center shrink-0 text-center">
-                                    <h2 className="text-xl md:text-2xl font-bold text-white drop-shadow-xl tracking-tight leading-tight px-6 max-w-md truncate">{result.title}</h2>
-                                    <p className="text-sm md:text-lg text-white/60 font-medium tracking-wide px-6 max-w-md truncate">{result.artist}</p>
+                                {/* Title & Artist — Apple Music layout (left-aligned with star + menu) */}
+                                <div className="mt-5 w-full shrink-0 flex items-center justify-between px-1">
+                                    <div className="min-w-0 flex-1">
+                                        <h2 className="text-xl md:text-2xl font-bold text-white drop-shadow-xl tracking-tight leading-tight truncate">{result.title}</h2>
+                                        <p className="text-sm md:text-lg text-white/60 font-medium tracking-wide truncate">{result.artist}</p>
+                                    </div>
+                                    <div className="flex items-center gap-1 shrink-0 ml-3">
+                                        <button className="w-9 h-9 flex items-center justify-center text-white/50 hover:text-white/80 active:scale-90 transition-all">
+                                            <FontAwesomeIcon icon={faStar} className="text-[17px]" />
+                                        </button>
+                                        <button className="w-9 h-9 flex items-center justify-center text-white/50 hover:text-white/80 active:scale-90 transition-all">
+                                            <FontAwesomeIcon icon={faEllipsisVertical} className="text-[17px]" />
+                                        </button>
+                                    </div>
                                 </div>
                              </div>
                         )}
@@ -756,62 +969,112 @@ const Card = ({ fullScreen = false, onOpenChat }) => {
                     {/* Controls */}
                     <div className="mt-auto flex flex-col gap-2 shrink-0 z-20 pt-2">
                         <AppleMusicTimeSlider audioRef={audioRef} duration={duration} isPaused={isPaused} onSeekStart={() => {}} onSeekEnd={handleSeekEnd} />
-                        <div className="flex justify-center items-center gap-6">
-                            <button onClick={handlePrev} className="text-white/60 hover:text-white p-3 active:scale-90 transition-all duration-200"><FontAwesomeIcon icon={faBackward} size="lg" /></button>
-                            <button onClick={togglePlay} className={`bg-white text-black w-16 h-16 rounded-full flex items-center justify-center shadow-lg active:scale-90 transition-all duration-200 ${isLoading ? 'opacity-80' : ''}`}>{isLoading ? <FontAwesomeIcon icon={faSpinner} spin size="lg" className="text-black/50" /> : <FontAwesomeIcon icon={isPaused ? faPlay : faPause} size="2xl" className={isPaused ? "ml-2" : ""} />}</button>
-                            <button onClick={handleNext} className="text-white/60 hover:text-white p-3 active:scale-90 transition-all duration-200"><FontAwesomeIcon icon={faForward} size="lg" /></button>
+                        <div className="flex justify-center items-center gap-10">
+                            <button onClick={handlePrev} className="text-white hover:text-white p-3 active:scale-90 transition-all duration-200"><FontAwesomeIcon icon={faBackward} size="xl" /></button>
+                            <button onClick={togglePlay} className={`text-white w-16 h-16 flex items-center justify-center active:scale-90 transition-all duration-200 ${isLoading ? 'opacity-80' : ''}`}>{isLoading ? <FontAwesomeIcon icon={faSpinner} spin size="2x" className="text-white/50" /> : <FontAwesomeIcon icon={isPaused ? faPlay : faPause} size="3x" className={isPaused ? "ml-2" : ""} />}</button>
+                            <button onClick={handleNext} className="text-white hover:text-white p-3 active:scale-90 transition-all duration-200"><FontAwesomeIcon icon={faForward} size="xl" /></button>
                         </div>
 
-                        {/* Bottom Action Bar — Apple Music style (chat, karaoke, playlist) */}
+                        {/* Bottom Action Bar — Apple Music style icons */}
                         {fullScreen && (
-                            <div className="flex justify-around items-center pt-2 pb-1">
-                                {/* Chat Button */}
+                            <div className="flex justify-around items-center pt-3 pb-2">
+                                {/* Lyrics / Subtitle Button (Apple Music CC icon) */}
                                 <button 
                                     onClick={onOpenChat} 
-                                    className="w-10 h-10 rounded-full flex items-center justify-center text-white/50 hover:text-white/80 active:scale-90 transition-all"
+                                    className="w-10 h-10 flex items-center justify-center text-white/50 hover:text-white/80 active:scale-90 transition-all"
                                 >
-                                    <FontAwesomeIcon icon={faCommentDots} className="text-lg" />
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                                        <line x1="8" y1="9" x2="16" y2="9"/>
+                                        <line x1="8" y1="13" x2="13" y2="13"/>
+                                    </svg>
                                 </button>
 
-                                {/* Karaoke / Vocal Controls */}
+                                {/* AirPlay / Karaoke Controls */}
                                 {result.karaokeUrl ? (
                                     <div className="relative">
                                         <AnimatePresence>{showVocalControls && (<AppleVocalSlider value={vocalMix} onChange={setVocalMix} onClose={() => setShowVocalControls(false)} />)}</AnimatePresence>
                                         <button 
                                             onClick={() => setShowVocalControls(!showVocalControls)} 
-                                            className={`w-10 h-10 rounded-full flex items-center justify-center active:scale-90 transition-all ${
+                                            className={`w-10 h-10 flex items-center justify-center active:scale-90 transition-all ${
                                                 showVocalControls || vocalMix < 0.95 
                                                     ? "text-[#ff375f]" 
                                                     : "text-white/50 hover:text-white/80"
                                             }`}
                                         >
-                                            <FontAwesomeIcon icon={faMicrophone} className="text-lg" />
+                                            {/* AirPlay-style icon */}
+                                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                                <path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"/>
+                                                <polygon points="12,15 17,21 7,21" fill="currentColor" stroke="none"/>
+                                            </svg>
                                         </button>
                                     </div>
                                 ) : (
-                                    <div className="w-10 h-10" /> /* spacer */
+                                    <button className="w-10 h-10 flex items-center justify-center text-white/50 hover:text-white/80 active:scale-90 transition-all">
+                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                            <path d="M5 17H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2h-1"/>
+                                            <polygon points="12,15 17,21 7,21" fill="currentColor" stroke="none"/>
+                                        </svg>
+                                    </button>
                                 )}
 
-                                {/* Playlist Button */}
+                                {/* Playlist Button (Apple Music queue icon) */}
                                 <button 
                                     onClick={() => { setShowPlaylist(!showPlaylist); if (!showPlaylist) { setShowLyrics(true); } }} 
-                                    className={`w-10 h-10 rounded-full flex items-center justify-center active:scale-90 transition-all ${
+                                    className={`w-10 h-10 flex items-center justify-center active:scale-90 transition-all ${
                                         showPlaylist 
                                             ? "text-[#ff375f]" 
                                             : "text-white/50 hover:text-white/80"
                                     }`}
                                 >
-                                    <FontAwesomeIcon icon={faBars} className="text-lg" />
+                                    {/* Queue/list icon */}
+                                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+                                        <line x1="3" y1="6" x2="17" y2="6"/>
+                                        <line x1="3" y1="12" x2="17" y2="12"/>
+                                        <line x1="3" y1="18" x2="13" y2="18"/>
+                                        <circle cx="20" cy="16" r="2" fill="currentColor" stroke="none"/>
+                                        <line x1="20" y1="14" x2="20" y2="10"/>
+                                    </svg>
                                 </button>
                             </div>
                         )}
                     </div>
                 </div>
+                )}
             </div>
 
             <style jsx global>{`
                 .no-scrollbar::-webkit-scrollbar { display: none; }
                 
+                /* Desktop Volume Slider — Apple Music style */
+                .desktop-volume-slider {
+                    -webkit-appearance: none;
+                    appearance: none;
+                    height: 3px;
+                    background: rgba(255,255,255,0.15);
+                    border-radius: 2px;
+                    outline: none;
+                    cursor: pointer;
+                }
+                .desktop-volume-slider::-webkit-slider-thumb {
+                    -webkit-appearance: none;
+                    appearance: none;
+                    width: 12px;
+                    height: 12px;
+                    border-radius: 50%;
+                    background: white;
+                    cursor: pointer;
+                    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+                }
+                .desktop-volume-slider::-moz-range-thumb {
+                    width: 12px;
+                    height: 12px;
+                    border-radius: 50%;
+                    background: white;
+                    cursor: pointer;
+                    border: none;
+                    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+                }
                 /* DEEP MASK FIX (25%) */
                 .mask-scroller-y { 
                     mask-image: linear-gradient(to bottom, 
