@@ -39,7 +39,7 @@ next-env.d.ts
 
 # music audio files (too large for git)
 *.mp3
-*.mp4a
+*.m4a
 
 # gemini
 .gemini/
