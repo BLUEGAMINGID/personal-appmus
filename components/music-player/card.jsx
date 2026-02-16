@@ -476,6 +476,18 @@ const Card = ({ fullScreen = false }) => {
       return 260; 
     };
 
+    // --- NAVIGATION HANDLERS (Moved up to fix ReferenceError) ---
+    const handleNext = useCallback(() => {
+        setCurrentIndex((prev) => (prev + 1) % playlist.length);
+    }, []);
+
+    const handlePrev = useCallback(() => {
+        setCurrentIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
+    }, []);
+
+    const selectSong = (idx) => { if (idx === currentIndex) { setShowPlaylist(false); return; } setCurrentIndex(idx); setShowPlaylist(false); };
+
+
     return (
         <div className={`${fullScreen ? "w-full h-full" : (isDesktop ? "mt-6 w-full max-w-md mx-auto" : "w-full h-full fixed inset-0 overflow-hidden")} font-jost select-none relative z-10`}>
             {/* AUDIO ELEMENTS with direct event listeners */}
