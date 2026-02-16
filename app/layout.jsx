@@ -53,7 +53,7 @@ export default function RootLayout({ children }) {
 		<html lang="en">
 			<body>
 				<ClientTopProgressBar />
-				<Navbar />
+				{/* <Navbar /> */}
 				{children}
 				<Chat />
 				<Analytics />

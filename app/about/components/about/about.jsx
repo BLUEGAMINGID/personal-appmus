@@ -4,7 +4,7 @@ import Me1 from "@/public/image/me1.jpg";
 import Me2 from "@/public/image/me2.jpg";
 import Me3 from "@/public/image/me3.jpg";
 import Hr from "@/components/Hr";
-import Card from "./spotify/card";
+import Card from "@/components/music-player/card";
 
 function Title() {
   return (
@@ -131,9 +131,7 @@ export default function About() {
             new tools and technologies, and I believe that consistency and
             curiosity are key to long-term growth in the tech field.
           </p>
-          <h2 className="text-black font-medium">
-          one of my favorite song:
-          </h2>
+          <h2 className="text-black font-medium">one of my favorite song:</h2>
           <Card />
         </motion.div>
       </div>
