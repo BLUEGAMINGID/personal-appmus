@@ -5,12 +5,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import getLocalMetadata, { getSimpleMetadata, fetchAudioBlob } from "./fetch";
 import { playlist } from "./list";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faApple, faM } from "@fortawesome/free-brands-svg-icons";
+import { faApple } from "@fortawesome/free-brands-svg-icons";
 import {
     faPlay, faPause, faQuoteRight, faForward, faBackward,
-    faMicrophone, faMusic, faSpinner, faBars, faTimes, faCommentDots, faList, faEllipsisH, faInfinity, faShuffle, faRepeat
+    faMicrophone, faMusic, faSpinner, faBars, faTimes, faCommentDots
 } from "@fortawesome/free-solid-svg-icons";
-import Chat from "../Chat";
 
 // --- HOOKS ---
 const useMediaQuery = (query) => {
@@ -165,7 +164,13 @@ const LyricLine = React.memo(({ line, isActive, onClick, audioRef }) => {
                 : "opacity-40 scale-[0.98] blur-[1.5px] hover:opacity-60 hover:blur-[0.5px]" 
             }`}
         >
-            <p className={`font-bold text-[28px] leading-tight text-white tracking-tight ${isActive ? "active-lyric-glow-text" : ""}`}>{line.text}</p>
+            <div className="flex items-stretch gap-3">
+                {/* Apple Music style left indicator bar */}
+                <div className={`w-[3px] shrink-0 rounded-full transition-all duration-500 ${
+                    isActive ? "bg-white/90" : "bg-transparent"
+                }`} />
+                <p className={`font-extrabold text-[26px] leading-snug text-white tracking-tight ${isActive ? "active-lyric-glow-text" : ""}`}>{line.text}</p>
+            </div>
         </div>
     );
 }, (prev, next) => prev.isActive === next.isActive && prev.line === next.line);
@@ -222,7 +227,7 @@ const AliveBackground = React.memo(({ cover }) => (
 AliveBackground.displayName = "AliveBackground";
 
 // --- MAIN CARD ---
-const Card = ({ fullScreen = false }) => {
+const Card = ({ fullScreen = false, onOpenChat }) => {
     const isDesktop = useMediaQuery("(min-width: 768px)");
     
     const [currentIndex, setCurrentIndex] = useState(0); 
@@ -239,7 +244,6 @@ const Card = ({ fullScreen = false }) => {
     const [playlistMeta, setPlaylistMeta] = useState([]);
     const [showVocalControls, setShowVocalControls] = useState(false);
     const [vocalMix, setVocalMix] = useState(1);
-    const [isChatOpen, setIsChatOpen] = useState(false);
 
     // Blob URLs State (to revoke later)
     const [audioBlobUrl, setAudioBlobUrl] = useState(null);
@@ -388,24 +392,6 @@ const Card = ({ fullScreen = false }) => {
         }
     }, [showPlaylist, playlistMeta.length]);
 
-    // --- AUDIO EVENTS ---
-    const handleLoadedMetadata = useCallback(() => {
-        if (audioRef.current) {
-            setDuration(audioRef.current.duration);
-            setIsLoading(false);
-            if (!isPaused) {
-                audioRef.current.play().catch(e => {
-                    console.error("Autoplay failed:", e);
-                    setIsPaused(true);
-                });
-                if (instruRef.current && result.karaokeUrl) {
-                     instruRef.current.currentTime = audioRef.current.currentTime;
-                     instruRef.current.play().catch(() => {});
-                }
-            }
-        }
-    }, [isPaused, result.karaokeUrl]);
-
     // Load Song & Blobs
     useEffect(() => {
         if (!isMounted) return;
@@ -416,14 +402,16 @@ const Card = ({ fullScreen = false }) => {
         
         const currentTrack = playlist[currentIndex];
         
-        // Pause current
-        if(audioRef.current) audioRef.current.pause();
-        if(instruRef.current) instruRef.current.pause();
+        if(audioRef.current) { audioRef.current.pause(); }
+        if(instruRef.current) { instruRef.current.pause(); }
+
+        // Determine if we should auto-play based on previous state or if it's the first load
+        const shouldPlay = !isPaused;
 
         getLocalMetadata(currentTrack).then(async (data) => {
             setResult(data);
 
-            // Fetch Blobs
+            // Fetch Blobs to hide source
             const audioUrl = await fetchAudioBlob(data.audioUrl);
             setAudioBlobUrl(audioUrl);
             
@@ -435,7 +423,6 @@ const Card = ({ fullScreen = false }) => {
                 setKaraokeBlobUrl(null);
             }
             
-            // Set Sources
             if (audioRef.current) { 
                 audioRef.current.src = audioUrl; 
                 audioRef.current.load(); 
@@ -448,8 +435,81 @@ const Card = ({ fullScreen = false }) => {
                     instruRef.current.removeAttribute("src"); 
                 }
             }
+
+            // --- PLAY AUDIO (BLOB-BASED) ---
+            const playAudio = async (src) => {
+                if (!src) return;
+                
+                if (currentSongRef.current !== src) {
+                    try {
+                        setIsLoading(true);
+                        
+                        // Use the shared helper to fetch blob
+                        const blobUrl = await fetchAudioBlob(src);
+                        
+                        // Revoke old blob to free memory
+                        if (audioSrcRef.current) {
+                            URL.revokeObjectURL(audioSrcRef.current);
+                        }
+                        audioSrcRef.current = blobUrl;
+                        
+                        audioRef.current.src = blobUrl;
+                        audioRef.current.load();
+                        currentSongRef.current = src;
+                    } catch (error) {
+                        console.error("Error loading audio:", error);
+                        setIsLoading(false);
+                        return;
+                    }
+                }
+
+                try {
+                    await audioRef.current.play();
+                    setIsPlaying(true);
+                    setIsLoading(false);
+                } catch (error) {
+                    console.error("Playback error:", error);
+                    setIsLoading(false);
+                }
+            };
+            
+            // Setup Playback
+             const onLoadedMetadata = () => {
+                if(audioRef.current) {
+                    setDuration(audioRef.current.duration);
+                    if (shouldPlay) {
+                        const playPromise = audioRef.current.play();
+                        if (playPromise !== undefined) {
+                            playPromise.then(() => {
+                                 if (instruRef.current && karaokeUrl) {
+                                     instruRef.current.currentTime = audioRef.current.currentTime;
+                                     instruRef.current.play().catch(() => {});
+                                 }
+                                 setIsPaused(false);
+                                 setIsLoading(false);
+                            }).catch(() => { 
+                                setIsPaused(true); 
+                                setIsLoading(false); 
+                            });
+                        }
+                    } else {
+                        setIsLoading(false);
+                    }
+                }
+            };
+            
+            const audioEl = audioRef.current;
+            if(audioEl) {
+                audioEl.addEventListener('loadedmetadata', onLoadedMetadata, {once: true});
+            }
         });
     }, [currentIndex, isMounted]);
+
+    useEffect(() => {
+        if (!audioRef.current) return;
+        audioRef.current.volume = Math.max(0, Math.min(1, vocalMix));
+        if (instruRef.current && result.karaokeUrl) instruRef.current.volume = 1.0; 
+    }, [vocalMix, result.karaokeUrl]);
 
     // Scroll Logic
     useEffect(() => {
@@ -459,81 +519,69 @@ const Card = ({ fullScreen = false }) => {
                 const container = scrollRef.current;
                 const containerH = container.clientHeight;
                 const elTop = activeEl.offsetTop;
-                const containerTop = container.offsetTop; // Offset relative to parent if needed
-                // Simple centering logic
                 const elH = activeEl.clientHeight;
-                let targetScroll = elTop - (containerH * 0.3); 
+                let targetScroll = elTop - (containerH * 0.22); 
+                if (elH > containerH * 0.4) targetScroll = elTop - (containerH * 0.15);
                 container.scrollTo({ top: targetScroll, behavior: 'smooth' });
             }
         }
     }, [activeIdx, showLyrics, showPlaylist]);
 
-    // LAYOUT 
-    const getCardHeight = () => {
-      if (fullScreen) return "100vh"; 
-      if (!isDesktop) return "100dvh"; // Mobile definitive full screen
-      if (showLyrics || showPlaylist) return 680; 
-      return 260; 
-    };
+    const togglePlay = useCallback(() => {
+        if(audioRef.current) {
+            if(isPaused) {
+                audioRef.current.play();
+                if(instruRef.current && result.karaokeUrl) instruRef.current.play();
+                setIsPaused(false);
+            } else {
+                audioRef.current.pause();
+                if(instruRef.current) instruRef.current.pause();
+                setIsPaused(true);
+            }
+        }
+    }, [isPaused, result.karaokeUrl]);
 
-    // --- NAVIGATION HANDLERS (Moved up to fix ReferenceError) ---
-    const handleNext = useCallback(() => {
-        setCurrentIndex((prev) => (prev + 1) % playlist.length);
-    }, []);
+    const handleSeekEnd = useCallback((newTime) => {
+        if (audioRef.current) audioRef.current.currentTime = newTime;
+        if (instruRef.current && result.karaokeUrl) instruRef.current.currentTime = newTime;
+    }, [result.karaokeUrl]);
 
-    const handlePrev = useCallback(() => {
-        setCurrentIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
-    }, []);
-
+    const handleNext = () => setCurrentIndex((prev) => (prev + 1) % playlist.length);
+    const handlePrev = () => setCurrentIndex((prev) => (prev - 1 + playlist.length) % playlist.length);
     const selectSong = (idx) => { if (idx === currentIndex) { setShowPlaylist(false); return; } setCurrentIndex(idx); setShowPlaylist(false); };
 
+    // LAYOUT RESPONSIVE (160px Mobile / 260px Desktop)
+    const getCardHeight = () => {
+      if (fullScreen) return "100vh"; // Full screen height
+      if (showLyrics || showPlaylist) return isDesktop ? 680 : 580; 
+      return isDesktop ? 260 : 190; 
+    };
+
+    // Calculate colored shadow
+    const getShadowColor = () => {
+        // This is a placeholder. Real implementation would use ColorThief or similar.
+        // For now, we rely on the blurred background image to provide the glow.
+        return "rgba(0,0,0,0.5)"; 
+    };
 
     return (
-        <div className={`${fullScreen ? "w-full h-full" : (isDesktop ? "mt-6 w-full max-w-md mx-auto" : "w-full h-full fixed inset-0 overflow-hidden")} font-jost select-none relative z-10`}>
-            {/* AUDIO ELEMENTS with direct event listeners */}
-            <audio 
-                ref={audioRef} 
-                preload="auto" 
-                onEnded={handleNext} 
-                onLoadedMetadata={handleLoadedMetadata}
-                onError={(e) => { console.error("Audio Error:", e); setIsLoading(false); }}
-                className="hidden" 
-            />
+        <div className={`${fullScreen ? "w-full h-full" : "mt-6 w-full max-w-md mx-auto"} font-jost select-none relative z-10`}>
+            <audio ref={audioRef} preload="auto" onEnded={handleNext} className="hidden" />
             <audio ref={instruRef} preload="auto" className="hidden" />
 
-            {/* PERFORMANCE: transition-[height] */}
+            {/* PERFORMANCE: transition-[height] ONLY (Don't animate everything) */}
+            {/* PERFORMANCE: will-change-height (Hint browser to prepare optimization) */}
             <div 
-                className={`relative w-full ${fullScreen || !isDesktop ? "h-full rounded-none" : "rounded-[40px] shadow-2xl overflow-hidden"} bg-[#0a0a0a] transition-[height] duration-500 cubic-bezier(0.32, 0.72, 0, 1) will-change-height`}
+                className={`relative w-full ${fullScreen ? "" : "rounded-[40px] shadow-2xl"} overflow-hidden bg-[#0a0a0a] transition-[height] duration-500 cubic-bezier(0.32, 0.72, 0, 1) will-change-height`}
                 style={{ height: getCardHeight() }}
             >
                 
-                {/* 3-LAYER ALIVE BACKGROUND */}
+                {/* 3-LAYER ALIVE BACKGROUND (OPTIMIZED) */}
                 <AliveBackground cover={result.microCover || result.cover} />
 
                 <div className="relative z-10 w-full h-full p-6 flex flex-col border border-white/5">
-                    {/* --- MOBILE HEADER --- */}
-                    {!isDesktop && (
-                        <div className="flex items-center justify-between mb-2 opacity-100 transition-opacity duration-300">
-                             <div className="flex items-center gap-3 min-w-0">
-                                <div className="w-12 h-12 rounded-md overflow-hidden shadow-md relative shrink-0 border border-white/10">
-                                    {result.cover ? <img src={result.cover} alt="Cover" className="w-full h-full object-cover" /> : <div className="bg-white/10 w-full h-full" />}
-                                </div>
-                                <div className="flex flex-col min-w-0">
-                                    <h3 className="font-bold text-white text-[16px] leading-tight truncate">{result.title}</h3>
-                                    <p className="text-white/60 font-medium text-[12px] truncate">{result.artist}</p>
-                                </div>
-                             </div>
-                             {/* REMOVED LEFT PLAYLIST BUTTON? Left side is Art. Right side is options. */}
-                             <div className="flex items-center gap-4">
-                                <button className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/20 transition-all">
-                                    <FontAwesomeIcon icon={faEllipsisH} className="text-sm" />
-                                </button>
-                             </div>
-                        </div>
-                    )}
-
-                    {/* --- DESKTOP HEADER (Existing Logic) --- */}
-                    {isDesktop && (!fullScreen || showLyrics || showPlaylist) && (
+                    {/* Header - Conditionally Hidden in FullScreen Idle Mode */}
+                    {(!fullScreen || (showLyrics && !isDesktop) || showPlaylist) && (
                         <div className="flex items-center space-x-5 shrink-0 mb-4 relative z-50 animate-fade-in">
                             <div className="w-14 h-14 rounded-lg overflow-hidden shadow-lg relative shrink-0 border border-white/10 bg-white/5">
                                 {result.cover ? <img src={result.cover} alt="Cover" className="w-full h-full object-cover" loading="eager" decoding="async" /> : <div className="w-full h-full flex items-center justify-center"><FontAwesomeIcon icon={faApple} className="text-white/30 text-xl" /></div>}
@@ -570,13 +618,13 @@ const Card = ({ fullScreen = false }) => {
                             </motion.button>
                         )}
 
-                        {/* ===== LARGE ART VIEW (Desktop Only) ===== */}
-                        {fullScreen && isDesktop && (
+                        {/* ===== LARGE ART VIEW ===== */}
+                        {fullScreen && (
                              <div className={`${fullScreen && showLyrics && isDesktop 
                                  ? "w-[45%] relative flex flex-col items-center justify-center px-6 shrink-0" 
                                  : `absolute inset-0 z-20 flex flex-col items-center justify-center px-6 pt-4 pb-14 ${
                                      showLyrics || showPlaylist 
-                                         ? ""
+                                         ? (isDesktop ? "" : "opacity-0 scale-95 blur-md pointer-events-none")
                                          : "opacity-100 scale-100 blur-0 pointer-events-auto"
                                  }`
                              }`}
@@ -668,7 +716,7 @@ const Card = ({ fullScreen = false }) => {
 
                         {/* ===== LYRICS AREA (Spring animated) ===== */}
                         <AnimatePresence>
-                        {(showLyrics || showPlaylist || !fullScreen || !isDesktop) && (
+                        {(showLyrics || showPlaylist || !fullScreen) && (
                             <motion.div 
                                 ref={scrollRef} 
                                 initial={{ opacity: 0, y: 40 }}
@@ -703,90 +751,63 @@ const Card = ({ fullScreen = false }) => {
                         )}
                         </AnimatePresence>
 
-                        {/* Bottom Actions (Desktop Only or Non-Mobile Controls) */}
-                        {isDesktop && (
-                            <div className="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end z-40">
-                                 <button onClick={(e) => { e.stopPropagation(); setShowPlaylist(!showPlaylist); }} className={`w-7 h-7 rounded-full flex items-center justify-center bg-black/20 backdrop-blur-md border border-white/10 transition-all active:scale-90 ${showPlaylist ? "bg-white text-black" : "text-white hover:bg-white/10"}`}><FontAwesomeIcon icon={showPlaylist ? faTimes : faBars} className="text-[10px]" /></button>
-                                 {result.karaokeUrl && !showPlaylist && (
-                                    <div className="relative pointer-events-auto font-jost">
-                                        <AnimatePresence>{showVocalControls && (<AppleVocalSlider value={vocalMix} onChange={setVocalMix} onClose={() => setShowVocalControls(false)} />)}</AnimatePresence>
-                                        <button onClick={() => setShowVocalControls(!showVocalControls)} className={`w-7 h-7 rounded-full flex items-center justify-center bg-black/20 backdrop-blur-md border border-white/10 transition-all active:scale-90 ${showVocalControls || vocalMix < 0.95 ? "bg-white text-black" : "text-white hover:bg-white/10"}`}><FontAwesomeIcon icon={faMicrophone} className="text-[10px]" /></button>
-                                    </div>
-                                )}
-                            </div>
-                        )}
                     </div>
 
-                    {/* --- CONTROLS SECTION --- */}
-                    <div className="mt-auto shrink-0 z-50 pt-2 w-full">
-                        
-                        {/* MOBILE CONTROLS */}
-                        {!isDesktop && (
-                            <div className="flex flex-col w-full">
-                                {/* Scrubber */}
-                                <div className="mb-6 w-full px-6">
-                                     <AppleMusicTimeSlider audioRef={audioRef} duration={duration} isPaused={isPaused} onSeekStart={() => {}} onSeekEnd={handleSeekEnd} />
-                                </div>
+                    {/* Controls */}
+                    <div className="mt-auto flex flex-col gap-2 shrink-0 z-20 pt-2">
+                        <AppleMusicTimeSlider audioRef={audioRef} duration={duration} isPaused={isPaused} onSeekStart={() => {}} onSeekEnd={handleSeekEnd} />
+                        <div className="flex justify-center items-center gap-6">
+                            <button onClick={handlePrev} className="text-white/60 hover:text-white p-3 active:scale-90 transition-all duration-200"><FontAwesomeIcon icon={faBackward} size="lg" /></button>
+                            <button onClick={togglePlay} className={`bg-white text-black w-16 h-16 rounded-full flex items-center justify-center shadow-lg active:scale-90 transition-all duration-200 ${isLoading ? 'opacity-80' : ''}`}>{isLoading ? <FontAwesomeIcon icon={faSpinner} spin size="lg" className="text-black/50" /> : <FontAwesomeIcon icon={isPaused ? faPlay : faPause} size="2xl" className={isPaused ? "ml-2" : ""} />}</button>
+                            <button onClick={handleNext} className="text-white/60 hover:text-white p-3 active:scale-90 transition-all duration-200"><FontAwesomeIcon icon={faForward} size="lg" /></button>
+                        </div>
 
-                                {/* Main Playback */}
-                                <div className="flex justify-center items-center gap-14 mb-12">
-                                    <button onClick={handlePrev} className="text-white/70 hover:text-white transition-all active:scale-90"><FontAwesomeIcon icon={faBackward} className="text-3xl" /></button>
-                                    <button onClick={togglePlay} className="text-white hover:scale-105 transition-all active:scale-90">
-                                        {isLoading 
-                                            ? <FontAwesomeIcon icon={faSpinner} spin className="text-6xl text-white/50" />
-                                            : <FontAwesomeIcon icon={isPaused ? faPlay : faPause} className="text-7xl" />
-                                        }
-                                    </button>
-                                    <button onClick={handleNext} className="text-white/70 hover:text-white transition-all active:scale-90"><FontAwesomeIcon icon={faForward} className="text-3xl" /></button>
-                                </div>
+                        {/* Bottom Action Bar — Apple Music style (chat, karaoke, playlist) */}
+                        {fullScreen && (
+                            <div className="flex justify-around items-center pt-2 pb-1">
+                                {/* Chat Button */}
+                                <button 
+                                    onClick={onOpenChat} 
+                                    className="w-10 h-10 rounded-full flex items-center justify-center text-white/50 hover:text-white/80 active:scale-90 transition-all"
+                                >
+                                    <FontAwesomeIcon icon={faCommentDots} className="text-lg" />
+                                </button>
 
-                                {/* Bottom Row (Lyrics, Chat, List) - Centered & Spaced */}
-                                <div className="flex justify-center items-center gap-16 pb-12 w-full">
-                                    <button className="w-10 h-10 flex items-center justify-center text-white bg-white/20 rounded-full backdrop-blur-md">
-                                        <FontAwesomeIcon icon={faQuoteRight} className="text-lg" />
-                                    </button>
-                                    
-                                    {/* CHAT BUTTON */}
-                                    <button 
-                                        onClick={() => setIsChatOpen(!isChatOpen)} 
-                                        className={`w-10 h-10 flex items-center justify-center rounded-full transition-all active:scale-90 border border-white/5 ${isChatOpen ? "bg-[#0a84ff] text-white shadow-lg shadow-blue-500/20" : "bg-white/10 text-white/60 hover:text-white hover:bg-white/20"}`}
-                                    >
-                                        <FontAwesomeIcon icon={faCommentDots} className="text-lg" />
-                                    </button>
-                                    
-                                    <button onClick={() => setShowPlaylist(!showPlaylist)} className="w-10 h-10 flex items-center justify-center text-white/60 hover:text-white bg-white/10 hover:bg-white/20 rounded-full transition-all active:scale-90 border border-white/5">
-                                        <FontAwesomeIcon icon={faList} className="text-lg" />
-                                    </button>
-                                </div>
-                            </div>
-                        )}
+                                {/* Karaoke / Vocal Controls */}
+                                {result.karaokeUrl ? (
+                                    <div className="relative">
+                                        <AnimatePresence>{showVocalControls && (<AppleVocalSlider value={vocalMix} onChange={setVocalMix} onClose={() => setShowVocalControls(false)} />)}</AnimatePresence>
+                                        <button 
+                                            onClick={() => setShowVocalControls(!showVocalControls)} 
+                                            className={`w-10 h-10 rounded-full flex items-center justify-center active:scale-90 transition-all ${
+                                                showVocalControls || vocalMix < 0.95 
+                                                    ? "text-[#ff375f]" 
+                                                    : "text-white/50 hover:text-white/80"
+                                            }`}
+                                        >
+                                            <FontAwesomeIcon icon={faMicrophone} className="text-lg" />
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className="w-10 h-10" /> /* spacer */
+                                )}
 
-                        {/* DESKTOP CONTROLS */}
-                        {isDesktop && (
-                            <div className="flex flex-col gap-3">
-                                <AppleMusicTimeSlider audioRef={audioRef} duration={duration} isPaused={isPaused} onSeekStart={() => {}} onSeekEnd={handleSeekEnd} />
-                                <div className="flex justify-center items-center gap-6 relative">
-                                    <button onClick={handlePrev} className="text-white/60 hover:text-white p-3 active:scale-90 transition-all duration-200"><FontAwesomeIcon icon={faBackward} size="lg" /></button>
-                                    <button onClick={togglePlay} className={`bg-white text-black w-16 h-16 rounded-full flex items-center justify-center shadow-lg active:scale-90 transition-all duration-200 ${isLoading ? 'opacity-80' : ''}`}>{isLoading ? <FontAwesomeIcon icon={faSpinner} spin size="lg" className="text-black/50" /> : <FontAwesomeIcon icon={isPaused ? faPlay : faPause} size="2xl" className={isPaused ? "ml-2" : ""} />}</button>
-                                    <button onClick={handleNext} className="text-white/60 hover:text-white p-3 active:scale-90 transition-all duration-200"><FontAwesomeIcon icon={faForward} size="lg" /></button>
-                                    
-                                    {/* Desktop Chat Button (Absolute Right or Inline) */}
-                                    <button 
-                                        onClick={() => setIsChatOpen(!isChatOpen)}
-                                        className={`absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full flex items-center justify-center transition-all active:scale-90 ${isChatOpen ? "bg-[#0a84ff] text-white" : "text-white/40 hover:text-white hover:bg-white/10"}`}
-                                        title="Chat with AI"
-                                    >
-                                        <FontAwesomeIcon icon={faCommentDots} />
-                                    </button>
-                                </div>
+                                {/* Playlist Button */}
+                                <button 
+                                    onClick={() => { setShowPlaylist(!showPlaylist); if (!showPlaylist) { setShowLyrics(true); } }} 
+                                    className={`w-10 h-10 rounded-full flex items-center justify-center active:scale-90 transition-all ${
+                                        showPlaylist 
+                                            ? "text-[#ff375f]" 
+                                            : "text-white/50 hover:text-white/80"
+                                    }`}
+                                >
+                                    <FontAwesomeIcon icon={faBars} className="text-lg" />
+                                </button>
                             </div>
                         )}
                     </div>
                 </div>
             </div>
-
-            {/* CHAT COMPONENT (Controlled) */}
-            <Chat isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
 
             <style jsx global>{`
                 .no-scrollbar::-webkit-scrollbar { display: none; }

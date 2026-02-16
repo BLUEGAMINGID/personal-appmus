@@ -4,7 +4,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { 
-    faCommentDots, faPaperPlane, faTimes, faRobot, faCircle, faExclamationTriangle, faExternalLinkAlt, faBriefcase, faUser, faChevronDown 
+    faPaperPlane, faRobot, faCircle, faExclamationTriangle, faExternalLinkAlt, faUser, faChevronDown 
 } from "@fortawesome/free-solid-svg-icons";
 import { faGithub, faInstagram, faLinkedin, faLetterboxd, faTiktok } from "@fortawesome/free-brands-svg-icons";
 
@@ -112,7 +112,8 @@ ARTIS & KOLEKSI LENGKAP:
 `;
 
 
-const Chat = ({ isOpen, onClose }) => {
+// Chat component now accepts isOpen/setIsOpen as props (controlled by parent)
+const Chat = ({ isOpen = false, onClose }) => {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   
@@ -122,18 +123,12 @@ const Chat = ({ isOpen, onClose }) => {
 
   const messagesEndRef = useRef(null);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
   useEffect(() => {
-    if (isOpen) scrollToBottom();
+    if (isOpen) messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, isOpen]);
 
-
-
   const handleNavigation = (hash) => {
-      setIsOpen(false);
+      if (onClose) onClose();
       window.location.hash = hash;
   };
 
@@ -236,105 +231,109 @@ const Chat = ({ isOpen, onClose }) => {
   };
 
 
-  // Controlled component props
-  if (isOpen === undefined) isOpen = false; 
-
   return (
-    <AnimatePresence>
-      {isOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: "100%", scale: 1 }}
-          animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: "100%", scale: 1 }}
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className="fixed inset-0 z-[10000] bg-[#0a0a0a] flex flex-col sm:absolute sm:inset-auto sm:bottom-[70px] sm:right-0 sm:w-[380px] sm:h-[580px] sm:rounded-3xl sm:shadow-[0_25px_80px_rgba(0,0,0,0.6)] sm:border sm:border-white/10 overflow-hidden font-sans antialiased"
-        >
-          {/* HEADER - Apple Music Style */}
-          <div className="relative bg-[#1c1c1e]/80 backdrop-blur-2xl px-5 py-4 flex justify-between items-center shrink-0 border-b border-white/5">
-            <div className="flex items-center gap-3">
-              <div className="relative">
-                  <div className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center border border-white/10">
-                      <FontAwesomeIcon icon={faRobot} className="text-white/80 text-sm"/>
-                  </div>
-                  <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-[#1c1c1e]"></div>
-              </div>
-              <div>
-                  <h3 className="font-bold text-white text-sm leading-tight">DanZ-Kev</h3>
-                  <div className="flex items-center gap-1">
-                      <FontAwesomeIcon icon={faCircle} className="text-[5px] text-green-400" />
-                      <span className="text-[10px] text-white/40 font-medium">Online</span>
-                  </div>
-              </div>
-            </div>
-            
-            <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-all active:scale-90">
-              <FontAwesomeIcon icon={faChevronDown} className="text-white/60 text-xs"/>
-            </button>
-          </div>
-
-          {/* CHAT AREA */}
-          <div className="flex-1 overflow-y-auto px-4 py-5 space-y-4 scroll-smooth">
-            {messages.map((msg, idx) => (
-              <motion.div 
-                  key={idx} 
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className={`flex ${msg.role === "user" ? "justify-end" : "justify-start items-end"}`}
-              >
-                {msg.role !== "user" && (
-                      <div className="w-6 h-6 bg-white/10 rounded-full flex items-center justify-center mr-2 shrink-0 mb-0.5 border border-white/5">
-                          <FontAwesomeIcon icon={faRobot} className="text-white/50 text-[9px]" />
-                      </div>
-                )}
-                <div 
-                  className={`max-w-[80%] px-3.5 py-2.5 text-[13px] leading-relaxed whitespace-pre-wrap
-                  ${msg.role === "user" 
-                      ? "bg-[#0a84ff] text-white rounded-2xl rounded-br-md" 
-                      : "bg-[#1c1c1e] text-white/90 border border-white/5 rounded-2xl rounded-bl-md"}`}
-                >
-                  {msg.role === "assistant" ? renderMessageContent(msg.content) : msg.content}
-                </div>
-              </motion.div>
-            ))}
-            
-            {isLoading && (
-                <div className="flex justify-start items-end gap-2">
-                    <div className="w-6 h-6 bg-white/10 rounded-full flex items-center justify-center border border-white/5">
-                          <FontAwesomeIcon icon={faRobot} className="text-white/50 text-[9px]" />
+    <>
+      {/* CHAT WINDOW (Apple Music Dark Aesthetic) — controlled by parent */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: "100%", scale: 1 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: "100%", scale: 1 }}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            className="pointer-events-auto fixed inset-0 z-[10000] bg-[#0a0a0a] flex flex-col overflow-hidden font-jost"
+          >
+            {/* HEADER - Apple Music Style */}
+            <div className="relative bg-[#1c1c1e]/80 backdrop-blur-2xl px-5 py-4 flex justify-between items-center shrink-0 border-b border-white/5">
+              <div className="flex items-center gap-3">
+                <div className="relative">
+                    <div className="w-9 h-9 bg-white/10 rounded-full flex items-center justify-center border border-white/10">
+                        <FontAwesomeIcon icon={faRobot} className="text-white/80 text-sm"/>
                     </div>
-                  <div className="bg-[#1c1c1e] px-4 py-3 rounded-2xl rounded-bl-md border border-white/5">
-                      <div className="flex space-x-1">
-                          <div className="w-1.5 h-1.5 bg-white/30 rounded-full animate-bounce [animation-delay:-0.3s]" />
-                          <div className="w-1.5 h-1.5 bg-white/30 rounded-full animate-bounce [animation-delay:-0.15s]" />
-                          <div className="w-1.5 h-1.5 bg-white/30 rounded-full animate-bounce" />
-                      </div>
-                  </div>
+                    <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-green-500 rounded-full border-2 border-[#1c1c1e]"></div>
+                </div>
+                <div>
+                    <h3 className="font-bold text-white text-sm leading-tight">DanZ-Kev</h3>
+                    <div className="flex items-center gap-1">
+                        <FontAwesomeIcon icon={faCircle} className="text-[5px] text-green-400" />
+                        <span className="text-[10px] text-white/40 font-medium">Online</span>
+                    </div>
+                </div>
               </div>
-            )}
-            <div ref={messagesEndRef} className="h-1" />
-          </div>
+              
+              <button onClick={onClose} className="w-8 h-8 flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20 transition-all active:scale-90">
+                <FontAwesomeIcon icon={faChevronDown} className="text-white/60 text-xs"/>
+              </button>
+            </div>
 
-          {/* INPUT AREA - Apple Music Style */}
-          <form onSubmit={handleSend} className="px-4 py-3 bg-[#1c1c1e]/60 backdrop-blur-xl border-t border-white/5 flex gap-2.5 shrink-0 pb-safe sm:pb-4">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Ketik pesan..."
-              className="flex-1 bg-white/10 text-white text-xs px-4 py-3 rounded-full focus:outline-none focus:ring-1 focus:ring-white/20 focus:bg-white/15 transition-all border border-white/5 placeholder:text-white/25 font-medium"
-            />
-            <button 
-              type="submit" 
-              disabled={isLoading || !input.trim()}
-              className="w-10 h-10 bg-[#0a84ff] text-white rounded-full flex items-center justify-center hover:bg-[#0b7aed] active:scale-90 disabled:opacity-30 disabled:scale-100 transition-all shrink-0"
-            >
-              <FontAwesomeIcon icon={faPaperPlane} className="text-xs" />
-            </button>
-          </form>
-        </motion.div>
-      )}
-    </AnimatePresence>
+            {/* CHAT AREA */}
+            <div className="flex-1 overflow-y-auto px-4 py-5 space-y-4 scroll-smooth">
+              {messages.map((msg, idx) => (
+                <motion.div 
+                    key={idx} 
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className={`flex ${msg.role === "user" ? "justify-end" : "justify-start items-end"}`}
+                >
+                  {msg.role !== "user" && (
+                       <div className="w-6 h-6 bg-white/10 rounded-full flex items-center justify-center mr-2 shrink-0 mb-0.5 border border-white/5">
+                            <FontAwesomeIcon icon={faRobot} className="text-white/50 text-[9px]" />
+                       </div>
+                  )}
+                  <div 
+                    className={`max-w-[80%] px-3.5 py-2.5 text-[13px] leading-relaxed whitespace-pre-wrap
+                    ${msg.role === "user" 
+                        ? "bg-[#0a84ff] text-white rounded-2xl rounded-br-md" 
+                        : "bg-[#1c1c1e] text-white/90 border border-white/5 rounded-2xl rounded-bl-md"}`}
+                  >
+                    {msg.role === "assistant" ? renderMessageContent(msg.content) : msg.content}
+                  </div>
+                </motion.div>
+              ))}
+              
+              {isLoading && (
+                 <div className="flex justify-start items-end gap-2">
+                     <div className="w-6 h-6 bg-white/10 rounded-full flex items-center justify-center border border-white/5">
+                            <FontAwesomeIcon icon={faRobot} className="text-white/50 text-[9px]" />
+                     </div>
+                    <div className="bg-[#1c1c1e] px-4 py-3 rounded-2xl rounded-bl-md border border-white/5">
+                        <div className="flex space-x-1">
+                            <div className="w-1.5 h-1.5 bg-white/30 rounded-full animate-bounce [animation-delay:-0.3s]" />
+                            <div className="w-1.5 h-1.5 bg-white/30 rounded-full animate-bounce [animation-delay:-0.15s]" />
+                            <div className="w-1.5 h-1.5 bg-white/30 rounded-full animate-bounce" />
+                        </div>
+                    </div>
+                </div>
+              )}
+              <div ref={messagesEndRef} className="h-1" />
+            </div>
+
+            {/* INPUT AREA - Apple Music Style */}
+            <form onSubmit={handleSend} className="px-4 py-3 bg-[#1c1c1e]/60 backdrop-blur-xl border-t border-white/5 flex gap-2.5 shrink-0 pb-safe">
+              <input
+                type="text"
+                value={input}
+                onChange={(e) => setInput(e.target.value)}
+                placeholder="Ketik pesan..."
+                className="flex-1 bg-white/10 text-white text-xs px-4 py-3 rounded-full focus:outline-none focus:ring-1 focus:ring-white/20 focus:bg-white/15 transition-all border border-white/5 placeholder:text-white/25 font-medium"
+              />
+              <button 
+                type="submit" 
+                disabled={isLoading || !input.trim()}
+                className="w-10 h-10 bg-[#0a84ff] text-white rounded-full flex items-center justify-center hover:bg-[#0b7aed] active:scale-90 disabled:opacity-30 disabled:scale-100 transition-all shrink-0"
+              >
+                <FontAwesomeIcon icon={faPaperPlane} className="text-xs" />
+              </button>
+            </form>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <style jsx>{`
+        .pb-safe { padding-bottom: max(16px, env(safe-area-inset-bottom)); }
+      `}</style>
+    </>
   );
 };
 
