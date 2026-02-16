@@ -1,0 +1,43 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" itunes:timing="Line" xml:lang="en">
+	<head>
+		<metadata>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal">
+				<translations/>
+				<songwriters>
+					<songwriter>Fathia Izzati</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="00:02:25.410">
+		<div begin="00:00:02.240" end="00:02:09.880">
+			<p begin="00:00:02.240" end="00:00:08.750">Four summers were never enough</p>
+			<p begin="00:00:08.750" end="00:00:13.310">To keep us together</p>
+			<p begin="00:00:13.310" end="00:00:17.860">Bad times, they didn't seem so rough</p>
+			<p begin="00:00:17.860" end="00:00:21.580">You know you're my pain reliever</p>
+			<p begin="00:00:21.580" end="00:00:28.560">What do you do when all is through?</p>
+			<p begin="00:00:28.560" end="00:00:32.490">When all is said and done</p>
+			<p begin="00:00:32.490" end="00:00:34.770">Where did you go?</p>
+			<p begin="00:00:34.770" end="00:00:36.550">Who are you now?</p>
+			<p begin="00:00:36.550" end="00:00:46.180">I really wanna see you again</p>
+			<p begin="00:00:46.180" end="00:00:56.340">I really wanna be your best friend</p>
+			<p begin="00:00:56.340" end="00:01:07.330">I'll even let go of my ego in saying this</p>
+			<p begin="00:01:07.330" end="00:01:12.930">'Cause I just wanna see you again</p>
+			<p begin="00:01:12.930" end="00:01:41.680">What do you do when all is through?</p>
+			<p begin="00:01:41.680" end="00:01:45.670">When all is said and done</p>
+			<p begin="00:01:45.670" end="00:01:47.940">Where did you go?</p>
+			<p begin="00:01:47.940" end="00:01:50.260">Who are you now?</p>
+			<p begin="00:01:50.260" end="00:01:58.150">(Life isn't easy) I really wanna see you again</p>
+			<p begin="00:01:58.150" end="00:02:00.340">(Life is a mystery)</p>
+			<p begin="00:02:00.340" end="00:02:07.500">(Life isn't easy) I really wanna be your best friend</p>
+			<p begin="00:02:07.500" end="00:02:09.880">(Life is a mystery)</p>
+		</div>
+		<div begin="00:02:12.260" end="00:02:25.410">
+			<p begin="00:02:12.260" end="00:02:20.410">I'll even let go of my ego in saying this</p>
+			<p begin="00:02:20.410" end="00:02:25.410">'Cause I just wanna see you again</p>
+		</div>
+	</body>
+</tt>
+
+

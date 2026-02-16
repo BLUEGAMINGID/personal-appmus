@@ -1,0 +1,56 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" itunes:timing="Line" xml:lang="en">
+	<head>
+		<metadata>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal" leadingSilence="0.660">
+				<translations/>
+				<songwriters>
+					<songwriter>Faiz Novascotia Saripudin</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="3:56.910">
+		<div begin="38.500" end="1:02.830">
+			<p begin="38.500" end="44.460">Listen won't you for a second</p>
+			<p begin="44.460" end="50.140">There are things you need to hear</p>
+			<p begin="50.140" end="56.400">Your mind is wondering ever-restless</p>
+			<p begin="56.400" end="1:02.830">Gotta stop you while you're near</p>
+		</div>
+		<div begin="1:05.850" end="1:23.770">
+			<p begin="1:05.850" end="1:17.700">And I know this isn't it</p>
+			<p begin="1:17.700" end="1:23.770">And I know this can't be it</p>
+		</div>
+		<div begin="1:25.940" end="3:29.630">
+			<p begin="1:25.940" end="1:31.870">Take a breather and just to be here</p>
+			<p begin="1:31.870" end="1:37.920">Promises we used to make</p>
+			<p begin="1:37.920" end="1:43.710">Linger longer than a second</p>
+			<p begin="1:43.710" end="1:53.320">Care to make a few mistakes</p>
+			<p begin="1:53.320" end="2:05.080">And I know this isn't it</p>
+			<p begin="2:05.080" end="2:11.510">And I know this can't be it</p>
+			<p begin="2:11.510" end="2:17.690">I waited too long just so I could sing this song</p>
+			<p begin="2:17.690" end="2:23.280">And take the silly pieces of my heart</p>
+			<p begin="2:23.280" end="2:29.300">I'm waited too long just so you could come along</p>
+			<p begin="2:29.300" end="2:35.460">And break the silly pieces of my heart</p>
+			<p begin="2:35.460" end="2:36.970">Take it all</p>
+			<p begin="2:36.970" end="2:38.480">('cause I got to go)</p>
+			<p begin="2:38.480" end="2:40.380">Watch me fall</p>
+			<p begin="2:40.380" end="2:41.490">('cause I got to go)</p>
+			<p begin="2:41.490" end="2:43.250">Understand</p>
+			<p begin="2:43.250" end="2:47.440">(I got to go take it all away)</p>
+			<p begin="2:47.440" end="2:49.030">Take it all</p>
+			<p begin="2:49.030" end="2:49.710">('cause I got to go)</p>
+			<p begin="2:49.710" end="2:51.760">Watch me fall</p>
+			<p begin="2:51.760" end="2:53.390">('cause I got to go)</p>
+			<p begin="2:53.390" end="2:55.100">Understand</p>
+			<p begin="2:55.100" end="3:29.630">(I got to go take it all away)</p>
+		</div>
+		<div begin="3:34.120" end="3:56.910">
+			<p begin="3:34.120" end="3:37.250">There's more to this</p>
+			<p begin="3:37.250" end="3:46.040">I want to see the one behind it all</p>
+			<p begin="3:46.040" end="3:56.910">I'm holding on but I can't promise that I won't fall</p>
+		</div>
+	</body>
+</tt>
+
+

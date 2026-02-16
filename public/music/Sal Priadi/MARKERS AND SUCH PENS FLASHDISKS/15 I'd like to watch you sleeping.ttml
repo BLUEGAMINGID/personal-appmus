@@ -1,0 +1,82 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="id">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal">
+				<translations/>
+				<songwriters>
+					<songwriter>Ahmad Dhani</songwriter>
+					<songwriter>Salmantyo Ashrizky Priadi</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="5:09.333">
+		<div begin="32.504" end="53.263" itunes:songPart="Verse">
+			<p begin="32.504" end="35.306" itunes:key="L1" ttm:agent="v1">I'd like to watch you sleeping</p>
+			<p begin="37.985" end="40.902" itunes:key="L2" ttm:agent="v1">Lebih sering menganga</p>
+			<p begin="41.837" end="46.815" itunes:key="L3" ttm:agent="v1">Aku lihat ada tempat longgar di sana</p>
+			<p begin="47.095" end="53.263" itunes:key="L4" ttm:agent="v1">Aku ingin tinggal di belakang gigimu</p>
+		</div>
+		<div begin="53.951" end="1:12.223" itunes:songPart="Verse">
+			<p begin="53.951" end="56.953" itunes:key="L5" ttm:agent="v1">Aku banyak takutnya</p>
+			<p begin="57.941" end="1:02.881" itunes:key="L6" ttm:agent="v1">Misalnya kehilangan dirimu sekali lagi</p>
+			<p begin="1:03.280" end="1:08.557" itunes:key="L7" ttm:agent="v1">Dan patah hati perasaan sendiri</p>
+			<p begin="1:09.117" end="1:12.223" itunes:key="L8" ttm:agent="v1">Bukan hal yang aku suka</p>
+		</div>
+		<div begin="1:14.602" end="1:36.329" itunes:songPart="Chorus">
+			<p begin="1:14.602" end="1:18.700" itunes:key="L9" ttm:agent="v1">Hal yang paling ku suka di dekatmu</p>
+			<p begin="1:19.004" end="1:24.054" itunes:key="L10" ttm:agent="v1">Kau adalah orang favoritku, nomor satu</p>
+			<p begin="1:24.319" end="1:29.378" itunes:key="L11" ttm:agent="v1">Nomor dua, tiga, empat, lima, enam</p>
+			<p begin="1:29.655" end="1:36.329" itunes:key="L12" ttm:agent="v1">Isinya namamu, huruf besar semua</p>
+		</div>
+		<div begin="1:36.657" end="1:59.266" itunes:songPart="Chorus">
+			<p begin="1:36.657" end="1:39.927" itunes:key="L13" ttm:agent="v1">Dan hitungan ke seribu</p>
+			<p begin="1:40.596" end="1:44.266" itunes:key="L14" ttm:agent="v1">Seribu tahun lagi maksudku</p>
+			<p begin="1:45.628" end="1:50.410" itunes:key="L15" ttm:agent="v1">Hiduplah terus, ada terus</p>
+			<p begin="1:50.928" end="1:59.266" itunes:key="L16" ttm:agent="v1">Seperti tokoh kartun di televisi itu</p>
+		</div>
+		<div begin="1:58.176" end="2:18.457" itunes:songPart="Verse">
+			<p begin="1:58.176" end="1:59.370" itunes:key="L17" ttm:agent="v1">I'd like to watch you sleeping</p>
+			<p begin="2:05.390" end="2:08.129" itunes:key="L18" ttm:agent="v1">Cari cara bagaimana kita bisa menjelajahi alam-alam mimpi</p>
+			<p begin="2:09.180" end="2:11.245" itunes:key="L19" ttm:agent="v1">Berdua akhirnya bisa terbang dan bermain-main di awan</p>
+			<p begin="2:13.002" end="2:14.831" itunes:key="L20" ttm:agent="v1">Berenang-renang ke dasar samudera biru</p>
+			<p begin="2:17.583" end="2:18.457" itunes:key="L21" ttm:agent="v1">Berdua di sana</p>
+		</div>
+		<div begin="2:18.091" end="2:43.481" itunes:songPart="Bridge">
+			<p begin="2:18.091" end="2:22.274" itunes:key="L22" ttm:agent="v1">Tubuh kita menguap menjadi bulir hujan yang diharapkan</p>
+			<p begin="2:22.274" end="2:25.631" itunes:key="L23" ttm:agent="v1">Setelah musim kemarau yang sangat panjang</p>
+			<p begin="2:26.181" end="2:31.602" itunes:key="L24" ttm:agent="v1">Serupa berkat deras jatuh, deras jatuh ke bumi</p>
+			<p begin="2:31.602" end="2:34.295" itunes:key="L25" ttm:agent="v1">Menyirami bunga-bunga indah</p>
+			<p begin="2:34.295" end="2:41.310" itunes:key="L26" ttm:agent="v1">Yang mekar hiasi hutan-hutan raksasa itu</p>
+			<p begin="2:42.344" end="2:43.481" itunes:key="L27" ttm:agent="v1">I'd like to watch you sleeping</p>
+		</div>
+		<div begin="2:52.520" end="3:15.709" itunes:songPart="Verse">
+			<p begin="2:52.520" end="2:55.395" itunes:key="L28" ttm:agent="v1">I'd like to watch you sleeping</p>
+			<p begin="2:57.883" end="3:00.858" itunes:key="L29" ttm:agent="v1">Lebih sering menganga</p>
+			<p begin="3:01.841" end="3:06.892" itunes:key="L30" ttm:agent="v1">Aku lihat ada tempat longgar di sana</p>
+			<p begin="3:07.282" end="3:15.709" itunes:key="L31" ttm:agent="v1">Ku ingin tinggal di belakang gigimu</p>
+		</div>
+		<div begin="3:54.188" end="4:14.558" itunes:songPart="Chorus">
+			<p begin="3:54.188" end="3:57.830" itunes:key="L32" ttm:agent="v1">Satu yang tak bisa lepas</p>
+			<p begin="3:58.274" end="4:00.274" itunes:key="L33" ttm:agent="v1">Percayalah</p>
+			<p begin="4:01.267" end="4:08.039" itunes:key="L34" ttm:agent="v1">Hanya kau yang mampu mencuri hatiku</p>
+			<p begin="4:09.280" end="4:14.558" itunes:key="L35" ttm:agent="v1">Aku pun tak mengerti</p>
+		</div>
+		<div begin="4:15.604" end="4:37.270" itunes:songPart="Chorus">
+			<p begin="4:15.604" end="4:19.216" itunes:key="L36" ttm:agent="v1">Satu yang tak bisa lepas</p>
+			<p begin="4:19.692" end="4:22.268" itunes:key="L37" ttm:agent="v1">Percayalah</p>
+			<p begin="4:22.654" end="4:29.657" itunes:key="L38" ttm:agent="v1">Hanya kau yang mampu mencuri hatiku</p>
+			<p begin="4:30.593" end="4:37.270" itunes:key="L39" ttm:agent="v1">Aku pun tak mengerti</p>
+		</div>
+		<div begin="4:36.876" end="5:06.583" itunes:songPart="Chorus">
+			<p begin="4:36.876" end="4:40.684" itunes:key="L40" ttm:agent="v1">Satu yang tak bisa lepas</p>
+			<p begin="4:41.260" end="4:50.609" itunes:key="L41" ttm:agent="v1">Bawalah kembali jiwa yang luka</p>
+			<p begin="4:51.275" end="4:57.028" itunes:key="L42" ttm:agent="v1">Dan perasaan yang lemah ini</p>
+			<p begin="4:57.890" end="5:06.583" itunes:key="L43" ttm:agent="v1">Menyentuh sendiriku</p>
+		</div>
+	</body>
+</tt>
+
+

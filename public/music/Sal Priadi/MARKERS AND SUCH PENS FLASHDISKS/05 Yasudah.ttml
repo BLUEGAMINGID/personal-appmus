@@ -1,0 +1,62 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="id">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<ttm:agent type="other" xml:id="v2000"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal" leadingSilence="0.060">
+				<translations/>
+				<songwriters>
+					<songwriter>Salmantyo Ashrizky Priadi</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="4:56.402">
+		<div begin="17.172" end="50.913" itunes:songPart="Verse">
+			<p begin="17.172" end="21.508" itunes:key="L1" ttm:agent="v1">Sudah hatinya ini tinggal satu-satunya</p>
+			<p begin="21.508" end="23.724" itunes:key="L2" ttm:agent="v1">Kau patahkan juga</p>
+			<p begin="25.512" end="30.982" itunes:key="L3" ttm:agent="v1">Lalu dia pakai apa untuk jalani ini semua?</p>
+			<p begin="34.114" end="37.030" itunes:key="L4" ttm:agent="v1">Emang ada persewaannya?</p>
+			<p begin="38.358" end="41.398" itunes:key="L5" ttm:agent="v1">Ini jelas bukan hal mudah</p>
+			<p begin="42.386" end="46.686" itunes:key="L6" ttm:agent="v1">Dia ambil serpihannya sambil dia bingung</p>
+			<p begin="46.686" end="50.913" itunes:key="L7" ttm:agent="v1">Mulai darimana beres-beresnya</p>
+		</div>
+		<div begin="50.913" end="1:05.034" itunes:songPart="Chorus">
+			<p begin="50.913" end="52.144" itunes:key="L8" ttm:agent="v1">Ya, sudah</p>
+			<p begin="53.367" end="58.828" itunes:key="L9" ttm:agent="v1">Mau tidak mau ia menatanya sendiri</p>
+			<p begin="59.228" end="1:03.657" itunes:key="L10" ttm:agent="v1">Tapi kalau sudah rapih, kau jangan datang lagi</p>
+			<p begin="1:03.657" end="1:05.034" itunes:key="L11" ttm:agent="v1">Janji</p>
+		</div>
+		<div begin="1:07.796" end="1:41.446" itunes:songPart="Verse">
+			<p begin="1:07.796" end="1:13.183" itunes:key="L12" ttm:agent="v1">Tidakkah kau kasihan dengan bentuk hatinya kini?</p>
+			<p begin="1:16.039" end="1:18.321" itunes:key="L13" ttm:agent="v1">Ada garis panjang merah</p>
+			<p begin="1:18.321" end="1:23.761" itunes:key="L14" ttm:agent="v1">Jadi semacam tanda dia orang yang pernah luka</p>
+			<p begin="1:24.827" end="1:27.627" itunes:key="L15" ttm:agent="v1">Kalau senyum dibuat-buat</p>
+			<p begin="1:28.843" end="1:31.739" itunes:key="L16" ttm:agent="v1">Mau terlihat selalu kuat</p>
+			<p begin="1:33.075" end="1:37.286" itunes:key="L17" ttm:agent="v1">Di malam-malamnya sangat sulit tidur</p>
+			<p begin="1:37.286" end="1:41.446" itunes:key="L18" ttm:agent="v1">Padahal kelelahan, lelah luar biasa</p>
+		</div>
+		<div begin="1:41.446" end="1:55.448" itunes:songPart="Chorus">
+			<p begin="1:41.446" end="1:42.744" itunes:key="L19" ttm:agent="v1">Ya, sudah</p>
+			<p begin="1:43.829" end="1:49.361" itunes:key="L20" ttm:agent="v1">Mau tidak mau ia menatanya sendiri</p>
+			<p begin="1:49.754" end="1:54.369" itunes:key="L21" ttm:agent="v1">Tapi kalau sudah rapih, jangan datang lagi</p>
+			<p begin="1:54.369" end="1:55.448" itunes:key="L22" ttm:agent="v1">Janji</p>
+		</div>
+		<div begin="3:17.717" end="3:36.403" itunes:songPart="Verse" ttm:agent="v2000">
+			<p begin="3:17.717" end="3:20.926" itunes:key="L23" ttm:agent="v2000">Hari ini ulang tahunku</p>
+			<p begin="3:22.593" end="3:25.753" itunes:key="L24" ttm:agent="v2000">Tahun kesekian tanpamu</p>
+			<p begin="3:27.290" end="3:29.788" itunes:key="L25" ttm:agent="v2000">Sebelum tiup lilin</p>
+			<p begin="3:29.788" end="3:34.300" itunes:key="L26" ttm:agent="v2000">Mamaku meminta sebut satu doa</p>
+			<p begin="3:34.672" end="3:36.403" itunes:key="L27" ttm:agent="v2000">Di hati kecilku</p>
+		</div>
+		<div begin="3:37.093" end="3:56.148" itunes:songPart="Verse" ttm:agent="v2000">
+			<p begin="3:37.093" end="3:39.654" itunes:key="L28" ttm:agent="v2000">Di sana bisa kau dengar</p>
+			<p begin="3:41.374" end="3:44.607" itunes:key="L29" ttm:agent="v2000">Berusaha sekuat tenaga</p>
+			<p begin="3:45.418" end="3:49.471" itunes:key="L30" ttm:agent="v2000">Sambil bisik-bisik dan terbata-bata</p>
+			<p begin="3:49.784" end="3:56.148" itunes:key="L31" ttm:agent="v2000">Dengarkah hatiku berdoa?</p>
+		</div>
+	</body>
+</tt>
+
+

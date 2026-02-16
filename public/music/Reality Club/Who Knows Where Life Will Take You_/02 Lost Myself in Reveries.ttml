@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="en">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal">
+				<translations/>
+				<songwriters>
+					<songwriter>Faiz Novascotia Saripudin</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="2:49.646">
+		<div begin="11.121" end="43.568" itunes:songPart="Verse">
+			<p begin="11.121" end="14.220" itunes:key="L1" ttm:agent="v1">I'm b-b-bursting at the seams with love</p>
+			<p begin="14.859" end="17.864" itunes:key="L2" ttm:agent="v1">My sister tell me tone it down just because</p>
+			<p begin="18.971" end="21.638" itunes:key="L3" ttm:agent="v1">You're bursting at the seams with love</p>
+			<p begin="22.123" end="25.862" itunes:key="L4" ttm:agent="v1">You try to play it cool but end up above and beyond</p>
+			<p begin="25.862" end="28.862" itunes:key="L5" ttm:agent="v1">T-t-t-take it easy just for a while</p>
+			<p begin="28.540" end="29.462" itunes:key="L6" ttm:agent="v1">For a while</p>
+			<p begin="29.463" end="32.464" itunes:key="L7" ttm:agent="v1">You're gonna tire yourself out by a mile</p>
+			<p begin="32.256" end="33.089" itunes:key="L8" ttm:agent="v1">By a mile</p>
+			<p begin="33.409" end="36.168" itunes:key="L9" ttm:agent="v1">But I swear to God it's just not my style</p>
+			<p begin="36.785" end="39.901" itunes:key="L10" ttm:agent="v1">I give it all up like I'm standing on trial</p>
+			<p begin="40.843" end="43.568" itunes:key="L11" ttm:agent="v1">So won't you take me home?</p>
+		</div>
+		<div begin="46.297" end="1:18.800" itunes:songPart="Chorus">
+			<p begin="46.297" end="49.752" itunes:key="L12" ttm:agent="v1">It's just my heart, get over it</p>
+			<p begin="50.005" end="53.253" itunes:key="L13" ttm:agent="v1">My head can't comprehend the half of it</p>
+			<p begin="53.703" end="57.066" itunes:key="L14" ttm:agent="v1">I slip and fall into this pit</p>
+			<p begin="57.387" end="1:00.827" itunes:key="L15" ttm:agent="v1">Of daytime dreams and romantics</p>
+			<p begin="1:01.005" end="1:04.408" itunes:key="L16" ttm:agent="v1">The smile you give's too good for me</p>
+			<p begin="1:04.752" end="1:08.235" itunes:key="L17" ttm:agent="v1">I lost myself in reveries</p>
+			<p begin="1:08.620" end="1:11.841" itunes:key="L18" ttm:agent="v1">Take it easy and we'll see</p>
+			<p begin="1:12.303" end="1:15.543" itunes:key="L19" ttm:agent="v1">Hopeless just for you and me</p>
+			<p begin="1:15.741" end="1:18.800" itunes:key="L20" ttm:agent="v1">So won't you take me home?</p>
+		</div>
+		<div begin="1:21.052" end="1:53.853" itunes:songPart="Verse">
+			<p begin="1:21.052" end="1:23.853" itunes:key="L21" ttm:agent="v1">So you read me like an open book</p>
+			<p begin="1:24.672" end="1:27.395" itunes:key="L22" ttm:agent="v1">My attention, my mind you took</p>
+			<p begin="1:28.525" end="1:31.184" itunes:key="L23" ttm:agent="v1">Obsessed with your daily look</p>
+			<p begin="1:32.141" end="1:34.933" itunes:key="L24" ttm:agent="v1">I'm caught and I can't get off the hook</p>
+			<p begin="1:35.469" end="1:38.587" itunes:key="L25" ttm:agent="v1">P-p-p-pump on the brakes, you're gon' need it</p>
+			<p begin="1:39.509" end="1:42.269" itunes:key="L26" ttm:agent="v1">Your heart breaks way too easy</p>
+			<p begin="1:42.868" end="1:45.809" itunes:key="L27" ttm:agent="v1">Expectations drowned out by joy</p>
+			<p begin="1:46.355" end="1:49.438" itunes:key="L28" ttm:agent="v1">You shoulda been just a little more coy</p>
+			<p begin="1:50.409" end="1:53.853" itunes:key="L29" ttm:agent="v1">So won't you take me home?</p>
+		</div>
+		<div begin="1:55.896" end="2:25.819" itunes:songPart="Chorus">
+			<p begin="1:55.896" end="1:59.336" itunes:key="L30" ttm:agent="v1">It's just my heart, get over it</p>
+			<p begin="1:59.565" end="2:03.019" itunes:key="L31" ttm:agent="v1">My head can't comprehend the half of it</p>
+			<p begin="2:03.302" end="2:06.653" itunes:key="L32" ttm:agent="v1">I slip and fall into this pit</p>
+			<p begin="2:06.960" end="2:10.501" itunes:key="L33" ttm:agent="v1">Of daytime dreams and romantics</p>
+			<p begin="2:10.592" end="2:14.168" itunes:key="L34" ttm:agent="v1">The smile you give's too good for me</p>
+			<p begin="2:14.269" end="2:17.803" itunes:key="L35" ttm:agent="v1">I lost myself in reveries</p>
+			<p begin="2:18.169" end="2:21.453" itunes:key="L36" ttm:agent="v1">Take it easy and we'll see</p>
+			<p begin="2:21.841" end="2:25.819" itunes:key="L37" ttm:agent="v1">Hopeless just for you and me</p>
+		</div>
+		<div begin="2:39.925" end="2:43.203" itunes:songPart="Outro">
+			<p begin="2:39.925" end="2:43.203" itunes:key="L38" ttm:agent="v1">So won't you take me home?</p>
+		</div>
+	</body>
+</tt>
+
+

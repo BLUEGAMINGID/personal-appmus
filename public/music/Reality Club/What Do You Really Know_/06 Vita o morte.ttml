@@ -1,0 +1,54 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" itunes:timing="Line" xml:lang="en">
+	<head>
+		<metadata>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal" leadingSilence="0.200">
+				<translations/>
+				<songwriters>
+					<songwriter>Era Patigo</songwriter>
+					<songwriter>Faiz Novascotia Saripudin</songwriter>
+					<songwriter>Fathia Izzati</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="3:32.940">
+		<div begin="9.330" end="58.410">
+			<p begin="9.330" end="13.160">I'll be leaving soon</p>
+			<p begin="13.160" end="18.250">No point in staying where desire</p>
+			<p begin="18.250" end="25.390">Divides my frigid mind</p>
+			<p begin="25.390" end="29.120">Made mistakes for you</p>
+			<p begin="29.120" end="31.760">And just to tell the truth</p>
+			<p begin="31.760" end="41.370">I long to slip into that circumstance</p>
+			<p begin="41.370" end="45.350">Take me further than before</p>
+			<p begin="45.350" end="49.360">Never settling the score</p>
+			<p begin="49.360" end="53.800">Twice revisiting the story</p>
+			<p begin="53.800" end="58.410">Disagreeing evermore</p>
+		</div>
+		<div begin="1:13.270" end="2:14.470">
+			<p begin="1:13.270" end="1:17.230">You make a great acquaintance, sir</p>
+			<p begin="1:17.230" end="1:21.410">I don't believe the things I've heard</p>
+			<p begin="1:21.410" end="1:29.370">Rumours speak louder than words</p>
+			<p begin="1:29.370" end="1:33.350">Take me further than before</p>
+			<p begin="1:33.350" end="1:37.320">Never settling the score</p>
+			<p begin="1:37.320" end="1:41.800">Twice revisiting the story</p>
+			<p begin="1:41.800" end="1:45.350">Disagreeing evermore</p>
+			<p begin="1:45.350" end="1:49.210">Count your lucky stars above</p>
+			<p begin="1:49.210" end="1:53.370">But I just can't find enough</p>
+			<p begin="1:53.370" end="1:56.910">Knocked on wood and rolled the dice</p>
+			<p begin="1:56.910" end="2:01.360">But Lady Fortune's not so nice</p>
+			<p begin="2:01.360" end="2:05.180">Fantasies of being free</p>
+			<p begin="2:05.180" end="2:14.470">But all this time you have been calling out to me</p>
+		</div>
+		<div begin="3:05.490" end="3:32.940">
+			<p begin="3:05.490" end="3:09.270">Count your lucky stars above</p>
+			<p begin="3:09.270" end="3:13.300">But I just can't find enough</p>
+			<p begin="3:13.300" end="3:16.830">Knocked on wood and rolled the dice</p>
+			<p begin="3:16.830" end="3:21.310">But Lady Fortune's not so nice</p>
+			<p begin="3:21.310" end="3:24.810">Fantasies of being free</p>
+			<p begin="3:24.810" end="3:32.940">But all this time you have been calling out to me</p>
+		</div>
+	</body>
+</tt>
+
+

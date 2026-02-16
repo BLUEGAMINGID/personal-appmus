@@ -1,0 +1,78 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="id">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<ttm:agent type="person" xml:id="v2"/>
+			<ttm:agent type="group" xml:id="v1000"/>
+			<ttm:agent type="person" xml:id="v3"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal" leadingSilence="0">
+				<translations/>
+				<songwriters>
+					<songwriter>Baskara Putra</songwriter>
+					<songwriter>Enrico Octaviano</songwriter>
+					<songwriter>Iga Massardi</songwriter>
+					<songwriter>Kareem Soenharjo</songwriter>
+					<songwriter>M. Syaifullah</songwriter>
+					<songwriter>Mohammed Kamga</songwriter>
+					<songwriter>Rubina W. Miranda</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="2:46.756">
+		<div begin="24.662" end="46.852" itunes:songPart="Verse">
+			<p begin="24.662" end="28.238" itunes:key="L1" ttm:agent="v1">Aku adalah arsitek</p>
+			<p begin="27.563" end="29.589" itunes:key="L2" ttm:agent="v1">No, I'm just kidding, that's Koil</p>
+			<p begin="30.131" end="34.173" itunes:key="L3" ttm:agent="v1">Aku tak peduli, kalian better watch your back</p>
+			<p begin="34.382" end="38.345" itunes:key="L4" ttm:agent="v1">Kalian bisa panggilku kaum intelek, paling punya knowledge</p>
+			<p begin="38.430" end="41.268" itunes:key="L5" ttm:agent="v1">Seleb rajin bersolek, kuasai setiap aspek</p>
+			<p begin="41.276" end="44.001" itunes:key="L6" ttm:agent="v1">Spec canggih, high tech, followers siap protect</p>
+			<p begin="44.078" end="46.852" itunes:key="L7" ttm:agent="v1">Kuangkat derajatmu waktu engkau ku follback</p>
+		</div>
+		<div begin="46.945" end="58.225" itunes:songPart="Verse">
+			<p begin="46.945" end="49.817" itunes:key="L8" ttm:agent="v1">Get it, get it on, kalian minum dari tong kosong</p>
+			<p begin="49.937" end="52.662" itunes:key="L9" ttm:agent="v1">Walau suaraku fals, kau tetap sing along</p>
+			<p begin="52.737" end="55.428" itunes:key="L10" ttm:agent="v1">Selebriti jadi candu, kau hisap pakai bong</p>
+			<p begin="55.428" end="58.225" itunes:key="L11" ttm:agent="v1">Lalu kumabukkan kalian dengan statement bodong</p>
+		</div>
+		<div begin="59.225" end="1:09.544" itunes:songPart="Verse">
+			<p begin="59.225" end="1:03.745" itunes:key="L12" ttm:agent="v1">Social media, televisi, arena bermainku untuk dapat komisi</p>
+			<p begin="1:03.852" end="1:06.323" itunes:key="L13" ttm:agent="v1">Comment semua isu, aku butuh validasi</p>
+			<p begin="1:06.323" end="1:09.544" itunes:key="L14" ttm:agent="v1">Adiksi monetisasi lalu aku selebrasi</p>
+		</div>
+		<div begin="1:10.021" end="1:33.514" itunes:songPart="Chorus" ttm:agent="v2">
+			<p begin="1:10.021" end="1:12.685" itunes:key="L15" ttm:agent="v2">No matter how I do it you'll keep walking around</p>
+			<p begin="1:12.685" end="1:15.635" itunes:key="L16" ttm:agent="v2">Trash talking but menina you're trying to hard</p>
+			<p begin="1:15.685" end="1:17.909" itunes:key="L17" ttm:agent="v2">'Cause I'll be saying tô nem ai</p>
+			<p begin="1:17.994" end="1:19.639" itunes:key="L18" ttm:agent="v2">Eu não tô nem ai</p>
+			<p begin="1:19.037" end="1:21.447" itunes:key="L19" ttm:agent="v1000">Mas que porra, mas que porra, mas que porra</p>
+			<p begin="1:21.447" end="1:23.804" itunes:key="L20" ttm:agent="v2">Se ele soubesse, esse</p>
+			<p begin="1:23.961" end="1:26.163" itunes:key="L21" ttm:agent="v2">Ele mesmo é um lixo assim</p>
+			<p begin="1:26.089" end="1:27.366" itunes:key="L22" ttm:agent="v2">Muito trashy</p>
+			<p begin="1:26.966" end="1:27.819" itunes:key="L23" ttm:agent="v2">Then I'll be saying</p>
+			<p begin="1:27.819" end="1:29.197" itunes:key="L24" ttm:agent="v2">Tô nem ai</p>
+			<p begin="1:29.312" end="1:33.514" itunes:key="L25" ttm:agent="v2">Eu não tô nem ai</p>
+		</div>
+		<div begin="1:32.456" end="1:43.059" itunes:songPart="Verse" ttm:agent="v3">
+			<p begin="1:32.456" end="1:34.384" itunes:key="L26" ttm:agent="v3">Lebih baik tutup mulutmu</p>
+			<p begin="1:34.384" end="1:37.205" itunes:key="L27" ttm:agent="v3">Karena ku sudah duluan menutup mulutku</p>
+			<p begin="1:37.205" end="1:40.081" itunes:key="L28" ttm:agent="v3">Karena ilmu milikmu tidak pernah di situ</p>
+			<p begin="1:40.081" end="1:43.059" itunes:key="L29" ttm:agent="v3">Pun aku mustahil selalu melek, kau halu</p>
+		</div>
+		<div begin="1:43.731" end="1:54.708" itunes:songPart="Verse">
+			<p begin="1:43.731" end="1:45.718" itunes:key="L30" ttm:agent="v1">Kamu hanya target pasar</p>
+			<p begin="1:45.718" end="1:48.517" itunes:key="L31" ttm:agent="v1">Produk jualan korporasi jemput antar</p>
+			<p begin="1:48.517" end="1:51.343" itunes:key="L32" ttm:agent="v1">Modal cerita sedih bisa main kasar</p>
+			<p begin="1:51.343" end="1:54.708" itunes:key="L33" ttm:agent="v1">Narasi kesehatan mental menggelegar</p>
+		</div>
+		<div begin="1:55.002" end="2:17.312" itunes:songPart="Verse" ttm:agent="v1000">
+			<p begin="1:55.002" end="2:00.074" itunes:key="L34" ttm:agent="v3">Lebih baik tutup mulutmu karena ku sudah duluan menutup mulutku</p>
+			<p begin="2:00.618" end="2:05.704" itunes:key="L35" ttm:agent="v1000">Lebih baik tutup mulutmu karena ku sudah duluan menutup mulutku</p>
+			<p begin="2:06.275" end="2:11.507" itunes:key="L36" ttm:agent="v1000">Lebih baik tutup mulut, lebih baik tutup mulutmu, kututup mulutmu lebih baik</p>
+			<p begin="2:11.920" end="2:17.312" itunes:key="L37" ttm:agent="v1000">Lebih baik tutup mulutmu, karena ku sudah duluan menutup mulutku</p>
+		</div>
+	</body>
+</tt>
+
+

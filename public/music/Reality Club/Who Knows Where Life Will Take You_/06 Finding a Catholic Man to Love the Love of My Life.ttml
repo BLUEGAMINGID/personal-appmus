@@ -1,0 +1,69 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="en">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal">
+				<translations/>
+				<songwriters>
+					<songwriter>Faiz Novascotia Saripudin</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="3:08.613">
+		<div begin="17.592" end="30.079" itunes:songPart="Verse">
+			<p begin="17.592" end="19.967" itunes:key="L1" ttm:agent="v1">I'm in a pickle</p>
+			<p begin="20.949" end="23.904" itunes:key="L2" ttm:agent="v1">I've found the love of my life</p>
+			<p begin="24.328" end="26.890" itunes:key="L3" ttm:agent="v1">But if I ever want to make her my wife</p>
+			<p begin="26.890" end="30.079" itunes:key="L4" ttm:agent="v1">That's when the problems will arise</p>
+		</div>
+		<div begin="31.329" end="43.612" itunes:songPart="Verse">
+			<p begin="31.329" end="33.743" itunes:key="L5" ttm:agent="v1">She's so gorgeous won't you come and see</p>
+			<p begin="34.104" end="37.360" itunes:key="L6" ttm:agent="v1">But she can't be with someone like me</p>
+			<p begin="37.983" end="40.689" itunes:key="L7" ttm:agent="v1">I pray that there's a miracle for me</p>
+			<p begin="40.611" end="43.612" itunes:key="L8" ttm:agent="v1">Or else we simply can never be</p>
+		</div>
+		<div begin="43.931" end="56.460" itunes:songPart="Chorus">
+			<p begin="43.931" end="47.631" itunes:key="L9" ttm:agent="v1">So I'm finding a Catholic man</p>
+			<p begin="47.864" end="50.619" itunes:key="L10" ttm:agent="v1">To love the love of my life</p>
+			<p begin="51.060" end="56.460" itunes:key="L11" ttm:agent="v1">When I'm old and gray I hope you'll be happy either way</p>
+		</div>
+		<div begin="1:01.920" end="1:14.059" itunes:songPart="Verse">
+			<p begin="1:01.920" end="1:04.997" itunes:key="L12" ttm:agent="v1">She's got a smile that'll melt you in your seat</p>
+			<p begin="1:05.384" end="1:08.212" itunes:key="L13" ttm:agent="v1">She's got wits to make you move your feet</p>
+			<p begin="1:08.801" end="1:11.400" itunes:key="L14" ttm:agent="v1">Alas the universe has me beat</p>
+			<p begin="1:11.410" end="1:14.059" itunes:key="L15" ttm:agent="v1">Pushed apart just as soon as we meet</p>
+		</div>
+		<div begin="1:15.603" end="1:28.091" itunes:songPart="Verse">
+			<p begin="1:15.603" end="1:18.363" itunes:key="L16" ttm:agent="v1">She's got the beauty and she's got the mind</p>
+			<p begin="1:18.594" end="1:21.929" itunes:key="L17" ttm:agent="v1">The best damn person that you'll ever find</p>
+			<p begin="1:22.502" end="1:25.116" itunes:key="L18" ttm:agent="v1">I wish that she could stay as mine</p>
+			<p begin="1:25.116" end="1:28.091" itunes:key="L19" ttm:agent="v1">Oh, God won't you give me a sign</p>
+		</div>
+		<div begin="1:28.475" end="1:41.176" itunes:songPart="Chorus">
+			<p begin="1:28.475" end="1:32.163" itunes:key="L20" ttm:agent="v1">So I'm finding a Catholic man</p>
+			<p begin="1:32.408" end="1:35.129" itunes:key="L21" ttm:agent="v1">To love the love of my life</p>
+			<p begin="1:35.538" end="1:41.176" itunes:key="L22" ttm:agent="v1">When I'm old and gray I hope you'll be happy either way</p>
+		</div>
+		<div begin="1:42.415" end="1:56.723" itunes:songPart="Chorus">
+			<p begin="1:42.415" end="1:45.854" itunes:key="L23" ttm:agent="v1">I'm finding a Catholic man</p>
+			<p begin="1:46.070" end="1:48.923" itunes:key="L24" ttm:agent="v1">To love the love of my life</p>
+			<p begin="1:49.252" end="1:54.935" itunes:key="L25" ttm:agent="v1">When I'm old and gray I hope you'll be happy either way</p>
+			<p begin="1:55.896" end="1:56.723" itunes:key="L26" ttm:agent="v1">Alright</p>
+		</div>
+		<div begin="2:09.543" end="2:22.229" itunes:songPart="Chorus">
+			<p begin="2:09.543" end="2:13.207" itunes:key="L27" ttm:agent="v1">So I'm finding a Catholic man</p>
+			<p begin="2:13.388" end="2:16.487" itunes:key="L28" ttm:agent="v1">To love the love of my life</p>
+			<p begin="2:16.676" end="2:22.229" itunes:key="L29" ttm:agent="v1">When I'm old and gray I hope you'll be happy either way</p>
+		</div>
+		<div begin="2:23.510" end="2:46.351" itunes:songPart="Chorus">
+			<p begin="2:23.510" end="2:26.981" itunes:key="L30" ttm:agent="v1">I'm finding a Catholic man</p>
+			<p begin="2:27.218" end="2:30.393" itunes:key="L31" ttm:agent="v1">To love the love of my life</p>
+			<p begin="2:30.393" end="2:35.888" itunes:key="L32" ttm:agent="v1">When I'm old and gray I hope you'll be happy either way</p>
+			<p begin="2:37.249" end="2:46.351" itunes:key="L33" ttm:agent="v1">When I'm old and gray you know I'll still love you anyways</p>
+		</div>
+	</body>
+</tt>
+
+

@@ -1,0 +1,74 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="id">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal">
+				<translations/>
+				<songwriters>
+					<songwriter>Baskara Putra</songwriter>
+					<songwriter>Kallula Harsynta Esterlita</songwriter>
+					<songwriter>Petra Sihombing</songwriter>
+					<songwriter>Wisnu Ikhsantama</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="3:14.469">
+		<div begin="0.030" end="48.785" itunes:songPart="Verse">
+			<p begin="0.030" end="7.784" itunes:key="L1" ttm:agent="v1">Yang tak bisa terobati</p>
+			<p begin="8.548" end="16.485" itunes:key="L2" ttm:agent="v1">Biarlah mengering sendiri</p>
+			<p begin="16.786" end="20.855" itunes:key="L3" ttm:agent="v1">Menghias tubuh dan yang</p>
+			<p begin="22.320" end="31.259" itunes:key="L4" ttm:agent="v1">Mengevaluasi ragamu</p>
+			<p begin="31.736" end="35.337" itunes:key="L5" ttm:agent="v1">Hanya kau sendiri</p>
+			<p begin="35.569" end="41.303" itunes:key="L6" ttm:agent="v1">Mereka tak mampu melewati yang telah kau lewa-</p>
+			<p begin="41.303" end="42.661" itunes:key="L7" ttm:agent="v1">Tiap berganti ha-</p>
+			<p begin="42.661" end="48.785" itunes:key="L8" ttm:agent="v1">Rintangan yang kau hadapi</p>
+		</div>
+		<div begin="49.673" end="1:05.614" itunes:songPart="Chorus">
+			<p begin="49.673" end="53.018" itunes:key="L9" ttm:agent="v1">Masalah yang mengeruh</p>
+			<p begin="53.444" end="57.596" itunes:key="L10" ttm:agent="v1">Oh, perasaan yang rapuh</p>
+			<p begin="57.905" end="1:01.486" itunes:key="L11" ttm:agent="v1">Ini belum separuhnya</p>
+			<p begin="1:01.486" end="1:05.614" itunes:key="L12" ttm:agent="v1">Biasa saja kamu tak apa</p>
+		</div>
+		<div begin="1:06.076" end="1:35.158" itunes:songPart="Verse">
+			<p begin="1:06.076" end="1:14.415" itunes:key="L13" ttm:agent="v1">Yang selalu ingin ambil peran</p>
+			<p begin="1:14.415" end="1:22.578" itunes:key="L14" ttm:agent="v1">Hanya berlomba menjadi lebih</p>
+			<p begin="1:22.578" end="1:25.034" itunes:key="L15" ttm:agent="v1">Sedih dari diri</p>
+			<p begin="1:25.034" end="1:30.544" itunes:key="L16" ttm:agent="v1">Muak dikesampingkan, disamakan</p>
+			<p begin="1:30.544" end="1:35.158" itunes:key="L17" ttm:agent="v1">Hatimu terluka sempurna</p>
+		</div>
+		<div begin="1:36.742" end="1:52.743" itunes:songPart="Chorus">
+			<p begin="1:36.742" end="1:40.236" itunes:key="L18" ttm:agent="v1">Masalah yang mengeruh</p>
+			<p begin="1:40.532" end="1:44.722" itunes:key="L19" ttm:agent="v1">Oh, perasaan yang rapuh</p>
+			<p begin="1:44.983" end="1:48.538" itunes:key="L20" ttm:agent="v1">Ini belum separuhnya</p>
+			<p begin="1:48.538" end="1:52.743" itunes:key="L21" ttm:agent="v1">Biasa saja kamu tak apa</p>
+		</div>
+		<div begin="1:55.568" end="2:12.015" itunes:songPart="Chorus">
+			<p begin="1:55.568" end="1:59.693" itunes:key="L22" ttm:agent="v1">Perjalanan yang jauh</p>
+			<p begin="1:59.990" end="2:03.785" itunes:key="L23" ttm:agent="v1">Kau bangun untuk bertaruh</p>
+			<p begin="2:03.785" end="2:07.345" itunes:key="L24" ttm:agent="v1">Hari belum selesai</p>
+			<p begin="2:07.345" end="2:12.015" itunes:key="L25" ttm:agent="v1">Biasa saja kamu tak apa</p>
+		</div>
+		<div begin="2:13.532" end="2:31.722" itunes:songPart="Chorus">
+			<p begin="2:13.532" end="2:17.618" itunes:key="L26" ttm:agent="v1">Bilas muka, gosok gigi, evaluasi</p>
+			<p begin="2:18.220" end="2:22.580" itunes:key="L27" ttm:agent="v1">Tidur sejenak menemui esok pagi</p>
+			<p begin="2:22.900" end="2:27.335" itunes:key="L28" ttm:agent="v1">Walau pedih, ku bersamamu kali ini</p>
+			<p begin="2:27.634" end="2:31.722" itunes:key="L29" ttm:agent="v1">Ku masih ingin melihatmu esok hari</p>
+		</div>
+		<div begin="2:32.360" end="2:50.565" itunes:songPart="Chorus">
+			<p begin="2:32.360" end="2:36.556" itunes:key="L30" ttm:agent="v1">Bilas muka, gosok gigi, evaluasi</p>
+			<p begin="2:37.049" end="2:41.192" itunes:key="L31" ttm:agent="v1">Tidur sejenak menemui esok pagi</p>
+			<p begin="2:41.752" end="2:45.901" itunes:key="L32" ttm:agent="v1">Walau pedih, ku bersamamu kali ini</p>
+			<p begin="2:46.461" end="2:50.565" itunes:key="L33" ttm:agent="v1">Ku masih ingin melihatmu esok hari</p>
+		</div>
+		<div begin="2:51.183" end="3:09.653" itunes:songPart="Chorus">
+			<p begin="2:51.183" end="2:55.314" itunes:key="L34" ttm:agent="v1">Bilas muka, gosok gigi, evaluasi</p>
+			<p begin="2:55.855" end="2:59.996" itunes:key="L35" ttm:agent="v1">Tidur sejenak menemui esok pagi</p>
+			<p begin="3:00.532" end="3:05.029" itunes:key="L36" ttm:agent="v1">Walau pedih, ku bersamamu kali ini</p>
+			<p begin="3:05.285" end="3:09.653" itunes:key="L37" ttm:agent="v1">Ku masih ingin melihatmu esok hari</p>
+		</div>
+	</body>
+</tt>
+
+

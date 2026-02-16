@@ -1,0 +1,46 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" itunes:timing="Line" xml:lang="en">
+	<head>
+		<metadata>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal">
+				<translations/>
+				<songwriters>
+					<songwriter>Faiz Novascotia Saripudin</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="00:04:09.890">
+		<div begin="00:00:19.540" end="00:01:19.240">
+			<p begin="00:00:19.540" end="00:00:26.860">The sun is all gone in this arrangement</p>
+			<p begin="00:00:26.860" end="00:00:35.590">So the darkness intercepts, time's a-wasting, so let's get</p>
+			<p begin="00:00:35.590" end="00:00:37.280">Out of this hole</p>
+			<p begin="00:00:37.280" end="00:00:44.400">The fighting is done, yet no one has won</p>
+			<p begin="00:00:44.400" end="00:00:53.390">And the wicked aftermath leaves us primitive and crass</p>
+			<p begin="00:00:53.390" end="00:01:02.060">As the wound begins to heal, the scar is only settling in</p>
+			<p begin="00:01:02.060" end="00:01:11.140">The disturbance of the peace, you're weak in the knees no more</p>
+			<p begin="00:01:11.140" end="00:01:19.240">With an empty harmony, we're dancing in the breeze alone</p>
+		</div>
+		<div begin="00:01:33.390" end="00:02:28.960">
+			<p begin="00:01:33.390" end="00:01:39.790">My core is distraught, I'm shaking, it's not the way</p>
+			<p begin="00:01:39.790" end="00:01:48.830">I'm willing to behave, think I dug myself a grave</p>
+			<p begin="00:01:48.830" end="00:01:55.300">We can't understand the forces at hand</p>
+			<p begin="00:01:55.300" end="00:02:03.960">Comprehending the divine, giving darkness of such kind</p>
+			<p begin="00:02:03.960" end="00:02:11.890">Well, only the weak could ever abide and play that game</p>
+			<p begin="00:02:11.890" end="00:02:19.170">Only the weak would ever have no one else to blame</p>
+			<p begin="00:02:19.170" end="00:02:28.960">Only the weak? Oh, how unfortunate, that's me</p>
+		</div>
+		<div begin="00:02:30.990" end="00:02:36.160">
+			<p begin="00:02:30.990" end="00:02:36.160">Oh, how unfortunate, that's me</p>
+		</div>
+		<div begin="00:03:31.340" end="00:04:09.890">
+			<p begin="00:03:31.340" end="00:03:38.800">As the wound begins to heal, the scar is only settling in</p>
+			<p begin="00:03:38.800" end="00:03:46.510">The disturbance of the peace, you're weak in the knees no more</p>
+			<p begin="00:03:46.510" end="00:03:54.390">With an empty harmony, I'm dancing in the breeze alone</p>
+			<p begin="00:03:54.390" end="00:04:02.710">With an empty harmony, I'm dancing in the breeze alone</p>
+			<p begin="00:04:02.710" end="00:04:09.890">With an empty harmony, I'm dancing in the breeze alone</p>
+		</div>
+	</body>
+</tt>
+
+

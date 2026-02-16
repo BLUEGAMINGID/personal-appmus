@@ -1,0 +1,100 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="id">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal">
+				<translations/>
+				<songwriters>
+					<songwriter>Baskara Putra</songwriter>
+					<songwriter>Enrico Octaviano</songwriter>
+					<songwriter>Herald Reynaldo</songwriter>
+					<songwriter>Mohammed Kamga</songwriter>
+					<songwriter>Petra Sihombing</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="3:44.419">
+		<div begin="19.386" end="33.584" itunes:songPart="Verse">
+			<p begin="19.386" end="22.474" itunes:key="L1" ttm:agent="v1">Besok coba kau izin pulang cepat</p>
+			<p begin="23.223" end="25.935" itunes:key="L2" ttm:agent="v1">Bilang saja siapa sedang sakit</p>
+			<p begin="27.034" end="30.173" itunes:key="L3" ttm:agent="v1">Lusa coba izin terlambat</p>
+			<p begin="30.917" end="33.584" itunes:key="L4" ttm:agent="v1">Bilang saja kau celaka sedikit</p>
+		</div>
+		<div begin="34.712" end="49.279" itunes:songPart="Verse">
+			<p begin="34.712" end="38.059" itunes:key="L5" ttm:agent="v1">Habiskan cutimu sebelum resign</p>
+			<p begin="38.568" end="42.165" itunes:key="L6" ttm:agent="v1">I know you're scared, but it's totally fine</p>
+			<p begin="42.410" end="45.676" itunes:key="L7" ttm:agent="v1">Karena kau bukan mesin assembly line</p>
+			<p begin="46.250" end="49.279" itunes:key="L8" ttm:agent="v1">Lihat promo liburan, babe, that's a sign</p>
+		</div>
+		<div begin="50.364" end="1:05.178" itunes:songPart="PreChorus">
+			<p begin="50.364" end="53.017" itunes:key="L9" ttm:agent="v1">Oh, karena ku tahu</p>
+			<p begin="53.923" end="57.668" itunes:key="L10" ttm:agent="v1">Kalimat itu ada di ujung mulutmu</p>
+			<p begin="58.036" end="1:01.075" itunes:key="L11" ttm:agent="v1">Oh, karena kau tahu</p>
+			<p begin="1:01.610" end="1:05.178" itunes:key="L12" ttm:agent="v1">Tak mau lakukan itu seumur hidupmu</p>
+		</div>
+		<div begin="1:05.458" end="1:20.657" itunes:songPart="Chorus">
+			<p begin="1:05.458" end="1:09.159" itunes:key="L13" ttm:agent="v1">Lakukan apa yang kau mau sekarang</p>
+			<p begin="1:09.303" end="1:12.973" itunes:key="L14" ttm:agent="v1">Saat hatimu bergerak, jangan kau larang</p>
+			<p begin="1:13.164" end="1:16.852" itunes:key="L15" ttm:agent="v1">Hidup ini tak ada artinya, maka</p>
+			<p begin="1:17.001" end="1:20.657" itunes:key="L16" ttm:agent="v1">Kau bebas mengarang maknanya seorang</p>
+		</div>
+		<div begin="1:20.801" end="1:36.158" itunes:songPart="Chorus">
+			<p begin="1:20.801" end="1:24.529" itunes:key="L17" ttm:agent="v1">Lakukan apa yang kau mau sekarang</p>
+			<p begin="1:24.667" end="1:28.335" itunes:key="L18" ttm:agent="v1">Saat hatimu bergerak, jangan kau larang</p>
+			<p begin="1:28.509" end="1:32.220" itunes:key="L19" ttm:agent="v1">Lagipula hidup akan berakhir, maka</p>
+			<p begin="1:32.331" end="1:36.158" itunes:key="L20" ttm:agent="v1">Lakukan apa yang kau mau sekarang</p>
+		</div>
+		<div begin="1:36.158" end="1:50.741" itunes:songPart="Chorus">
+			<p begin="1:36.158" end="1:39.409" itunes:key="L21" ttm:agent="v1">Berdansalah, kau raja dunia</p>
+			<p begin="1:40.043" end="1:43.397" itunes:key="L22" ttm:agent="v1">Karir ini tak ada artinya</p>
+			<p begin="1:43.858" end="1:47.056" itunes:key="L23" ttm:agent="v1">Berdansalah, kau ratu dunia</p>
+			<p begin="1:47.687" end="1:50.741" itunes:key="L24" ttm:agent="v1">Hidup ini tak ada artinya</p>
+		</div>
+		<div begin="1:51.552" end="2:05.846" itunes:songPart="Verse">
+			<p begin="1:51.552" end="1:54.796" itunes:key="L25" ttm:agent="v1">Besok coba kau berbohong sedikit</p>
+			<p begin="1:55.425" end="1:58.199" itunes:key="L26" ttm:agent="v1">Lalu kau melupa saat diungkit</p>
+			<p begin="1:59.254" end="2:02.376" itunes:key="L27" ttm:agent="v1">Bisa juga kau jujur saja</p>
+			<p begin="2:03.032" end="2:05.846" itunes:key="L28" ttm:agent="v1">Separahnya kau akan makin lega</p>
+		</div>
+		<div begin="2:07.131" end="2:22.013" itunes:songPart="PreChorus">
+			<p begin="2:07.131" end="2:09.814" itunes:key="L29" ttm:agent="v1">Oh, karena ku tahu</p>
+			<p begin="2:10.734" end="2:14.429" itunes:key="L30" ttm:agent="v1">Kalimat itu ada di ujung mulutmu</p>
+			<p begin="2:14.840" end="2:18.225" itunes:key="L31" ttm:agent="v1">Oh, karena kau tahu</p>
+			<p begin="2:18.458" end="2:22.013" itunes:key="L32" ttm:agent="v1">Utamakanlah dirimu di sisa hidupmu</p>
+		</div>
+		<div begin="2:22.258" end="2:37.485" itunes:songPart="Chorus">
+			<p begin="2:22.258" end="2:25.943" itunes:key="L33" ttm:agent="v1">Lakukan apa yang kau mau sekarang</p>
+			<p begin="2:26.068" end="2:29.789" itunes:key="L34" ttm:agent="v1">Saat hatimu bergerak, jangan kau larang</p>
+			<p begin="2:29.948" end="2:33.621" itunes:key="L35" ttm:agent="v1">Hidup ini tak ada artinya, maka</p>
+			<p begin="2:33.784" end="2:37.485" itunes:key="L36" ttm:agent="v1">Kau bebas mengarang maknanya seorang</p>
+		</div>
+		<div begin="2:37.635" end="2:52.957" itunes:songPart="Chorus">
+			<p begin="2:37.635" end="2:41.359" itunes:key="L37" ttm:agent="v1">Lakukan apa yang kau mau sekarang</p>
+			<p begin="2:41.457" end="2:45.124" itunes:key="L38" ttm:agent="v1">Saat hatimu bergerak, jangan kau larang</p>
+			<p begin="2:45.303" end="2:49.004" itunes:key="L39" ttm:agent="v1">Lagipula hidup akan berakhir, maka</p>
+			<p begin="2:49.133" end="2:52.957" itunes:key="L40" ttm:agent="v1">Lakukan apa yang kau mau sekarang</p>
+		</div>
+		<div begin="2:52.957" end="3:08.179" itunes:songPart="Chorus">
+			<p begin="2:52.957" end="2:56.701" itunes:key="L41" ttm:agent="v1">Lakukan apa yang kau mau sekarang</p>
+			<p begin="2:56.818" end="3:00.527" itunes:key="L42" ttm:agent="v1">Saat hatimu bergerak, jangan kau larang</p>
+			<p begin="3:00.654" end="3:04.385" itunes:key="L43" ttm:agent="v1">Hidup ini tak ada artinya, maka</p>
+			<p begin="3:04.519" end="3:08.179" itunes:key="L44" ttm:agent="v1">Kau bebas mengarang maknanya seorang</p>
+		</div>
+		<div begin="3:08.321" end="3:23.683" itunes:songPart="Chorus">
+			<p begin="3:08.321" end="3:12.045" itunes:key="L45" ttm:agent="v1">Lakukan apa yang kau mau sekarang</p>
+			<p begin="3:12.166" end="3:15.881" itunes:key="L46" ttm:agent="v1">Saat hatimu bergerak, jangan kau larang</p>
+			<p begin="3:16.025" end="3:19.751" itunes:key="L47" ttm:agent="v1">Lagipula hidup akan berakhir, maka</p>
+			<p begin="3:19.866" end="3:23.683" itunes:key="L48" ttm:agent="v1">Lakukan apa yang kau mau sekarang</p>
+		</div>
+		<div begin="3:23.683" end="3:38.195" itunes:songPart="Chorus">
+			<p begin="3:23.683" end="3:26.943" itunes:key="L49" ttm:agent="v1">Berdansalah, kau raja dunia</p>
+			<p begin="3:27.542" end="3:30.894" itunes:key="L50" ttm:agent="v1">Karir ini tak ada artinya</p>
+			<p begin="3:31.402" end="3:34.557" itunes:key="L51" ttm:agent="v1">Berdansalah, kau ratu dunia</p>
+			<p begin="3:35.218" end="3:38.195" itunes:key="L52" ttm:agent="v1">Hidup ini tak ada artinya</p>
+		</div>
+	</body>
+</tt>
+
+

@@ -1,0 +1,52 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="id">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal">
+				<translations/>
+				<songwriters>
+					<songwriter>Baskara Putra</songwriter>
+					<songwriter>Hasief Ardiasyah</songwriter>
+					<songwriter>Iga Massardi</songwriter>
+					<songwriter>Kamga</songwriter>
+					<songwriter>Kusuma Widhiana</songwriter>
+					<songwriter>Pradipta Beawiharta</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="2:50.000">
+		<div begin="23.993" end="44.608" itunes:songPart="Verse">
+			<p begin="23.993" end="28.286" itunes:key="L1" ttm:agent="v1">Matikan ponselmu</p>
+			<p begin="29.149" end="33.999" itunes:key="L2" ttm:agent="v1">Berita selalu sama saja</p>
+			<p begin="34.293" end="38.883" itunes:key="L3" ttm:agent="v1">Matikan hatimu</p>
+			<p begin="39.145" end="44.608" itunes:key="L4" ttm:agent="v1">Tak perlu kau bela penguasa</p>
+		</div>
+		<div begin="44.608" end="54.688" itunes:songPart="Chorus">
+			<p begin="44.608" end="49.612" itunes:key="L5" ttm:agent="v1">The world is ending all over again</p>
+			<p begin="49.764" end="54.688" itunes:key="L6" ttm:agent="v1">Oh, well, I don't care, pick me up at ten</p>
+		</div>
+		<div begin="54.890" end="1:24.889" itunes:songPart="Verse">
+			<p begin="54.890" end="59.148" itunes:key="L7" ttm:agent="v1">Buang simpatimu</p>
+			<p begin="1:00.088" end="1:08.372" itunes:key="L8" ttm:agent="v1">Kau pun sedang lewati bencana</p>
+			<p begin="1:08.858" end="1:14.419" itunes:key="L9" ttm:agent="v1">Makin tak berdaya</p>
+			<p begin="1:14.897" end="1:19.085" itunes:key="L10" ttm:agent="v1">Ah, ah-ah</p>
+			<p begin="1:19.153" end="1:24.889" itunes:key="L11" ttm:agent="v1">Makin terbiasa</p>
+		</div>
+		<div begin="2:07.204" end="2:37.778" itunes:songPart="Chorus">
+			<p begin="2:07.204" end="2:12.103" itunes:key="L12" ttm:agent="v1">The world is ending all over again</p>
+			<p begin="2:12.342" end="2:17.167" itunes:key="L13" ttm:agent="v1">Oh, well, I don't care, pick me up at ten</p>
+			<p begin="2:17.503" end="2:21.533" itunes:key="L14" ttm:agent="v1">Ku tak peduli</p>
+			<p begin="2:22.681" end="2:27.489" itunes:key="L15" ttm:agent="v1">The world is ending all over again</p>
+			<p begin="2:27.851" end="2:32.725" itunes:key="L16" ttm:agent="v1">The world is ending all over again</p>
+			<p begin="2:32.997" end="2:37.778" itunes:key="L17" ttm:agent="v1">Oh, well, I don't care, pick me up at ten</p>
+		</div>
+		<div begin="2:38.098" end="2:48.364" itunes:songPart="Outro">
+			<p begin="2:38.098" end="2:41.516" itunes:key="L18" ttm:agent="v1">Ku tak peduli</p>
+			<p begin="2:43.294" end="2:48.364" itunes:key="L19" ttm:agent="v1">Right now I'm used to all this fading pain</p>
+		</div>
+	</body>
+</tt>
+
+

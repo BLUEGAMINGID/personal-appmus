@@ -1,0 +1,59 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="en">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal" leadingSilence="0.020">
+				<translations/>
+				<songwriters>
+					<songwriter>Faiz Novascotia Saripudin</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="4:19.771">
+		<div begin="19.738" end="45.634" itunes:songPart="Verse">
+			<p begin="19.738" end="24.505" itunes:key="L1" ttm:agent="v1">She wondered when the raindrops fell</p>
+			<p begin="28.645" end="34.613" itunes:key="L2" ttm:agent="v1">She wondered why her cheeks were wet</p>
+			<p begin="36.980" end="40.729" itunes:key="L3" ttm:agent="v1">And she entrusted a secret</p>
+			<p begin="42.009" end="45.634" itunes:key="L4" ttm:agent="v1">That I could not have kept</p>
+		</div>
+		<div begin="55.235" end="1:21.765" itunes:songPart="Verse">
+			<p begin="55.235" end="1:01.291" itunes:key="L5" ttm:agent="v1">I wonder where she is tonight</p>
+			<p begin="1:04.134" end="1:10.678" itunes:key="L6" ttm:agent="v1">And wonder why the dawn was so bright</p>
+			<p begin="1:12.717" end="1:16.085" itunes:key="L7" ttm:agent="v1">I couldn't contain it</p>
+			<p begin="1:17.052" end="1:21.765" itunes:key="L8" ttm:agent="v1">Sank into the pavement</p>
+		</div>
+		<div begin="1:28.482" end="1:54.550" itunes:songPart="Chorus">
+			<p begin="1:28.482" end="1:31.831" itunes:key="L9" ttm:agent="v1">The sorrowful reunion</p>
+			<p begin="1:32.808" end="1:36.372" itunes:key="L10" ttm:agent="v1">Was inevitable</p>
+			<p begin="1:37.322" end="1:40.607" itunes:key="L11" ttm:agent="v1">Living an illusion</p>
+			<p begin="1:40.870" end="1:44.780" itunes:key="L12" ttm:agent="v1">Oh, we were so compatible</p>
+			<p begin="1:45.178" end="1:49.482" itunes:key="L13" ttm:agent="v1">And I miss all the X and O's</p>
+			<p begin="1:49.628" end="1:54.550" itunes:key="L14" ttm:agent="v1">Do you regret the path you chose?</p>
+		</div>
+		<div begin="2:14.575" end="2:40.163" itunes:songPart="Verse">
+			<p begin="2:14.575" end="2:18.802" itunes:key="L15" ttm:agent="v1">He looks as if he knows the way</p>
+			<p begin="2:23.325" end="2:27.336" itunes:key="L16" ttm:agent="v1">So calm in his confliction</p>
+			<p begin="2:31.783" end="2:35.308" itunes:key="L17" ttm:agent="v1">Though I know there’s a storm here</p>
+			<p begin="2:36.219" end="2:40.163" itunes:key="L18" ttm:agent="v1">Through his eyes I will hide my fear</p>
+		</div>
+		<div begin="2:50.051" end="3:15.615" itunes:songPart="Verse">
+			<p begin="2:50.051" end="2:54.928" itunes:key="L19" ttm:agent="v1">I wonder why he’s so composed</p>
+			<p begin="2:58.926" end="3:04.203" itunes:key="L20" ttm:agent="v1">Though life seems to hand out troubles on a tray</p>
+			<p begin="3:07.535" end="3:10.842" itunes:key="L21" ttm:agent="v1">Well I can't escape it</p>
+			<p begin="3:11.961" end="3:15.615" itunes:key="L22" ttm:agent="v1">Hid down in the basement</p>
+		</div>
+		<div begin="3:23.299" end="3:54.228" itunes:songPart="Chorus">
+			<p begin="3:23.299" end="3:27.271" itunes:key="L23" ttm:agent="v1">The sorrowful reunion</p>
+			<p begin="3:27.580" end="3:31.094" itunes:key="L24" ttm:agent="v1">Was inevitable</p>
+			<p begin="3:32.056" end="3:35.403" itunes:key="L25" ttm:agent="v1">Living an illusion</p>
+			<p begin="3:35.716" end="3:39.632" itunes:key="L26" ttm:agent="v1">Oh, but we're so compatible</p>
+			<p begin="3:40.028" end="3:44.207" itunes:key="L27" ttm:agent="v1">And I miss all the X and O's</p>
+			<p begin="3:44.339" end="3:49.749" itunes:key="L28" ttm:agent="v1">Do you regret the path you chose</p>
+			<p begin="3:50.548" end="3:54.228" itunes:key="L29" ttm:agent="v1">With me?</p>
+		</div>
+	</body>
+</tt>
+
+

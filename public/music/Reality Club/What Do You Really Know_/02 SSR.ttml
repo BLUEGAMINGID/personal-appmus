@@ -1,0 +1,45 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" itunes:timing="Line" xml:lang="en">
+	<head>
+		<metadata>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal">
+				<translations/>
+				<songwriters>
+					<songwriter>Faiz Novascotia Saripudin</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="00:03:35.410">
+		<div begin="00:00:31.430" end="00:00:47.540">
+			<p begin="00:00:31.430" end="00:00:35.060">All the pieces are re-arranging</p>
+			<p begin="00:00:35.060" end="00:00:39.050">Inside my mind, all the fucking time</p>
+			<p begin="00:00:39.050" end="00:00:42.390">Tiny whispers, but why are you shouting?</p>
+			<p begin="00:00:42.390" end="00:00:47.540">Is this yours or mine? I think it is a crime</p>
+		</div>
+		<div begin="00:01:01.720" end="00:01:30.060">
+			<p begin="00:01:01.720" end="00:01:05.260">Inside your pocket, dancing with the devil</p>
+			<p begin="00:01:05.260" end="00:01:09.170">Look beyond my eyes, you'll see there's no surprise</p>
+			<p begin="00:01:09.170" end="00:01:12.850">Flagrantly jumping to the nearest exit,</p>
+			<p begin="00:01:12.850" end="00:01:15.960">You'll find no relief I turn the other cheek</p>
+			<p begin="00:01:15.960" end="00:01:23.500">And I don't believe it's true</p>
+			<p begin="00:01:23.500" end="00:01:30.060">When you say you want it too</p>
+		</div>
+		<div begin="00:01:47.070" end="00:02:34.510">
+			<p begin="00:01:47.070" end="00:01:50.830">Brave enough to say it, brave enough to try it</p>
+			<p begin="00:01:50.830" end="00:01:54.500">Cleansing of the mind or cleansing of the soul?</p>
+			<p begin="00:01:54.500" end="00:01:58.570">Protagonist beliefs but antagonizing feelings</p>
+			<p begin="00:01:58.570" end="00:02:01.750">Mirrors in the sky, reflect your hollow eyes</p>
+			<p begin="00:02:01.750" end="00:02:09.220">And I don't believe it's true</p>
+			<p begin="00:02:09.220" end="00:02:16.910">When you say you want it too</p>
+			<p begin="00:02:16.910" end="00:02:34.510">And I tore apart an empty heart last night to find deep regrets</p>
+		</div>
+		<div begin="00:03:04.750" end="00:03:35.410">
+			<p begin="00:03:04.750" end="00:03:12.110">And I don't believe it's true</p>
+			<p begin="00:03:12.110" end="00:03:19.870">When you say you want it too</p>
+			<p begin="00:03:19.870" end="00:03:35.410">And I tore apart an empty heart last night to find deep regrets</p>
+		</div>
+	</body>
+</tt>
+
+

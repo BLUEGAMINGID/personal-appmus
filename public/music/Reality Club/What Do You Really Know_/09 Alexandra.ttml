@@ -1,0 +1,55 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="en">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal">
+				<translations/>
+				<songwriters>
+					<songwriter>Faiz Novascotia Saripudin</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="3:58.543">
+		<div begin="1.404" end="50.319" itunes:songPart="Verse">
+			<p begin="1.404" end="8.277" itunes:key="L1" ttm:agent="v1">Just like a certain motorbike gang from charming</p>
+			<p begin="8.840" end="17.631" itunes:key="L2" ttm:agent="v1">Or you're looking for the old ultraviolence, you're trouble</p>
+			<p begin="18.571" end="24.823" itunes:key="L3" ttm:agent="v1">Yes, I knew right from the start</p>
+			<p begin="28.390" end="40.236" itunes:key="L4" ttm:agent="v1">And the labyrinth I thought I knew, rearranged to shape anew</p>
+			<p begin="40.766" end="50.319" itunes:key="L5" ttm:agent="v1">At amazement of the excitement that once rang true</p>
+		</div>
+		<div begin="54.052" end="1:23.776" itunes:songPart="Chorus">
+			<p begin="54.052" end="1:00.275" itunes:key="L6" ttm:agent="v1">And if I was a fool for you</p>
+			<p begin="1:00.812" end="1:07.088" itunes:key="L7" ttm:agent="v1">I'd wait five hundred million hours</p>
+			<p begin="1:07.396" end="1:13.078" itunes:key="L8" ttm:agent="v1">On a park bench out on the moon</p>
+			<p begin="1:13.745" end="1:23.776" itunes:key="L9" ttm:agent="v1">But in full view of what you are, oh</p>
+		</div>
+		<div begin="1:29.532" end="1:47.516" itunes:songPart="Verse">
+			<p begin="1:29.532" end="1:35.190" itunes:key="L10" ttm:agent="v1">Just like a feline with multiple lives</p>
+			<p begin="1:35.392" end="1:41.784" itunes:key="L11" ttm:agent="v1">She lost a couple, but she used to have five</p>
+			<p begin="1:42.477" end="1:47.516" itunes:key="L12" ttm:agent="v1">A saviour of mankind</p>
+		</div>
+		<div begin="1:51.003" end="2:20.582" itunes:songPart="Chorus">
+			<p begin="1:51.003" end="1:56.448" itunes:key="L13" ttm:agent="v1">And if I was a fool for you</p>
+			<p begin="1:56.849" end="2:02.634" itunes:key="L14" ttm:agent="v1">I'd wait five hundred million hours</p>
+			<p begin="2:02.857" end="2:08.539" itunes:key="L15" ttm:agent="v1">On a park bench out on the moon</p>
+			<p begin="2:08.791" end="2:13.678" itunes:key="L16" ttm:agent="v1">But in full view of what you are</p>
+			<p begin="2:14.655" end="2:20.582" itunes:key="L17" ttm:agent="v1">You're a goddess, you're my rock star</p>
+		</div>
+		<div begin="2:22.641" end="2:44.543" itunes:songPart="Bridge">
+			<p begin="2:22.641" end="2:28.557" itunes:key="L18" ttm:agent="v1">I fell in love with Alexandra</p>
+			<p begin="2:29.832" end="2:35.957" itunes:key="L19" ttm:agent="v1">Even though I barely met her</p>
+			<p begin="2:36.757" end="2:44.543" itunes:key="L20" ttm:agent="v1">Even though we'd break our hearts before we'd even start</p>
+		</div>
+		<div begin="3:16.308" end="3:50.324" itunes:songPart="Chorus">
+			<p begin="3:16.308" end="3:22.722" itunes:key="L21" ttm:agent="v1">And if I was a fool for you</p>
+			<p begin="3:23.283" end="3:29.771" itunes:key="L22" ttm:agent="v1">I'd wait five hundred million hours</p>
+			<p begin="3:30.178" end="3:36.362" itunes:key="L23" ttm:agent="v1">On a park bench out on the moon</p>
+			<p begin="3:37.182" end="3:42.918" itunes:key="L24" ttm:agent="v1">But in full view of what you are</p>
+			<p begin="3:44.111" end="3:50.324" itunes:key="L25" ttm:agent="v1">You're a goddess, you're my rock star</p>
+		</div>
+	</body>
+</tt>
+
+

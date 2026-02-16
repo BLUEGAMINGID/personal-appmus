@@ -1,0 +1,84 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" itunes:timing="Line" xml:lang="id">
+	<head>
+		<metadata>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal" leadingSilence="0.000">
+				<translations/>
+				<songwriters>
+					<songwriter>Baskara Putra</songwriter>
+					<songwriter>Kareem Soenharjo</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="3:28.000">
+		<div begin="00:00:01.749" end="00:00:23.622">
+			<p begin="00:00:01.749" end="00:00:05.962">Aku hanya ingin ketenangan</p>
+			<p begin="00:00:07.392" end="00:00:12.277">Bukan rumah, uang, atau ketenaran</p>
+			<p begin="00:00:12.925" end="00:00:17.291">Aku hanya butuh ketenangan</p>
+			<p begin="00:00:18.565" end="00:00:23.622">Ia sangat jauh, hanya angan-angan</p>
+		</div>
+		<div begin="00:00:24.174" end="00:00:46.249">
+			<p begin="00:00:24.174" end="00:00:28.660">Aku hanya ingin ketenangan</p>
+			<p begin="00:00:29.915" end="00:00:34.944">Tanpa kabar, panggilan, dan pertemuan</p>
+			<p begin="00:00:35.556" end="00:00:39.943">Aku hanya butuh ketenangan</p>
+			<p begin="00:00:41.190" end="00:00:46.249">Menghilangkan diri dari keramaian</p>
+		</div>
+		<div begin="00:00:45.731" end="00:01:07.816">
+			<p begin="00:00:45.731" end="00:00:50.770">Seribu Tuhan, ini berat</p>
+			<p begin="00:00:51.307" end="00:00:55.997">Bangun berpura menjadi kuat</p>
+			<p begin="00:00:57.071" end="00:01:02.019">Sungguh semua ini bom waktu</p>
+			<p begin="00:01:02.675" end="00:01:07.816">Memikul ceritamu, memikul salahku</p>
+		</div>
+		<div begin="00:01:09.363" end="00:01:31.479">
+			<p begin="00:01:09.363" end="00:01:13.889">Aku bukan objek validasi</p>
+			<p begin="00:01:15.067" end="00:01:20.418">Jauhkan diriku dari foto selfie</p>
+			<p begin="00:01:20.650" end="00:01:25.133">Aku bukan objek imitasi</p>
+			<p begin="00:01:26.383" end="00:01:31.479">Jangan pakai fotoku di akun pribadi</p>
+		</div>
+		<div begin="00:01:32.039" end="00:01:54.075">
+			<p begin="00:01:32.039" end="00:01:37.247">Kau tak akan pernah mengenaliku</p>
+			<p begin="00:01:37.719" end="00:01:42.768">Berbicara seakan kau tahu diriku</p>
+			<p begin="00:01:43.320" end="00:01:47.804">Kumendoakanmu dari jauh</p>
+			<p begin="00:01:48.892" end="00:01:54.075">Tak perlu mengirim pesan di ulang tahunku</p>
+		</div>
+		<div begin="00:01:53.579" end="00:02:15.524">
+			<p begin="00:01:53.579" end="00:01:58.515">Seribu Tuhan, ini berat</p>
+			<p begin="00:01:59.123" end="00:02:03.893">Bangun berpura menjadi kuat</p>
+			<p begin="00:02:04.738" end="00:02:09.913">Sungguh semua ini bom waktu</p>
+			<p begin="00:02:10.504" end="00:02:15.524">Memikul ceritamu, memikul salahku</p>
+		</div>
+		<div begin="00:02:16.445" end="00:02:27.380">
+			<p begin="00:02:16.445" end="00:02:19.038">Sekarang kupergi</p>
+			<p begin="00:02:19.335" end="00:02:21.706">Anggap aku mati</p>
+			<p begin="00:02:22.035" end="00:02:24.637">Selamatkan diri</p>
+			<p begin="00:02:24.934" end="00:02:27.380">Oh, evakuasi</p>
+		</div>
+		<div begin="00:02:27.741" end="00:02:39.302">
+			<p begin="00:02:27.741" end="00:02:29.911">Jangan cari aku</p>
+			<p begin="00:02:30.007" end="00:02:32.770">Siang hari, sore nanti</p>
+			<p begin="00:02:32.866" end="00:02:35.522">Malam ini kumenari</p>
+			<p begin="00:02:35.665" end="00:02:39.302">Dengan bayangan diri sendiri</p>
+		</div>
+		<div begin="00:02:38.996" end="00:02:50.289">
+			<p begin="00:02:38.996" end="00:02:41.577">Sekarang kupergi</p>
+			<p begin="00:02:41.807" end="00:02:44.289">Anggap aku mati</p>
+			<p begin="00:02:44.552" end="00:02:47.147">Selamatkan diri</p>
+			<p begin="00:02:47.434" end="00:02:50.289">Oh, evakuasi</p>
+		</div>
+		<div begin="00:02:50.304" end="00:03:01.969">
+			<p begin="00:02:50.304" end="00:02:52.531">Jangan cari aku</p>
+			<p begin="00:02:52.610" end="00:02:55.236">Siang hari, sore nanti</p>
+			<p begin="00:02:55.348" end="00:02:58.131">Malam ini kumenari</p>
+			<p begin="00:02:58.227" end="00:03:01.969">Dengan bayangan diri sendiri</p>
+		</div>
+		<div begin="00:03:02.416" end="00:03:18.042">
+			<p begin="00:03:02.416" end="00:03:06.738">Aku hanya butuh ketenangan</p>
+			<p begin="00:03:08.002" end="00:03:10.244">Ia sangat jauh</p>
+			<p begin="00:03:10.908" end="00:03:13.098">Hanya angan-angan</p>
+			<p begin="00:03:13.706" end="00:03:18.042">Aku hanya butuh ketenangan</p>
+		</div>
+	</body>
+</tt>
+
+

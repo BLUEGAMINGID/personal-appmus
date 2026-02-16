@@ -1,0 +1,88 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="id">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<ttm:agent type="other" xml:id="v2000"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal">
+				<translations/>
+				<songwriters>
+					<songwriter>Adnan Satyanugraha Putra</songwriter>
+					<songwriter>Baskara Putra</songwriter>
+					<songwriter>Dicky Renanda Putra</songwriter>
+					<songwriter>Fadli Fikriawan Wibowo</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="4:37.944">
+		<div begin="21.278" end="42.274" itunes:songPart="Verse">
+			<p begin="21.278" end="26.260" itunes:key="L1" ttm:agent="v1">Saat engkau tertidur</p>
+			<p begin="26.699" end="31.341" itunes:key="L2" ttm:agent="v1">Aku pergi menghibur</p>
+			<p begin="31.971" end="36.790" itunes:key="L3" ttm:agent="v1">Beda kota, pisah raga bukan masalahku</p>
+			<p begin="37.212" end="42.274" itunes:key="L4" ttm:agent="v1">Lihat wajahmu di layar, ku tetap bersyukur</p>
+		</div>
+		<div begin="42.735" end="1:03.560" itunes:songPart="Verse">
+			<p begin="42.735" end="47.556" itunes:key="L5" ttm:agent="v1">Saat engkau terjaga</p>
+			<p begin="48.090" end="52.736" itunes:key="L6" ttm:agent="v1">Aku 'kan ada di sana</p>
+			<p begin="53.219" end="58.163" itunes:key="L7" ttm:agent="v1">Sempatkan bermain dan bawakan cenderamata</p>
+			<p begin="58.538" end="1:03.560" itunes:key="L8" ttm:agent="v1">Satu sampai lima tahun cepat tak terasa</p>
+		</div>
+		<div begin="1:03.989" end="1:22.383" itunes:songPart="PreChorus">
+			<p begin="1:03.989" end="1:11.738" itunes:key="L9" ttm:agent="v1">Segala hal kuupayakan untuk melindungi</p>
+			<p begin="1:14.718" end="1:22.383" itunes:key="L10" ttm:agent="v1">Tunggu aku kembali lagi esok pagi</p>
+		</div>
+		<div begin="1:25.763" end="1:53.513" itunes:songPart="Chorus">
+			<p begin="1:25.763" end="1:30.685" itunes:key="L11" ttm:agent="v1">Tumbuh lebih baik, cari panggilanmu</p>
+			<p begin="1:31.016" end="1:36.076" itunes:key="L12" ttm:agent="v1">Jadi lebih baik dibanding diriku</p>
+			<p begin="1:36.443" end="1:49.354" itunes:key="L13" ttm:agent="v1">'Tuk sementara ini, aku mengembara jauh</p>
+			<p begin="1:48.979" end="1:53.513" itunes:key="L14" ttm:agent="v1">Saat dewasa kau 'kan mengerti</p>
+		</div>
+		<div begin="2:02.685" end="2:23.521" itunes:songPart="Verse">
+			<p begin="2:02.685" end="2:07.631" itunes:key="L15" ttm:agent="v1">Saat engkau dewasa</p>
+			<p begin="2:07.904" end="2:12.747" itunes:key="L16" ttm:agent="v1">Dan aku kian menua</p>
+			<p begin="2:13.220" end="2:18.160" itunes:key="L17" ttm:agent="v1">Jika ku berpulang lebih awal, tidak apa</p>
+			<p begin="2:18.560" end="2:23.521" itunes:key="L18" ttm:agent="v1">Berjumpa lagi di sana, aku tetap sama</p>
+		</div>
+		<div begin="2:24.002" end="2:45.007" itunes:songPart="Verse">
+			<p begin="2:24.002" end="2:28.899" itunes:key="L19" ttm:agent="v1">Saat engkau teringat</p>
+			<p begin="2:29.418" end="2:34.258" itunes:key="L20" ttm:agent="v1">Tengkar kita, manakala</p>
+			<p begin="2:34.600" end="2:39.523" itunes:key="L21" ttm:agent="v1">Maaf, atas perjalanan yang tidak sempurna</p>
+			<p begin="2:39.906" end="2:45.007" itunes:key="L22" ttm:agent="v1">Namun, percayalah untukmu kujual dunia</p>
+		</div>
+		<div begin="2:45.271" end="3:06.954" itunes:songPart="PreChorus">
+			<p begin="2:45.271" end="2:53.122" itunes:key="L23" ttm:agent="v1">Segala hal kuupayakan untuk melindungi</p>
+			<p begin="2:56.073" end="3:02.698" itunes:key="L24" ttm:agent="v1">Tunggu aku kembali lagi esok pagi</p>
+			<p begin="3:02.013" end="3:06.954" itunes:key="L25" ttm:agent="v1">Selalu janjiku pada dirimu</p>
+		</div>
+		<div begin="3:07.061" end="3:34.338" itunes:songPart="Chorus">
+			<p begin="3:07.061" end="3:12.060" itunes:key="L26" ttm:agent="v1">Tumbuh lebih baik, cari panggilanmu</p>
+			<p begin="3:12.385" end="3:17.396" itunes:key="L27" ttm:agent="v1">Jadi lebih baik dibanding diriku</p>
+			<p begin="3:17.715" end="3:33.062" itunes:key="L28" ttm:agent="v1">Dan tertawalah saat ini selepas-lepasnya</p>
+			<p begin="3:30.358" end="3:34.338" itunes:key="L29" ttm:agent="v1">Karena kelak kau 'kan tersakiti</p>
+		</div>
+		<div begin="3:33.394" end="3:51.246" itunes:songPart="Bridge">
+			<p begin="3:33.394" end="3:36.056" itunes:key="L30" ttm:agent="v2000">Ah-ah</p>
+			<p begin="3:35.715" end="3:37.772" itunes:key="L31" ttm:agent="v1">Aku tahu kamu hebat</p>
+			<p begin="3:38.380" end="3:41.964" itunes:key="L32" ttm:agent="v1">Namun, selamanya diriku pasti berkutat</p>
+			<p begin="3:41.380" end="3:43.978" itunes:key="L33" ttm:agent="v2000">Ah-ah</p>
+			<p begin="3:43.026" end="3:46.910" itunes:key="L34" ttm:agent="v1">'Tuk selalu jauhkanmu dari dunia yang jahat</p>
+			<p begin="3:47.738" end="3:51.246" itunes:key="L35" ttm:agent="v1">Ini sumpahku padamu 'tuk biarkanmu</p>
+		</div>
+		<div begin="3:51.085" end="4:18.723" itunes:songPart="Chorus">
+			<p begin="3:51.085" end="3:56.015" itunes:key="L36" ttm:agent="v1">Tumbuh lebih baik, cari panggilanmu</p>
+			<p begin="3:56.371" end="4:01.380" itunes:key="L37" ttm:agent="v1">Jadi lebih baik dibanding diriku</p>
+			<p begin="4:01.735" end="4:06.946" itunes:key="L38" ttm:agent="v1">'Tuk sementara, kita tertawakan</p>
+			<p begin="4:07.042" end="4:11.446" itunes:key="L39" ttm:agent="v1">Berbagai hal yang lucu dan lara</p>
+			<p begin="4:11.646" end="4:14.115" itunes:key="L40" ttm:agent="v1">Selepas-lepasnya</p>
+			<p begin="4:14.321" end="4:18.723" itunes:key="L41" ttm:agent="v1">Saat dewasa kau 'kan mengerti</p>
+		</div>
+		<div begin="4:19.737" end="4:34.397" itunes:songPart="Outro">
+			<p begin="4:19.737" end="4:24.098" itunes:key="L42" ttm:agent="v1">Karena kelak kau 'kan tersakiti</p>
+			<p begin="4:24.926" end="4:29.866" itunes:key="L43" ttm:agent="v1">Saat dewasa kau 'kan mengerti</p>
+			<p begin="4:30.377" end="4:34.397" itunes:key="L44" ttm:agent="v1">Karena kelak kau 'kan tersakiti</p>
+		</div>
+	</body>
+</tt>
+
+

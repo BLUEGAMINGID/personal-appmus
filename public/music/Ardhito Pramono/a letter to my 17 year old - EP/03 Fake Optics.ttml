@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" itunes:timing="Line" xml:lang="en">
+	<head>
+		<metadata>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal" leadingSilence="0.960">
+				<translations/>
+				<songwriters>
+					<songwriter>Ardhito Pramono</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="00:02:50.980">
+		<div begin="16.080" end="30.560">
+			<p begin="16.080" end="24.030">If I could picture all my friends in this lonely world</p>
+			<p begin="24.030" end="30.560">It will be hundred thousand pictures on my head</p>
+		</div>
+		<div begin="33.030" end="1:21.530">
+			<p begin="33.030" end="41.700">But then I realized that my life's been so much mess</p>
+			<p begin="41.700" end="48.720">It's only just you and me, friend</p>
+			<p begin="48.720" end="57.870">My life has been fooled</p>
+			<p begin="57.870" end="1:06.230">On someone who always been there cooked</p>
+			<p begin="1:06.230" end="1:13.040">Thought it be the one pleasure, it's always mine</p>
+			<p begin="1:13.040" end="1:21.530">It's goodbye for the past, all the blessings for the rest</p>
+		</div>
+		<div begin="1:36.520" end="2:39.800">
+			<p begin="1:36.520" end="1:45.910">Here there every lil' fake optics are the same mistake</p>
+			<p begin="1:45.910" end="1:52.490">Wouldn't be so surprised to find the place</p>
+			<p begin="1:52.490" end="2:01.700">You are my future hope, please don't make the same mistake</p>
+			<p begin="2:01.700" end="2:08.260">'Cause I want you to be free (want you to be free)</p>
+			<p begin="2:08.260" end="2:15.840">My life has been fooled</p>
+			<p begin="2:15.840" end="2:23.710">On someone who always been there cooked</p>
+			<p begin="2:23.710" end="2:30.650">Thought it be the one pleasure, it's always mine</p>
+			<p begin="2:30.650" end="2:39.800">It's goodbye for the past, all the blessings for the rest</p>
+		</div>
+		<div begin="2:45.690" end="2:51.940">
+			<p begin="2:45.690" end="2:51.940">It's goodbye for the past, all the blessings for the rest</p>
+		</div>
+	</body>
+</tt>
+
+

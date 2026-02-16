@@ -1,0 +1,81 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="en">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal">
+				<translations/>
+				<songwriters>
+					<songwriter>Faiz Novascotia Saripudin</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="3:45.109">
+		<div begin="18.907" end="43.895" itunes:songPart="Verse">
+			<p begin="18.907" end="23.452" itunes:key="L1" ttm:agent="v1">We're both strangers to a miracle</p>
+			<p begin="25.709" end="30.197" itunes:key="L2" ttm:agent="v1">We've had our eyes locked for a while</p>
+			<p begin="31.439" end="33.482" itunes:key="L3" ttm:agent="v1">I've completed all the courses</p>
+			<p begin="33.482" end="37.376" itunes:key="L4" ttm:agent="v1">I need to understand my loneliness</p>
+			<p begin="38.496" end="43.895" itunes:key="L5" ttm:agent="v1">I've accepted that maybe we're meant for a different time</p>
+		</div>
+		<div begin="45.846" end="51.911" itunes:songPart="PreChorus">
+			<p begin="45.846" end="48.284" itunes:key="L6" ttm:agent="v1">But then out of the blue</p>
+			<p begin="48.509" end="51.911" itunes:key="L7" ttm:agent="v1">A spark or two seems to generate</p>
+		</div>
+		<div begin="52.511" end="1:08.894" itunes:songPart="Chorus">
+			<p begin="52.511" end="57.097" itunes:key="L8" ttm:agent="v1">Now I'm bothering you, it's bothering me</p>
+			<p begin="57.321" end="1:00.599" itunes:key="L9" ttm:agent="v1">What can I do? What should I do?</p>
+			<p begin="1:00.806" end="1:04.167" itunes:key="L10" ttm:agent="v1">We're not too far, look where we are</p>
+			<p begin="1:04.280" end="1:08.894" itunes:key="L11" ttm:agent="v1">Bothering me, bothering you</p>
+		</div>
+		<div begin="1:11.298" end="1:36.218" itunes:songPart="Verse">
+			<p begin="1:11.298" end="1:16.248" itunes:key="L12" ttm:agent="v1">We fill our days with hypotheticals</p>
+			<p begin="1:16.549" end="1:17.657" itunes:key="L13" ttm:agent="v1">Ooh-ooh</p>
+			<p begin="1:18.398" end="1:22.979" itunes:key="L14" ttm:agent="v1">Living vividly in our minds</p>
+			<p begin="1:23.584" end="1:24.649" itunes:key="L15" ttm:agent="v1">Ooh-ooh</p>
+			<p begin="1:25.297" end="1:30.785" itunes:key="L16" ttm:agent="v1">We take apart our dreams with heavy heart</p>
+			<p begin="1:31.182" end="1:36.218" itunes:key="L17" ttm:agent="v1">But I know that maybe we can start something right</p>
+		</div>
+		<div begin="1:38.437" end="1:44.494" itunes:songPart="PreChorus">
+			<p begin="1:38.437" end="1:40.901" itunes:key="L18" ttm:agent="v1">But then out of the blue</p>
+			<p begin="1:41.040" end="1:44.494" itunes:key="L19" ttm:agent="v1">A spark or two seems to generate</p>
+		</div>
+		<div begin="1:45.127" end="2:00.240" itunes:songPart="Chorus">
+			<p begin="1:45.127" end="1:49.738" itunes:key="L20" ttm:agent="v1">Now I'm bothering you, it's bothering me</p>
+			<p begin="1:49.826" end="1:53.254" itunes:key="L21" ttm:agent="v1">What can I do? What should I do?</p>
+			<p begin="1:53.339" end="1:56.732" itunes:key="L22" ttm:agent="v1">We're not too far, look where we are</p>
+			<p begin="1:56.854" end="2:00.240" itunes:key="L23" ttm:agent="v1">Bothering me, bothering you</p>
+		</div>
+		<div begin="2:00.311" end="2:15.435" itunes:songPart="Chorus">
+			<p begin="2:00.311" end="2:03.765" itunes:key="L24" ttm:agent="v1">Lost in the sea, feel so complete</p>
+			<p begin="2:03.838" end="2:07.197" itunes:key="L25" ttm:agent="v1">Love is a myth, depends who you're with</p>
+			<p begin="2:07.354" end="2:15.435" itunes:key="L26" ttm:agent="v1">Bothering me, bothering you, ooh</p>
+		</div>
+		<div begin="2:41.516" end="2:54.732" itunes:songPart="PreChorus">
+			<p begin="2:41.516" end="2:43.813" itunes:key="L27" ttm:agent="v1">But then out of the blue</p>
+			<p begin="2:44.095" end="2:47.641" itunes:key="L28" ttm:agent="v1">A spark or two seems to generate</p>
+			<p begin="2:48.488" end="2:50.945" itunes:key="L29" ttm:agent="v1">And you with similar views</p>
+			<p begin="2:51.136" end="2:54.732" itunes:key="L30" ttm:agent="v1">You know my heart did incinerate</p>
+		</div>
+		<div begin="2:55.323" end="3:10.318" itunes:songPart="Chorus">
+			<p begin="2:55.323" end="2:59.820" itunes:key="L31" ttm:agent="v1">Now I'm bothering you, it's bothering me</p>
+			<p begin="2:59.941" end="3:03.275" itunes:key="L32" ttm:agent="v1">What can I do? What should I do?</p>
+			<p begin="3:03.417" end="3:06.812" itunes:key="L33" ttm:agent="v1">We're not too far, look where we are</p>
+			<p begin="3:06.920" end="3:10.318" itunes:key="L34" ttm:agent="v1">Bothering me, bothering you</p>
+		</div>
+		<div begin="3:10.424" end="3:25.498" itunes:songPart="Chorus">
+			<p begin="3:10.424" end="3:13.775" itunes:key="L35" ttm:agent="v1">Lost in the sea, feel so complete</p>
+			<p begin="3:13.922" end="3:17.259" itunes:key="L36" ttm:agent="v1">Love is a myth, depends who you're with</p>
+			<p begin="3:17.433" end="3:25.498" itunes:key="L37" ttm:agent="v1">Bothering me, bothering you, ooh</p>
+		</div>
+		<div begin="3:24.554" end="3:36.037" itunes:songPart="Outro">
+			<p begin="3:24.554" end="3:27.302" itunes:key="L38" ttm:agent="v1">Ooh-ooh, ooh-ooh</p>
+			<p begin="3:27.957" end="3:30.705" itunes:key="L39" ttm:agent="v1">Ooh-ooh, ooh-ooh</p>
+			<p begin="3:31.480" end="3:34.228" itunes:key="L40" ttm:agent="v1">Ooh-ooh, ooh-ooh</p>
+			<p begin="3:34.973" end="3:36.037" itunes:key="L41" ttm:agent="v1">Ooh-ooh</p>
+		</div>
+	</body>
+</tt>
+
+

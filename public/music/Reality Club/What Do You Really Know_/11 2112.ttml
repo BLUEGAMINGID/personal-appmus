@@ -1,0 +1,113 @@
+<?xml version="1.0" ?>
+<tt xmlns="http://www.w3.org/ns/ttml" xmlns:itunes="http://music.apple.com/lyric-ttml-internal" xmlns:ttm="http://www.w3.org/ns/ttml#metadata" itunes:timing="Line" xml:lang="en">
+	<head>
+		<metadata>
+			<ttm:agent type="person" xml:id="v1"/>
+			<iTunesMetadata xmlns="http://music.apple.com/lyric-ttml-internal" leadingSilence="0.480">
+				<translations/>
+				<songwriters>
+					<songwriter>Faiz Novascotia Saripudin</songwriter>
+				</songwriters>
+			</iTunesMetadata>
+		</metadata>
+	</head>
+	<body dur="5:56.613">
+		<div begin="2.010" end="30.893" itunes:songPart="Intro">
+			<p begin="2.010" end="4.440" itunes:key="L1" ttm:agent="v1">I'll fully comprehend</p>
+			<p begin="4.455" end="7.927" itunes:key="L2" ttm:agent="v1">Why the 21st of December</p>
+			<p begin="8.461" end="14.330" itunes:key="L3" ttm:agent="v1">Rings heavy on my battle-worn heart</p>
+			<p begin="17.810" end="20.816" itunes:key="L4" ttm:agent="v1">But who are we kidding?</p>
+			<p begin="22.045" end="24.363" itunes:key="L5" ttm:agent="v1">Nobody's winning</p>
+			<p begin="24.376" end="30.893" itunes:key="L6" ttm:agent="v1">In this tale of past and future love</p>
+		</div>
+		<div begin="38.348" end="49.846" itunes:songPart="Verse">
+			<p begin="38.348" end="40.207" itunes:key="L7" ttm:agent="v1">They were just twenty</p>
+			<p begin="42.212" end="44.345" itunes:key="L8" ttm:agent="v1">Show us the money</p>
+			<p begin="44.785" end="49.846" itunes:key="L9" ttm:agent="v1">A smoke show picturesque affair</p>
+		</div>
+		<div begin="54.104" end="1:06.199" itunes:songPart="Verse">
+			<p begin="54.104" end="57.337" itunes:key="L10" ttm:agent="v1">It started as all things do</p>
+			<p begin="58.112" end="1:03.497" itunes:key="L11" ttm:agent="v1">A simple hello turned to romantic visions</p>
+			<p begin="1:03.507" end="1:06.199" itunes:key="L12" ttm:agent="v1">Far away</p>
+		</div>
+		<div begin="1:10.440" end="1:23.316" itunes:songPart="Verse">
+			<p begin="1:10.440" end="1:13.767" itunes:key="L13" ttm:agent="v1">They were too clever</p>
+			<p begin="1:14.222" end="1:16.827" itunes:key="L14" ttm:agent="v1">For it to be never</p>
+			<p begin="1:16.837" end="1:23.316" itunes:key="L15" ttm:agent="v1">As they sunk into each other's heart</p>
+		</div>
+		<div begin="1:25.836" end="1:56.990" itunes:songPart="Verse">
+			<p begin="1:25.836" end="1:27.023" itunes:key="L16" ttm:agent="v1">And this is the part</p>
+			<p begin="1:27.559" end="1:29.439" itunes:key="L17" ttm:agent="v1">Where our whole lives collide</p>
+			<p begin="1:30.138" end="1:31.850" itunes:key="L18" ttm:agent="v1">The stars themselves fell</p>
+			<p begin="1:32.376" end="1:33.722" itunes:key="L19" ttm:agent="v1">Like we did that night</p>
+			<p begin="1:34.937" end="1:36.966" itunes:key="L20" ttm:agent="v1">Though it felt like the universe knew</p>
+			<p begin="1:38.092" end="1:40.727" itunes:key="L21" ttm:agent="v1">Like a pack of friends who couldn't hold their laughter</p>
+			<p begin="1:41.556" end="1:44.785" itunes:key="L22" ttm:agent="v1">They chose to be painfully obvious in front of us</p>
+			<p begin="1:45.736" end="1:48.976" itunes:key="L23" ttm:agent="v1">Slightly unaware or in denial of the dangers ahead</p>
+			<p begin="1:49.529" end="1:52.636" itunes:key="L24" ttm:agent="v1">We thrust our weary hearts into each other's arms</p>
+			<p begin="1:53.408" end="1:55.498" itunes:key="L25" ttm:agent="v1">Content and comfortable</p>
+			<p begin="1:55.945" end="1:56.990" itunes:key="L26" ttm:agent="v1">For years to come</p>
+		</div>
+		<div begin="2:15.003" end="2:27.804" itunes:songPart="Verse">
+			<p begin="2:15.003" end="2:17.917" itunes:key="L27" ttm:agent="v1">They felt it right and true</p>
+			<p begin="2:19.019" end="2:21.249" itunes:key="L28" ttm:agent="v1">Blessings and kisses</p>
+			<p begin="2:21.370" end="2:27.804" itunes:key="L29" ttm:agent="v1">As they thought it was the universe's wishes</p>
+		</div>
+		<div begin="2:31.002" end="2:42.984" itunes:songPart="Verse">
+			<p begin="2:31.002" end="2:33.813" itunes:key="L30" ttm:agent="v1">And though they could feel it then</p>
+			<p begin="2:34.886" end="2:37.380" itunes:key="L31" ttm:agent="v1">It's not how they want to end</p>
+			<p begin="2:37.390" end="2:39.708" itunes:key="L32" ttm:agent="v1">So they turn their heads away</p>
+			<p begin="2:39.718" end="2:42.984" itunes:key="L33" ttm:agent="v1">As if they were to say goodbye</p>
+		</div>
+		<div begin="2:47.092" end="3:00.456" itunes:songPart="Verse">
+			<p begin="2:47.092" end="2:50.620" itunes:key="L34" ttm:agent="v1">But clocks keep on ticking</p>
+			<p begin="2:51.065" end="2:53.820" itunes:key="L35" ttm:agent="v1">And life keeps on going</p>
+			<p begin="2:53.830" end="3:00.456" itunes:key="L36" ttm:agent="v1">To leave the pair behind at last</p>
+		</div>
+		<div begin="3:03.431" end="3:13.916" itunes:songPart="Verse">
+			<p begin="3:03.431" end="3:04.477" itunes:key="L37" ttm:agent="v1">She said to me</p>
+			<p begin="3:05.268" end="3:06.579" itunes:key="L38" ttm:agent="v1">And I said to her</p>
+			<p begin="3:08.128" end="3:10.119" itunes:key="L39" ttm:agent="v1">To hold back each other's true fate</p>
+			<p begin="3:10.416" end="3:11.712" itunes:key="L40" ttm:agent="v1">Is not of our nature</p>
+			<p begin="3:12.790" end="3:13.916" itunes:key="L41" ttm:agent="v1">Let's be mature</p>
+		</div>
+		<div begin="3:18.414" end="3:31.242" itunes:songPart="Verse">
+			<p begin="3:18.414" end="3:20.329" itunes:key="L42" ttm:agent="v1">Maybe you weren't made for me</p>
+			<p begin="3:21.083" end="3:22.563" itunes:key="L43" ttm:agent="v1">Nor I for you</p>
+			<p begin="3:28.158" end="3:29.364" itunes:key="L44" ttm:agent="v1">But I'd be damn lying</p>
+			<p begin="3:29.685" end="3:31.242" itunes:key="L45" ttm:agent="v1">If I think that that's true</p>
+		</div>
+		<div begin="3:35.729" end="4:07.613" itunes:songPart="Chorus">
+			<p begin="3:35.729" end="3:39.425" itunes:key="L46" ttm:agent="v1">We were young and we were old</p>
+			<p begin="3:39.760" end="3:43.448" itunes:key="L47" ttm:agent="v1">Life was warm then life was cold</p>
+			<p begin="3:43.815" end="3:47.299" itunes:key="L48" ttm:agent="v1">It gets harder, yes, you'll see</p>
+			<p begin="3:47.309" end="3:51.455" itunes:key="L49" ttm:agent="v1">But were we ever meant to be?</p>
+			<p begin="3:51.832" end="3:55.528" itunes:key="L50" ttm:agent="v1">We were young and we were old</p>
+			<p begin="3:55.878" end="3:59.566" itunes:key="L51" ttm:agent="v1">Life was warm then life was cold</p>
+			<p begin="3:59.919" end="4:03.482" itunes:key="L52" ttm:agent="v1">It gets harder, yes, you'll see</p>
+			<p begin="4:03.492" end="4:07.613" itunes:key="L53" ttm:agent="v1">But were we ever meant to be?</p>
+		</div>
+		<div begin="4:08.006" end="4:39.865" itunes:songPart="Chorus">
+			<p begin="4:08.006" end="4:11.702" itunes:key="L54" ttm:agent="v1">We were young and we were old</p>
+			<p begin="4:12.032" end="4:15.720" itunes:key="L55" ttm:agent="v1">Life was warm then life was cold</p>
+			<p begin="4:16.102" end="4:19.580" itunes:key="L56" ttm:agent="v1">It gets harder, yes, you'll see</p>
+			<p begin="4:19.590" end="4:23.815" itunes:key="L57" ttm:agent="v1">But were we ever meant to be?</p>
+			<p begin="4:24.169" end="4:27.865" itunes:key="L58" ttm:agent="v1">We were young and we were old</p>
+			<p begin="4:28.214" end="4:32.012" itunes:key="L59" ttm:agent="v1">Life was warm then life was cold</p>
+			<p begin="4:32.286" end="4:35.702" itunes:key="L60" ttm:agent="v1">It gets harder, yes, you'll see</p>
+			<p begin="4:35.719" end="4:39.865" itunes:key="L61" ttm:agent="v1">But were we ever meant to be?</p>
+		</div>
+		<div begin="5:12.558" end="5:45.757" itunes:songPart="Chorus">
+			<p begin="5:12.558" end="5:16.462" itunes:key="L62" ttm:agent="v1">We were young and we were old</p>
+			<p begin="5:16.546" end="5:20.336" itunes:key="L63" ttm:agent="v1">Life was warm then life was cold</p>
+			<p begin="5:20.618" end="5:24.034" itunes:key="L64" ttm:agent="v1">It gets harder, yes, you'll see</p>
+			<p begin="5:24.085" end="5:28.231" itunes:key="L65" ttm:agent="v1">But were we ever meant to be?</p>
+			<p begin="5:28.671" end="5:32.367" itunes:key="L66" ttm:agent="v1">We were young and we were old</p>
+			<p begin="5:32.764" end="5:36.761" itunes:key="L67" ttm:agent="v1">Life was warm then life was cold</p>
+			<p begin="5:36.788" end="5:40.204" itunes:key="L68" ttm:agent="v1">It gets harder, yes, you'll see</p>
+			<p begin="5:40.266" end="5:45.757" itunes:key="L69" ttm:agent="v1">But were we ever meant to</p>
+		</div>
+	</body>
+</tt>
+
+
