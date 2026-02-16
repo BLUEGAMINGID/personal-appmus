@@ -254,7 +254,7 @@ const Chat = () => {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: 10, scale: 0.8 }}
                 onClick={() => setIsOpen(true)}
-                className="pointer-events-auto absolute bottom-[70px] right-4 sm:right-5 bg-[#1c1c1e]/90 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.4)] rounded-2xl py-3 px-4 flex items-center space-x-3 cursor-pointer hover:bg-[#2c2c2e]/90 border border-white/10 w-max max-w-[240px] transition-all duration-300"
+                className="pointer-events-auto absolute bottom-[22px] right-[72px] sm:right-[76px] bg-[#1c1c1e]/90 backdrop-blur-2xl shadow-[0_8px_32px_rgba(0,0,0,0.4)] rounded-2xl py-2.5 px-3.5 flex items-center space-x-2.5 cursor-pointer hover:bg-[#2c2c2e]/90 border border-white/10 w-max max-w-[220px] transition-all duration-300"
             >
                 <div className="w-8 h-8 bg-white/10 rounded-full flex items-center justify-center shrink-0 text-white/80">
                      <FontAwesomeIcon icon={faRobot} className="text-xs" />

@@ -170,49 +170,52 @@ const LyricLine = React.memo(({ line, isActive, onClick, audioRef }) => {
 }, (prev, next) => prev.isActive === next.isActive && prev.line === next.line);
 LyricLine.displayName = "LyricLine";
 
-// --- MEMOIZED BACKGROUND (STATIC CANVAS TECHNIQUE) ---
+// --- PURE CSS ALIVE BACKGROUND (GPU compositor, zero JS cost) ---
 const AliveBackground = React.memo(({ cover }) => (
-    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#101010] contain-strict">
+    <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none bg-[#0a0a0a]" style={{ contain: 'strict' }}>
         {cover && (
-            <div className="absolute inset-0 overflow-hidden">
-                <div className="absolute top-0 left-0 w-full h-[800px] will-change-transform">
-                    {/* Layer 1 */}
-                    <div 
-                        className="absolute inset-0 bg-cover bg-center animate-spin-slow will-change-transform transform-gpu" 
-                        style={{ 
-                            backgroundImage: `url(${cover})`, 
-                            filter: 'blur(15px) saturate(200%) brightness(0.8)', 
-                            opacity: 0.4,
-                            transform: 'scale(3.5)', 
-                            animationDelay: '-12s'
-                        }} 
-                    />
-                    {/* Layer 2 */}
-                    <div 
-                        className="absolute inset-0 bg-cover bg-center animate-spin-reverse-slower will-change-transform transform-gpu" 
-                        style={{ 
-                            backgroundImage: `url(${cover})`, 
-                            filter: 'blur(20px) saturate(250%)', 
-                            opacity: 0.5, 
-                            transform: 'scale(3.0)', 
-                            animationDelay: '-45s' 
-                        }} 
-                    />
-                    {/* Layer 3 */}
-                    <div 
-                        className="absolute inset-0 bg-cover bg-center animate-pulse-spin will-change-transform transform-gpu" 
-                        style={{ 
-                            backgroundImage: `url(${cover})`, 
-                            filter: 'blur(10px) saturate(150%)', 
-                            opacity: 0.3,
-                            animationDelay: '-23s' 
-                        }} 
-                    />
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/30 to-black/90" />
+            <div className="absolute inset-0">
+                {/* Layer 1 — slow diagonal drift */}
+                <div 
+                    className="absolute will-change-transform transform-gpu alive-drift-1" 
+                    style={{ 
+                        inset: '-30%',
+                        backgroundImage: `url(${cover})`, 
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        filter: 'blur(70px) saturate(200%) brightness(0.6)', 
+                        opacity: 0.5,
+                    }} 
+                />
+                {/* Layer 2 — opposite diagonal drift, hue shifted */}
+                <div 
+                    className="absolute will-change-transform transform-gpu alive-drift-2" 
+                    style={{ 
+                        inset: '-25%',
+                        backgroundImage: `url(${cover})`, 
+                        backgroundSize: 'cover',
+                        backgroundPosition: '30% 70%',
+                        filter: 'blur(80px) saturate(180%) brightness(0.5) hue-rotate(15deg)', 
+                        opacity: 0.4,
+                    }} 
+                />
+                {/* Layer 3 — gentle vertical breathing */}
+                <div 
+                    className="absolute will-change-transform transform-gpu alive-drift-3" 
+                    style={{ 
+                        inset: '-20%',
+                        backgroundImage: `url(${cover})`, 
+                        backgroundSize: 'cover',
+                        backgroundPosition: '70% 30%',
+                        filter: 'blur(60px) saturate(220%) brightness(0.55)', 
+                        opacity: 0.35,
+                    }} 
+                />
+                {/* Gradient overlays for depth */}
+                <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60" />
             </div>
         )}
-        <div className="absolute inset-0 opacity-[0.05] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay" />
+        <div className="absolute inset-0 opacity-[0.03] bg-[url('https://grainy-gradients.vercel.app/noise.svg')] mix-blend-overlay" />
     </div>
 ));
 AliveBackground.displayName = "AliveBackground";
@@ -535,7 +538,7 @@ const Card = ({ fullScreen = false }) => {
 
                 <div className="relative z-10 w-full h-full p-6 flex flex-col border border-white/5">
                     {/* Header - Conditionally Hidden in FullScreen Idle Mode */}
-                    {(!fullScreen || showLyrics || showPlaylist) && (
+                    {(!fullScreen || (showLyrics && !isDesktop) || showPlaylist) && (
                         <div className="flex items-center space-x-5 shrink-0 mb-4 relative z-50 animate-fade-in">
                             <div className="w-14 h-14 rounded-lg overflow-hidden shadow-lg relative shrink-0 border border-white/10 bg-white/5">
                                 {result.cover ? <img src={result.cover} alt="Cover" className="w-full h-full object-cover" loading="eager" decoding="async" /> : <div className="w-full h-full flex items-center justify-center"><FontAwesomeIcon icon={faApple} className="text-white/30 text-xl" /></div>}
@@ -551,17 +554,47 @@ const Card = ({ fullScreen = false }) => {
                     )}
 
                     {/* Expandable Area / Large Art Area */}
-                    <div className={`relative flex-1 overflow-hidden transition-all duration-500 ease-out ${showLyrics || showPlaylist ? "opacity-100 mb-4" : (fullScreen ? "opacity-100 mb-4" : "opacity-0 h-0 mb-0 pointer-events-none")}`}>
+                    <div className={`relative flex-1 overflow-hidden ${showLyrics || showPlaylist ? "opacity-100 mb-4" : (fullScreen ? "opacity-100 mb-4" : "opacity-0 h-0 mb-0 pointer-events-none")} ${fullScreen && showLyrics && isDesktop ? "flex flex-row gap-6" : ""}`}>
                         
-                        {/* ===== LARGE ART VIEW (Always mounted in fullScreen, animated via CSS) ===== */}
+                        {/* Lyrics Toggle Button — top right (spring animated) */}
+                        {fullScreen && isDesktop && (
+                            <motion.button 
+                                onClick={() => setShowLyrics(!showLyrics)} 
+                                initial={{ opacity: 0, scale: 0.5 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                transition={{ type: "spring", stiffness: 400, damping: 20 }}
+                                whileTap={{ scale: 0.85 }}
+                                whileHover={{ scale: 1.08 }}
+                                className={`absolute top-2 right-2 z-50 w-8 h-8 rounded-full flex items-center justify-center backdrop-blur-md border border-white/10 ${
+                                    showLyrics 
+                                        ? "bg-white text-black" 
+                                        : "bg-white/10 text-white"
+                                }`}
+                            >
+                                <FontAwesomeIcon icon={showLyrics ? faTimes : faQuoteRight} className="text-[11px]" />
+                            </motion.button>
+                        )}
+
+                        {/* ===== LARGE ART VIEW ===== */}
                         {fullScreen && (
-                             <div className={`absolute inset-0 z-20 flex flex-col items-center justify-center px-6 pt-4 pb-14 transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
-                                 showLyrics || showPlaylist 
-                                     ? "opacity-0 scale-90 blur-md pointer-events-none" 
-                                     : "opacity-100 scale-100 blur-0 pointer-events-auto"
-                             }`}>
-                                {/* Art Container - Uses % of parent height for guaranteed fit */}
-                                <div className="relative group shrink-0 aspect-square transition-all duration-500" style={{ height: '55%', maxHeight: '400px' }}>
+                             <div className={`${fullScreen && showLyrics && isDesktop 
+                                 ? "w-[45%] relative flex flex-col items-center justify-center px-6 shrink-0" 
+                                 : `absolute inset-0 z-20 flex flex-col items-center justify-center px-6 pt-4 pb-14 ${
+                                     showLyrics || showPlaylist 
+                                         ? (isDesktop ? "" : "opacity-0 scale-95 blur-md pointer-events-none")
+                                         : "opacity-100 scale-100 blur-0 pointer-events-auto"
+                                 }`
+                             }`}
+                             style={{ transition: 'width 0.65s cubic-bezier(0.32,0.72,0,1), opacity 0.5s ease, filter 0.5s ease, transform 0.5s ease' }}
+                             >
+                                {/* Art Container — 15% bigger, slightly lower */}
+                                <div 
+                                    className={`relative group shrink-0 aspect-square overflow-hidden mt-4 ${fullScreen && showLyrics && isDesktop ? "w-full max-w-[415px]" : ""}`} 
+                                    style={{ 
+                                        ...(fullScreen && showLyrics && isDesktop ? {} : { height: '63%', maxHeight: '460px' }),
+                                        transition: 'all 0.65s cubic-bezier(0.32,0.72,0,1)'
+                                    }}
+                                >
                                      {/* Colored Glow */}
                                      <div className="absolute inset-0 bg-cover bg-center rounded-2xl bg-gray-800"
                                           style={{ 
@@ -577,70 +610,103 @@ const Card = ({ fullScreen = false }) => {
                                      </div>
                                 </div>
                                 
-                                {/* Title & Artist & Button */}
+                                {/* Title & Artist */}
                                 <div className="mt-5 space-y-1 w-full flex flex-col items-center shrink-0 text-center">
                                     <h2 className="text-xl md:text-2xl font-bold text-white drop-shadow-xl tracking-tight leading-tight px-6 max-w-md truncate">{result.title}</h2>
                                     <p className="text-sm md:text-lg text-white/60 font-medium tracking-wide px-6 max-w-md truncate">{result.artist}</p>
-                                    
-                                    {/* Lyrics Button */}
-                                    <button onClick={() => setShowLyrics(true)} className="mt-3 px-5 py-2 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center space-x-2 transition-all active:scale-95 backdrop-blur-md border border-white/5 relative z-50">
-                                         <FontAwesomeIcon icon={faQuoteRight} className="text-xs opacity-70" />
-                                         <span className="text-xs font-semibold tracking-wide">Lyrics</span>
-                                    </button>
-
-                                    {/* Songwriters Credits */}
-                                    {result.songwriters && result.songwriters.length > 0 && (
-                                        <div className="mt-3 px-6 max-w-sm w-full">
-                                            <p className="text-[10px] uppercase tracking-[0.2em] text-white/30 font-bold mb-1">Written by</p>
-                                            <p className="text-xs text-white/50 leading-relaxed">{result.songwriters.join(', ')}</p>
-                                        </div>
-                                    )}
                                 </div>
                              </div>
                         )}
                         
-                        {/* ===== PLAYLIST ===== */}
+                        {/* ===== PLAYLIST (Apple Music Sheet) ===== */}
+                        <AnimatePresence>
                         {showPlaylist && (
-                            <div className="absolute inset-0 z-30 bg-[#111]/80 backdrop-blur-xl rounded-3xl overflow-hidden flex flex-col border border-white/10 animate-slide-up">
-                                <div className="p-4 border-b border-white/5 flex justify-between items-center bg-white/5"><span className="text-[11px] font-bold text-white/70 uppercase tracking-widest pl-1">Up Next</span></div>
-                                <div ref={playlistContainerRef} className="flex-1 overflow-y-auto no-scrollbar p-3 space-y-4">
+                            <motion.div
+                                initial={{ y: '100%' }}
+                                animate={{ y: 0 }}
+                                exit={{ y: '100%' }}
+                                transition={{ type: "spring", stiffness: 300, damping: 32, mass: 0.8 }}
+                                className="absolute inset-0 z-30 bg-[#1c1c1e]/95 backdrop-blur-2xl rounded-2xl overflow-hidden flex flex-col"
+                            >
+                                {/* Drag Handle + Header */}
+                                <div className="pt-3 pb-2 px-5 flex flex-col items-center">
+                                    <div className="w-9 h-1 rounded-full bg-white/20 mb-3"></div>
+                                    <div className="w-full flex justify-between items-center">
+                                        <span className="text-[13px] font-bold text-white/90 tracking-tight">Up Next</span>
+                                        <button onClick={(e) => { e.stopPropagation(); setShowPlaylist(false); }} className="text-[13px] font-semibold text-[#ff375f] active:opacity-60 transition-opacity">Done</button>
+                                    </div>
+                                </div>
+                                <div className="h-[0.5px] bg-white/8"></div>
+                                <div ref={playlistContainerRef} className="flex-1 overflow-y-auto no-scrollbar px-4 pt-2 pb-4">
                                     {groupedPlaylist.map((group, gIdx) => (
-                                        <div key={gIdx} className="mb-2">
-                                            <div className="sticky top-0 bg-[#111]/90 backdrop-blur-md p-2 rounded-lg mb-2 z-10 border border-white/5 shadow-sm"><h4 className="text-white font-bold text-sm truncate ml-1">{group.album}</h4></div>
-                                            <div className="space-y-1">
+                                        <div key={gIdx} className="mb-4">
+                                            <div className="sticky top-0 z-10 bg-[#1c1c1e]/90 backdrop-blur-xl py-2 px-1">
+                                                <h4 className="text-[11px] font-bold text-white/40 uppercase tracking-widest">{group.album}</h4>
+                                            </div>
+                                            <div>
                                                 {group.tracks.map((track, i) => (
-                                                    <div key={track.idx} onClick={() => selectSong(track.idx)} className={`flex items-center p-2 rounded-xl gap-3 cursor-pointer ${currentIndex === track.idx ? "bg-white/20 active-playlist-song border border-white/10" : "hover:bg-white/5"}`}>
-                                                        <div className="w-6 text-center shrink-0">{currentIndex === track.idx ? <FontAwesomeIcon icon={faPlay} className="text-green-400 text-[10px]"/> : <span className="text-white/30 text-[12px] font-medium">{i + 1}</span>}</div>
-                                                        <span className={`text-[13px] font-bold truncate ${currentIndex === track.idx ? "text-green-400" : "text-white"}`}>{track.title}</span>
-                                                    </div>
+                                                    <motion.div 
+                                                        key={track.idx} 
+                                                        onClick={() => selectSong(track.idx)} 
+                                                        whileTap={{ scale: 0.97, opacity: 0.7 }}
+                                                        transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                                                        className={`flex items-center py-2.5 px-1 gap-3.5 cursor-pointer border-b border-white/[0.04] last:border-b-0 ${currentIndex === track.idx ? "active-playlist-song" : ""}`}
+                                                    >
+                                                        <div className="w-5 text-right shrink-0">
+                                                            {currentIndex === track.idx 
+                                                                ? <FontAwesomeIcon icon={faPlay} className="text-[#ff375f] text-[9px] animate-pulse"/> 
+                                                                : <span className="text-white/25 text-[12px] font-medium tabular-nums">{i + 1}</span>
+                                                            }
+                                                        </div>
+                                                        <div className="flex-1 min-w-0">
+                                                            <p className={`text-[14px] font-semibold truncate leading-tight ${currentIndex === track.idx ? "text-[#ff375f]" : "text-white/90"}`}>{track.title}</p>
+                                                        </div>
+                                                    </motion.div>
                                                 ))}
                                             </div>
                                         </div>
                                     ))}
                                 </div>
-                            </div>
+                            </motion.div>
                         )}
+                        </AnimatePresence>
 
-                        {/* ===== LYRICS AREA (Hidden when Large Art is active) ===== */}
-                        <div ref={scrollRef} className={`w-full h-full overflow-y-auto no-scrollbar pt-20 pb-32 px-4 mask-scroller-y transition-all duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
-                            fullScreen && !showLyrics && !showPlaylist 
-                                ? "opacity-0 pointer-events-none translate-y-8" 
-                                : "opacity-100 pointer-events-auto translate-y-0"
-                        }`}>
+                        {/* ===== LYRICS AREA (Spring animated) ===== */}
+                        <AnimatePresence>
+                        {(showLyrics || showPlaylist || !fullScreen) && (
+                            <motion.div 
+                                ref={scrollRef} 
+                                initial={{ opacity: 0, y: 40 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                exit={{ opacity: 0, y: 20 }}
+                                transition={{ type: "spring", stiffness: 200, damping: 26, mass: 0.8 }}
+                                className={`${fullScreen && showLyrics && isDesktop ? "w-1/2 h-full" : "w-full h-full"} overflow-y-auto no-scrollbar pt-20 pb-32 px-4 mask-scroller-y`}
+                            >
                             {processedLyrics.length === 0 ? (
                                 <div className="flex flex-col items-center justify-center h-full text-white/30 gap-2"><FontAwesomeIcon icon={faMusic} className="text-2xl" /><p className="text-sm">No Lyrics</p></div>
                             ) : (
-                                processedLyrics.map((line, i) => (
-                                    <LyricLine 
-                                        key={i} 
-                                        line={line} 
-                                        isActive={activeIdx === i} 
-                                        onClick={handleSeekEnd} 
-                                        audioRef={audioRef}
-                                    />
-                                ))
+                                <>
+                                    {processedLyrics.map((line, i) => (
+                                        <LyricLine 
+                                            key={i} 
+                                            line={line} 
+                                            isActive={activeIdx === i} 
+                                            onClick={handleSeekEnd} 
+                                            audioRef={audioRef}
+                                        />
+                                    ))}
+                                    {/* Songwriters Credits — at the end of lyrics like Apple Music */}
+                                    {result.songwriters && result.songwriters.length > 0 && (
+                                        <div className="mt-10 mb-6 text-center">
+                                            <p className="text-[10px] uppercase tracking-[0.2em] text-white/30 font-bold mb-1">Written by</p>
+                                            <p className="text-xs text-white/50 leading-relaxed">{result.songwriters.join(', ')}</p>
+                                        </div>
+                                    )}
+                                </>
                             )}
-                        </div>
+                        </motion.div>
+                        )}
+                        </AnimatePresence>
 
                         {/* Bottom Actions */}
                         <div className="absolute bottom-0 left-0 right-0 p-2 flex justify-between items-end z-40">
@@ -658,9 +724,9 @@ const Card = ({ fullScreen = false }) => {
                     <div className="mt-auto flex flex-col gap-3 shrink-0 z-20 pt-2">
                         <AppleMusicTimeSlider audioRef={audioRef} duration={duration} isPaused={isPaused} onSeekStart={() => {}} onSeekEnd={handleSeekEnd} />
                         <div className="flex justify-center items-center gap-6">
-                            <button onClick={handlePrev} className="text-white/60 hover:text-white p-3 active:scale-90 transition-transform"><FontAwesomeIcon icon={faBackward} size="lg" /></button>
-                            <button onClick={togglePlay} className={`bg-white text-black w-16 h-16 rounded-full flex items-center justify-center shadow-lg active:scale-90 transition-transform ${isLoading ? 'opacity-80' : ''}`}>{isLoading ? <FontAwesomeIcon icon={faSpinner} spin size="lg" className="text-black/50" /> : <FontAwesomeIcon icon={isPaused ? faPlay : faPause} size="2xl" className={isPaused ? "ml-2" : ""} />}</button>
-                            <button onClick={handleNext} className="text-white/60 hover:text-white p-3 active:scale-90 transition-transform"><FontAwesomeIcon icon={faForward} size="lg" /></button>
+                            <button onClick={handlePrev} className="text-white/60 hover:text-white p-3 active:scale-90 transition-all duration-200"><FontAwesomeIcon icon={faBackward} size="lg" /></button>
+                            <button onClick={togglePlay} className={`bg-white text-black w-16 h-16 rounded-full flex items-center justify-center shadow-lg active:scale-90 transition-all duration-200 ${isLoading ? 'opacity-80' : ''}`}>{isLoading ? <FontAwesomeIcon icon={faSpinner} spin size="lg" className="text-black/50" /> : <FontAwesomeIcon icon={isPaused ? faPlay : faPause} size="2xl" className={isPaused ? "ml-2" : ""} />}</button>
+                            <button onClick={handleNext} className="text-white/60 hover:text-white p-3 active:scale-90 transition-all duration-200"><FontAwesomeIcon icon={faForward} size="lg" /></button>
                         </div>
                     </div>
                 </div>
@@ -698,21 +764,46 @@ const Card = ({ fullScreen = false }) => {
                     text-shadow: 0 0 5px rgba(255,255,255,0.4), 0 0 15px rgba(255,255,255,0.1);
                 }
 
-                @keyframes spin-slow { from { transform: rotate(0deg) scale(1.5); } to { transform: rotate(360deg) scale(1.5); } }
-                @keyframes spin-reverse-slower { from { transform: rotate(360deg) scale(1.2); } to { transform: rotate(0deg) scale(1.2); } }
-                @keyframes pulse-spin { 
-                    0% { transform: rotate(0deg) scale(1.4); opacity: 0.3; } 
-                    50% { transform: rotate(180deg) scale(1.6); opacity: 0.5; }
-                    100% { transform: rotate(360deg) scale(1.4); opacity: 0.3; }
+                /* Alive Background — GPU compositor-only animations (transform only) */
+                @keyframes alive1 {
+                    0%   { transform: translate(0%, 0%) scale(1); }
+                    25%  { transform: translate(4%, -6%) scale(1.03); }
+                    50%  { transform: translate(-3%, 4%) scale(0.98); }
+                    75%  { transform: translate(5%, 2%) scale(1.02); }
+                    100% { transform: translate(0%, 0%) scale(1); }
                 }
+                @keyframes alive2 {
+                    0%   { transform: translate(0%, 0%) scale(1); }
+                    33%  { transform: translate(-5%, 3%) scale(1.05); }
+                    66%  { transform: translate(3%, -5%) scale(0.97); }
+                    100% { transform: translate(0%, 0%) scale(1); }
+                }
+                @keyframes alive3 {
+                    0%   { transform: translate(0%, 0%) scale(1); }
+                    20%  { transform: translate(2%, 4%) scale(1.04); }
+                    40%  { transform: translate(-4%, 1%) scale(0.97); }
+                    60%  { transform: translate(1%, -3%) scale(1.02); }
+                    80%  { transform: translate(-2%, -2%) scale(1.01); }
+                    100% { transform: translate(0%, 0%) scale(1); }
+                }
+
+                .alive-drift-1 { animation: alive1 25s ease-in-out infinite; animation-delay: -8s; }
+                .alive-drift-2 { animation: alive2 30s ease-in-out infinite; animation-delay: -14s; }
+                .alive-drift-3 { animation: alive3 22s ease-in-out infinite; animation-delay: -5s; }
+
                 
-                .animate-spin-slow { animation: spin-slow 90s linear infinite; }
-                .animate-spin-reverse-slower { animation: spin-reverse-slower 75s linear infinite; }
-                .animate-pulse-spin { animation: pulse-spin 60s ease-in-out infinite; }
+                @keyframes fade-in { 
+                    from { opacity: 0; transform: scale(0.96) translateY(8px); } 
+                    to { opacity: 1; transform: scale(1) translateY(0); } 
+                }
+                .animate-fade-in { animation: fade-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
                 
-                @keyframes fade-in { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-                .animate-fade-in { animation: fade-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-                
+                @keyframes apple-sheet { 
+                    from { transform: translateY(100%); } 
+                    to { transform: translateY(0); } 
+                }
+                .animate-apple-sheet { animation: apple-sheet 0.55s cubic-bezier(0.32, 0.72, 0, 1) forwards; }
+
                 @keyframes slide-up { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
                 .animate-slide-up { animation: slide-up 0.5s cubic-bezier(0.32, 0.72, 0, 1) forwards; }
 
