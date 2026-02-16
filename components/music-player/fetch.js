@@ -221,14 +221,11 @@ export async function getSimpleMetadata(item) {
 
 export const fetchAudioBlob = async (url) => {
   try {
-    // Encode the public path as a base64 token
-    // url is like '/music/Artist/Album/song.mp3'
-    const token = btoa(url);
-    const streamUrl = `/api/stream?t=${encodeURIComponent(token)}`;
+    // Direct fetch (bypass Vercel API limits & IDM)
+    // IDM doesn't intercept fetch() calls that return Blobs
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Fetch failed");
 
-    const response = await fetch(streamUrl, {
-      credentials: "same-origin",
-    });
     const blob = await response.blob();
     return URL.createObjectURL(blob);
   } catch (error) {

@@ -430,6 +430,43 @@ const Card = ({ fullScreen = false }) => {
                 }
             }
 
+            // --- PLAY AUDIO (BLOB-BASED) ---
+            const playAudio = async (src) => {
+                if (!src) return;
+                
+                if (currentSongRef.current !== src) {
+                    try {
+                        setIsLoading(true);
+                        
+                        // Use the shared helper to fetch blob
+                        const blobUrl = await fetchAudioBlob(src);
+                        
+                        // Revoke old blob to free memory
+                        if (audioSrcRef.current) {
+                            URL.revokeObjectURL(audioSrcRef.current);
+                        }
+                        audioSrcRef.current = blobUrl;
+                        
+                        audioRef.current.src = blobUrl;
+                        audioRef.current.load();
+                        currentSongRef.current = src;
+                    } catch (error) {
+                        console.error("Error loading audio:", error);
+                        setIsLoading(false);
+                        return;
+                    }
+                }
+
+                try {
+                    await audioRef.current.play();
+                    setIsPlaying(true);
+                    setIsLoading(false);
+                } catch (error) {
+                    console.error("Playback error:", error);
+                    setIsLoading(false);
+                }
+            };
+            
             // Setup Playback
              const onLoadedMetadata = () => {
                 if(audioRef.current) {
