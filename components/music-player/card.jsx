@@ -439,45 +439,8 @@ const Card = ({ fullScreen = false, onOpenChat }) => {
                 }
             }
 
-            // --- PLAY AUDIO (BLOB-BASED) ---
-            const playAudio = async (src) => {
-                if (!src) return;
-                
-                if (currentSongRef.current !== src) {
-                    try {
-                        setIsLoading(true);
-                        
-                        // Use the shared helper to fetch blob
-                        const blobUrl = await fetchAudioBlob(src);
-                        
-                        // Revoke old blob to free memory
-                        if (audioSrcRef.current) {
-                            URL.revokeObjectURL(audioSrcRef.current);
-                        }
-                        audioSrcRef.current = blobUrl;
-                        
-                        audioRef.current.src = blobUrl;
-                        audioRef.current.load();
-                        currentSongRef.current = src;
-                    } catch (error) {
-                        console.error("Error loading audio:", error);
-                        setIsLoading(false);
-                        return;
-                    }
-                }
-
-                try {
-                    await audioRef.current.play();
-                    setIsPlaying(true);
-                    setIsLoading(false);
-                } catch (error) {
-                    console.error("Playback error:", error);
-                    setIsLoading(false);
-                }
-            };
-            
             // Setup Playback
-             const onLoadedMetadata = () => {
+            const onCanPlay = () => {
                 if(audioRef.current) {
                     setDuration(audioRef.current.duration);
                     if (shouldPlay) {
@@ -500,11 +463,32 @@ const Card = ({ fullScreen = false, onOpenChat }) => {
                     }
                 }
             };
+
+            const onError = () => {
+                console.error("Audio loading error");
+                setIsLoading(false);
+            };
             
             const audioEl = audioRef.current;
             if(audioEl) {
-                audioEl.addEventListener('loadedmetadata', onLoadedMetadata, {once: true});
+                audioEl.addEventListener('canplay', onCanPlay, {once: true});
+                audioEl.addEventListener('error', onError, {once: true});
             }
+
+            // Safety timeout — if canplay never fires, unstick the UI
+            const safetyTimeout = setTimeout(() => {
+                if (audioEl) {
+                    audioEl.removeEventListener('canplay', onCanPlay);
+                    audioEl.removeEventListener('error', onError);
+                    // If we have duration data, the audio might be ready
+                    if (audioEl.readyState >= 2) {
+                        setDuration(audioEl.duration || 0);
+                    }
+                    setIsLoading(false);
+                }
+            }, 10000);
+
+            return () => clearTimeout(safetyTimeout);
         });
     }, [currentIndex, isMounted]);
 
